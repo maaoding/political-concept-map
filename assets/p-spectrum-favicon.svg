@@ -1,0 +1,16 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">P spectrum favicon</title>
+  <desc id="desc">A high-contrast letter P spectrum icon on a light background for small browser favicons.</desc>
+  <rect x="14" y="14" width="228" height="228" rx="34" fill="#FBFBF8"/>
+  <rect x="14" y="14" width="228" height="228" rx="34" stroke="#D8DCD3" stroke-width="10"/>
+  <g stroke="#171A1F" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M80 206V50" stroke-width="19"/>
+    <path d="M80 50H140C181 50 208 78 208 116C208 154 181 181 140 181H80" stroke-width="19"/>
+    <path d="M80 116H195" stroke-width="9"/>
+    <path d="M108 151L136 121L169 141" stroke-width="9"/>
+    <circle cx="80" cy="116" r="9" fill="#FBFBF8" stroke-width="8"/>
+    <circle cx="108" cy="151" r="8" fill="#FBFBF8" stroke-width="7"/>
+    <circle cx="136" cy="121" r="8" fill="#FBFBF8" stroke-width="7"/>
+    <circle cx="169" cy="141" r="8" fill="#FBFBF8" stroke-width="7"/>
+  </g>
+</svg>
