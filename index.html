@@ -1029,13 +1029,29 @@
       }
 
       .result-heading {
-        display: flex;
-        gap: 14px;
-        align-items: flex-start;
+        display: grid;
+        gap: 10px;
+        align-items: start;
+        max-width: 720px;
+      }
+
+      .result-heading > div {
+        display: grid;
+        gap: 10px;
+        justify-items: start;
       }
 
       .result-heading .badge {
-        margin-top: 3px;
+        display: flex;
+        margin: 0;
+      }
+
+      .result-title {
+        margin: 0;
+        max-width: 100%;
+        font-size: clamp(34px, 5.4vw, 64px);
+        line-height: 1.04;
+        overflow-wrap: anywhere;
       }
 
       .hero-copy,
@@ -1195,6 +1211,52 @@
         margin-top: 12px;
       }
 
+      .ideology-guide,
+      .result-reading {
+        padding: 24px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .ideology-guide h3,
+      .result-reading h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .ideology-guide p,
+      .result-reading p {
+        max-width: 760px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .quick-nav,
+      .reading-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .quick-nav a,
+      .reading-links a {
+        padding: 6px 9px;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 760;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        background: transparent;
+      }
+
+      .quick-nav a:hover,
+      .reading-links a:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
       .note-item,
       .info-block,
       .chart-block {
@@ -1224,12 +1286,24 @@
 
       .info-block {
         padding: 28px 0;
+        scroll-margin-top: 92px;
+      }
+
+      .info-block:focus {
+        outline: 2px solid rgba(23, 26, 31, 0.18);
+        outline-offset: 6px;
       }
 
       .info-block h3 {
         margin: 0 0 12px;
         font-size: 24px;
         letter-spacing: 0;
+      }
+
+      .ideology-heading {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 12px;
       }
 
       .info-block > .badge,
@@ -1242,6 +1316,10 @@
         margin: 0;
         color: var(--soft);
         line-height: 1.78;
+      }
+
+      .info-block p.section-space {
+        margin-top: 18px;
       }
 
       .axis {
@@ -1272,6 +1350,10 @@
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+      }
+
+      .info-block > .pill-list {
+        margin-top: 14px;
       }
 
       .pill,
@@ -1518,6 +1600,13 @@
         line-height: 1.8;
       }
 
+      .result-reading {
+        margin-top: 24px;
+        padding-bottom: 0;
+        border-bottom: 0;
+        border-top: 1px solid var(--line);
+      }
+
       .score-grid {
         display: grid;
         gap: 18px;
@@ -1691,6 +1780,21 @@
           font-size: 40px;
         }
 
+        .hero-mark {
+          width: 38px;
+          height: 38px;
+        }
+
+        .result-mark {
+          width: 34px;
+          height: 34px;
+        }
+
+        .result-title {
+          font-size: clamp(30px, 10vw, 44px);
+          line-height: 1.08;
+        }
+
         .question-top {
           grid-template-columns: 1fr;
         }
@@ -1739,7 +1843,7 @@
               中文政治光谱测试
             </h1>
             <p class="lead">
-              用 40 道中文语境公共议题陈述题，观察你在经济组织、治理偏好、分配原则、文化变化和共同体边界上的默认倾向。
+              你将回答 40 道公共议题陈述题，完成后看到五组价值倾向、两张光谱图，以及可继续阅读的相关政治词汇。
             </p>
             <div class="actions">
               <a class="button" href="#quiz">开始测试</a>
@@ -1766,20 +1870,20 @@
 
         <div class="note-list">
           <article class="note-item">
-            <h3>不是立场审判</h3>
-            <p>它更像一张价值排序速写：你更优先考虑什么、在哪些议题上更愿意承受成本。</p>
+            <h3>按直觉作答</h3>
+            <p>不需要寻找“标准答案”。遇到需要条件判断的题目，就选择更接近你默认倾向的一边。</p>
           </article>
           <article class="note-item">
-            <h3>不强行贴标签</h3>
-            <p>结果只展示维度画像，不会宣称“你就是某主义者”。意识形态页用于延伸阅读。</p>
+            <h3>看价值排序</h3>
+            <p>结果展示的是你在五组价值张力中的相对位置，不会把你直接判定为某一种主义。</p>
           </article>
           <article class="note-item">
             <h3>本地完成</h3>
-            <p>答案不会保存、上传或统计。刷新页面会清空未提交结果，适合私下自测。</p>
+            <p>你的答案只在当前浏览器中计算，不保存、不上传、不统计；刷新页面会清空未提交结果。</p>
           </article>
           <article class="note-item">
-            <h3>可继续修改</h3>
-            <p>题目、维度说明和百科词条都在单个 HTML 内，后续可以直接编辑。</p>
+            <h3>继续阅读</h3>
+            <p>生成结果后，你可以沿着最明显的维度去看相关词条，把结果当作阅读地图而不是身份标签。</p>
           </article>
         </div>
       </section>
@@ -1827,6 +1931,11 @@
             这里的介绍用于理解政治词汇的常见含义、核心关切和内部差异。它们不是推荐清单，也不等同于你的测试结果。
           </p>
         </div>
+        <div class="ideology-guide">
+          <h3>阅读路径</h3>
+          <p>先看与你结果中最明显维度相关的词条，再回到维度说明对照。每个词条下方的维度标签只表示常见议题关联，不代表你属于该立场。</p>
+          <div class="quick-nav" id="ideologyQuickNav" aria-label="意识形态快速索引"></div>
+        </div>
         <div class="ideology-list section-space" id="ideologyGrid"></div>
       </section>
 
@@ -1847,10 +1956,11 @@
                 <img class="result-mark" src="assets/p-spectrum-icon.svg?v=1" alt="" aria-hidden="true" />
                 <div>
                   <span class="badge">你的光谱画像</span>
-                  <h2 class="page-title accent-text" id="resultTitle">中轴观察者</h2>
+                  <h2 class="page-title accent-text result-title" id="resultTitle">中轴观察者</h2>
                 </div>
               </div>
               <p class="result-copy" id="resultCopy"></p>
+              <div class="result-reading" id="resultReading"></div>
               <div class="actions">
                 <button class="button" id="restartButton" type="button">重新测试</button>
                 <a class="button secondary" href="#dimensions">阅读维度说明</a>
@@ -1951,8 +2061,10 @@
 
       const ideologies = [
         {
+          id: "liberalism",
           name: "自由主义",
           family: "权利与制度",
+          axes: ["个体自由", "市场自主", "世界主义"],
           summary: "自由主义通常强调个人权利、法治、有限政府和公共权力的程序约束。",
           core: "核心关切是如何保护个人免受任意权力侵害，同时通过制度竞争、权利保障和公共讨论处理分歧。",
           policies: ["宪政与法治", "表达和结社自由", "市场经济中的基础监管", "少数权利保护"],
@@ -1960,8 +2072,10 @@
           caution: "自由主义不等同于放任一切，它通常仍接受维护权利边界和公共秩序的制度安排。",
         },
         {
+          id: "conservatism",
           name: "保守主义",
           family: "传统与秩序",
+          axes: ["传统延续", "公共秩序", "共同体优先"],
           summary: "保守主义倾向重视历史经验、社会连续性、家庭社区和渐进改革。",
           core: "核心关切是社会秩序与文化传承，认为许多制度和习俗承载了长期试错后的隐性知识。",
           policies: ["渐进式制度改革", "家庭和社区责任", "文化遗产保护", "强调社会稳定"],
@@ -1969,8 +2083,10 @@
           caution: "保守主义不必然反对所有变化，常见主张是变化应谨慎、可逆并尊重社会承受力。",
         },
         {
+          id: "social-democracy",
           name: "社会民主主义",
           family: "福利与市场",
+          axes: ["国家调节", "公平保障", "个体自由"],
           summary: "社会民主主义通常接受市场经济，同时主张强福利、劳动保护和较积极的再分配。",
           core: "核心关切是在保留市场活力的同时降低贫困、失业、疾病和教育差距带来的风险。",
           policies: ["全民医疗或基础医疗保障", "累进税制", "劳动者保护", "公共教育和社会保险"],
@@ -1978,8 +2094,10 @@
           caution: "它不等同于取消市场，而是试图通过公共政策驯化市场带来的不平等与不安全感。",
         },
         {
+          id: "democratic-socialism",
           name: "民主社会主义",
           family: "平等与民主",
+          axes: ["国家调节", "公平保障", "进步开放"],
           summary: "民主社会主义强调以民主方式扩大社会对经济权力和公共资源的控制。",
           core: "核心关切是不仅政治权力需要民主监督，资本和生产资料形成的经济权力也需要被制衡。",
           policies: ["关键行业公共所有或合作所有", "强化工会和职工参与", "高水平公共服务", "财富和资本收益再分配"],
@@ -1987,8 +2105,10 @@
           caution: "民主社会主义与威权式计划经济不同，其自我定义通常强调民主程序和公民参与。",
         },
         {
+          id: "marxism",
           name: "马克思主义",
           family: "阶级与资本",
+          axes: ["国家调节", "公平保障", "结构分析"],
           summary: "马克思主义以阶级关系、资本积累和生产方式分析社会结构与历史变化。",
           core: "核心关切是劳动、资本和所有制关系如何塑造不平等、意识形态和政治权力。",
           policies: ["生产资料社会化的不同方案", "劳动者组织", "批判资本集中", "强调结构性不平等分析"],
@@ -1996,8 +2116,10 @@
           caution: "马克思主义既是政治传统，也是社会理论谱系；不能简单等同于某一种历史政体。",
         },
         {
+          id: "libertarianism",
           name: "自由意志主义",
           family: "个人与市场",
+          axes: ["市场自主", "个体自由", "效率竞争"],
           summary: "自由意志主义强调个人自主、私有产权、自愿交换和尽可能小的政府干预。",
           core: "核心关切是减少强制，认为许多公共问题可以通过市场、自愿组织和个人责任解决。",
           policies: ["低税收和小政府", "放松经济管制", "强产权保护", "反对家长式干预"],
@@ -2005,8 +2127,10 @@
           caution: "它重视自由选择，但常被批评低估结构性不平等和公共品供给难题。",
         },
         {
+          id: "communitarianism",
           name: "社群主义",
           family: "共同体与责任",
+          axes: ["共同体优先", "公共秩序", "公平保障"],
           summary: "社群主义强调个人并非孤立存在，身份、责任和价值判断深受共同体塑造。",
           core: "核心关切是在个人权利之外，如何维护社区纽带、公共责任和共享价值。",
           policies: ["地方自治和社区参与", "公共服务中的互助责任", "重视公民教育", "平衡权利与义务"],
@@ -2014,8 +2138,10 @@
           caution: "强调共同体不必然否认个人权利，关键在共同体规范能否被公开讨论和民主修正。",
         },
         {
+          id: "nationalism",
           name: "民族主义",
           family: "认同与主权",
+          axes: ["共同体优先", "传统延续", "国家调节"],
           summary: "民族主义强调民族共同体、国家主权、文化认同和成员间的特殊责任。",
           core: "核心关切是政治共同体需要共享身份和边界，公共政策应优先回应本共同体成员。",
           policies: ["产业和就业保护", "文化认同教育", "边境与移民管理", "维护主权自主"],
@@ -2023,8 +2149,10 @@
           caution: "民族主义可以表现为反殖民和自决诉求，也可能滑向排外；需要区分具体语境和边界设置。",
         },
         {
+          id: "ecologism",
           name: "生态主义",
           family: "环境与代际",
+          axes: ["世界主义", "公平保障", "进步开放"],
           summary: "生态主义把环境承载力、代际公平和人与自然关系放在政治判断中心。",
           core: "核心关切是经济增长、消费结构和能源体系是否超过生态边界，并把成本转嫁给未来。",
           policies: ["减排和能源转型", "生态保护红线", "绿色公共交通", "循环经济和环境税"],
@@ -2032,8 +2160,10 @@
           caution: "生态主义不只是环保技术方案，也常涉及发展模式、产业利益和公平分担问题。",
         },
         {
+          id: "progressivism",
           name: "女权/进步主义",
           family: "平等与承认",
+          axes: ["进步开放", "公平保障", "世界主义"],
           summary: "女权和进步主义关注性别、身份、文化规范和制度安排中的不平等。",
           core: "核心关切是某些群体的不利处境并非纯粹个人问题，而与法律、习俗、劳动分工和社会偏见有关。",
           policies: ["反歧视规则", "性别平等和照护支持", "少数群体权利", "教育与职场机会平等"],
@@ -2041,8 +2171,10 @@
           caution: "进步主义内部并不总是一致，常围绕表达边界、身份政治和制度优先级发生争论。",
         },
         {
+          id: "anarchism",
           name: "无政府主义",
           family: "反强制与自治",
+          axes: ["个体自由", "进步开放", "自治互助"],
           summary: "无政府主义反对等级化强制权力，主张自愿合作、自治组织和去中心化秩序。",
           core: "核心关切是国家、资本或其他等级结构可能把临时管理变成持久支配。",
           policies: ["基层自治", "合作社和互助网络", "反对过度警治", "去中心化公共决策"],
@@ -2050,8 +2182,10 @@
           caution: "无政府主义不等于混乱崇拜，它通常设想的是非国家形式的规则、互助和自我管理。",
         },
         {
+          id: "authoritarianism",
           name: "威权主义",
           family: "集中与控制",
+          axes: ["公共秩序", "共同体优先", "国家调节"],
           summary: "威权主义强调集中权力、政治服从和以秩序或目标实现压倒多元竞争。",
           core: "核心关切是快速决策、社会整合和风险控制，通常认为开放竞争会削弱效率或稳定。",
           policies: ["集中决策", "限制反对力量", "强化社会管理", "以安全或发展目标约束权利"],
@@ -2128,8 +2262,33 @@
       const scoreGrid = document.querySelector("#scoreGrid");
       const dimensionGrid = document.querySelector("#dimensionGrid");
       const ideologyGrid = document.querySelector("#ideologyGrid");
+      const ideologyQuickNav = document.querySelector("#ideologyQuickNav");
+      const resultReading = document.querySelector("#resultReading");
       const radarCanvas = document.querySelector("#radarCanvas");
       const compassCanvas = document.querySelector("#compassCanvas");
+
+      const ideologyRecommendations = {
+        economy: {
+          negative: ["social-democracy", "democratic-socialism", "marxism"],
+          positive: ["libertarianism", "liberalism"],
+        },
+        authority: {
+          negative: ["liberalism", "libertarianism", "anarchism"],
+          positive: ["authoritarianism", "conservatism", "communitarianism"],
+        },
+        justice: {
+          negative: ["social-democracy", "progressivism", "democratic-socialism"],
+          positive: ["libertarianism", "liberalism"],
+        },
+        culture: {
+          negative: ["progressivism", "liberalism", "anarchism"],
+          positive: ["conservatism", "communitarianism", "nationalism"],
+        },
+        identity: {
+          negative: ["ecologism", "liberalism", "progressivism"],
+          positive: ["nationalism", "communitarianism", "conservatism"],
+        },
+      };
 
       function getRoute() {
         const route = window.location.hash.replace("#", "") || "home";
@@ -2145,6 +2304,28 @@
         }
 
         window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
+      function getIdeologyById(id) {
+        return ideologies.find((ideology) => ideology.id === id);
+      }
+
+      function scrollToIdeology(id) {
+        const target = document.querySelector(`#ideology-${id}`);
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.focus({ preventScroll: true });
+      }
+
+      function goToIdeology(id) {
+        if (getRoute() !== "ideologies") {
+          window.location.hash = "ideologies";
+          window.setTimeout(() => scrollToIdeology(id), 80);
+          return;
+        }
+
+        scrollToIdeology(id);
       }
 
       function renderQuiz() {
@@ -2204,15 +2385,28 @@
       }
 
       function renderIdeologies() {
+        ideologyQuickNav.innerHTML = ideologies
+          .map(
+            (ideology) => `
+              <a href="#ideologies" data-ideology-link="${ideology.id}">${ideology.name}</a>
+            `
+          )
+          .join("");
+
         ideologyGrid.innerHTML = ideologies
           .map(
             (ideology) => `
-              <article class="info-block">
-                <span class="tag">${ideology.family}</span>
-                <h3>${ideology.name}</h3>
+              <article class="info-block" id="ideology-${ideology.id}" tabindex="-1">
+                <div class="ideology-heading">
+                  <span class="tag">${ideology.family}</span>
+                  <h3>${ideology.name}</h3>
+                </div>
                 <p>${ideology.summary}</p>
-                <p class="section-space"><strong>核心关切：</strong>${ideology.core}</p>
-                <h4 class="list-label">常见政策偏好</h4>
+                <div class="pill-list">
+                  ${ideology.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
+                </div>
+                <p class="section-space"><strong>关心的问题：</strong>${ideology.core}</p>
+                <h4 class="list-label">常见政策倾向</h4>
                 <ul class="text-list">
                   ${ideology.policies.map((policy) => `<li>${policy}</li>`).join("")}
                 </ul>
@@ -2254,8 +2448,8 @@
         );
       }
 
-      function describeScores(scores) {
-        const ranked = dimensions
+      function getRankedDimensions(scores) {
+        return dimensions
           .map((dimension) => ({
             ...dimension,
             score: scores[dimension.id],
@@ -2264,6 +2458,10 @@
             pole: scores[dimension.id] >= 0 ? dimension.positive : dimension.negative,
           }))
           .sort((a, b) => b.strength - a.strength);
+      }
+
+      function describeScores(scores) {
+        const ranked = getRankedDimensions(scores);
 
         if (ranked[0].strength < 18) {
           return {
@@ -2284,6 +2482,51 @@
           title,
           text: `你的主要画像是「${title}」。从答案看，你的${emphasis}。${moderation}这不是政治身份标签，而是一张帮助你观察自己价值排序的速写；如果想理解相关词汇，可以继续阅读维度说明和意识形态百科。`,
         };
+      }
+
+      function getReadingRecommendations(scores) {
+        const ranked = getRankedDimensions(scores);
+        const sources = ranked.filter((item) => item.strength >= 18).slice(0, 3);
+        const readingSources = sources.length > 0 ? sources : ranked.slice(0, 2);
+        const ids = [];
+
+        readingSources.forEach((dimension) => {
+          const side = dimension.score >= 0 ? "positive" : "negative";
+          const matched = ideologyRecommendations[dimension.id]?.[side] || [];
+          matched.forEach((id) => {
+            if (!ids.includes(id)) ids.push(id);
+          });
+        });
+
+        return {
+          sources: readingSources,
+          ideologies: ids.slice(0, 4).map(getIdeologyById).filter(Boolean),
+        };
+      }
+
+      function renderResultReading(scores) {
+        const { sources, ideologies: matchedIdeologies } = getReadingRecommendations(scores);
+
+        if (!matchedIdeologies.length) {
+          resultReading.innerHTML = "";
+          return;
+        }
+
+        const sourceText = sources
+          .map((dimension) => `${dimension.name}偏向「${dimension.pole}」`)
+          .join("、");
+
+        resultReading.innerHTML = `
+          <h3>继续阅读</h3>
+          <p>${
+            sourceText ? `这些词条根据${sourceText}生成，` : ""
+          }只是帮助你理解相关政治词汇的阅读线索，不是身份判定，也不是立场排名。</p>
+          <div class="reading-links">
+            ${matchedIdeologies
+              .map((ideology) => `<a href="#ideologies" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+              .join("")}
+          </div>
+        `;
       }
 
       function renderScores(scores) {
@@ -2312,6 +2555,11 @@
         const hasResult = Boolean(latestScores);
         emptyResult.classList.toggle("hidden", hasResult);
         resultContent.classList.toggle("hidden", !hasResult);
+
+        if (!hasResult) {
+          resultReading.innerHTML = "";
+          return;
+        }
 
         if (hasResult) {
           requestAnimationFrame(() => {
@@ -2521,6 +2769,7 @@
         resultTitle.textContent = description.title;
         resultCopy.textContent = description.text;
         renderScores(latestScores);
+        renderResultReading(latestScores);
         window.location.hash = "result";
         renderResultState();
       }
@@ -2529,6 +2778,7 @@
         answers.fill(null);
         quizForm.reset();
         latestScores = null;
+        resultReading.innerHTML = "";
         document.querySelectorAll(".question").forEach((element) => element.classList.remove("missing"));
         updateProgress();
         window.location.hash = "quiz";
@@ -2545,6 +2795,14 @@
 
       submitButton.addEventListener("click", showResults);
       document.querySelector("#restartButton").addEventListener("click", restart);
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+        const link = event.target.closest("[data-ideology-link]");
+        if (!link) return;
+
+        event.preventDefault();
+        goToIdeology(link.dataset.ideologyLink);
+      });
       window.addEventListener("hashchange", () => routeTo());
       window.addEventListener("resize", () => {
         if (!latestScores || getRoute() !== "result") return;
