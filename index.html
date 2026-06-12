@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="一个本地计算、无数据上传的中文政治光谱卡片测试，包含五组维度介绍与常见意识形态百科。"
+      content="一个本地计算、无数据上传的中文政治光谱测试，包含五组维度介绍与常见意识形态百科。"
     />
-    <title>中文政治光谱卡片测试</title>
-    <link rel="icon" type="image/png" href="assets/favicon.png?v=1" />
+    <title>中文政治光谱测试</title>
+    <link rel="icon" type="image/png" href="assets/p-spectrum-icon-256.png?v=1" />
     <style>
+      @media not all {
       :root {
         color-scheme: dark;
         --bg: #070914;
@@ -842,13 +843,878 @@
           min-height: 310px;
         }
       }
+      }
+
+      /* Light minimal redesign */
+      :root {
+        color-scheme: light;
+        --bg: #fbfbf8;
+        --surface: #ffffff;
+        --surface-soft: #f5f6f3;
+        --line: #e2e4df;
+        --line-strong: #b8beb4;
+        --text: #171a1f;
+        --muted: #626b74;
+        --soft: #39414d;
+        --primary: #2457d6;
+        --ink: #171a1f;
+        --secondary: #69707a;
+        --accent: #b36b00;
+        --danger: #b4233a;
+        --ok: #187248;
+        --shadow: none;
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--bg);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+        background: var(--bg);
+        overflow-x: hidden;
+      }
+
+      body::before {
+        display: none;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+      }
+
+      .topbar {
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 251, 248, 0.92);
+        backdrop-filter: blur(12px);
+      }
+
+      .topbar-inner {
+        display: flex;
+        width: min(1040px, calc(100% - 40px));
+        min-height: 64px;
+        margin: 0 auto;
+        gap: 22px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        min-width: max-content;
+        color: var(--text);
+        font-weight: 820;
+        letter-spacing: 0;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+        box-shadow: none;
+      }
+
+      .brand-mark img {
+        display: block;
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+      }
+
+      .nav {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        justify-content: flex-end;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-link {
+        min-width: max-content;
+        padding: 8px 10px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: var(--ink);
+        background: transparent;
+        box-shadow: inset 0 -2px 0 var(--ink);
+      }
+
+      .shell {
+        width: min(1040px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 36px 0 56px;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .home-hero,
+      .section-header,
+      .result-summary,
+      .empty-state {
+        padding: 38px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .home-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 34px;
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .hero-mark,
+      .result-mark {
+        display: block;
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+      }
+
+      .result-heading {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+      }
+
+      .result-heading .badge {
+        margin-top: 3px;
+      }
+
+      .hero-copy,
+      .section-header {
+        max-width: 760px;
+      }
+
+      .eyebrow {
+        display: block;
+        margin: 0;
+        padding: 0;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--text);
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(38px, 7vw, 70px);
+        line-height: 1.02;
+        letter-spacing: 0;
+      }
+
+      .page-title {
+        margin: 0;
+        font-size: clamp(30px, 4.6vw, 48px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .accent-text,
+      .gradient-text {
+        color: var(--ink);
+        background: none;
+        -webkit-background-clip: initial;
+        background-clip: initial;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 18px 0 0;
+        color: var(--soft);
+        font-size: clamp(16px, 2vw, 19px);
+        line-height: 1.72;
+      }
+
+      .actions,
+      .inline-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 26px;
+      }
+
+      .button {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 15px;
+        color: var(--ink);
+        font-weight: 760;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .button:hover {
+        transform: none;
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .button.secondary {
+        color: var(--text);
+        border-color: var(--line-strong);
+        background: transparent;
+      }
+
+      .button.secondary:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+      }
+
+      .button:disabled {
+        color: #89919b;
+        cursor: not-allowed;
+        border-color: var(--line);
+        background: transparent;
+      }
+
+      .stat-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .metric,
+      .note-item,
+      .score-item {
+        padding: 18px 18px 18px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .metric + .metric {
+        padding-left: 18px;
+        border-left: 1px solid var(--line);
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--text);
+        font-size: 28px;
+        letter-spacing: 0;
+      }
+
+      .metric span,
+      .note-item p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .note-list,
+      .dimension-list,
+      .ideology-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .note-list {
+        margin-top: 12px;
+      }
+
+      .note-item,
+      .info-block,
+      .chart-block {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .note-item {
+        display: grid;
+        grid-template-columns: minmax(170px, 0.28fr) minmax(0, 1fr);
+        gap: 18px;
+        padding: 22px 0;
+      }
+
+      .note-item h3 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .note-item p {
+        margin: 0;
+      }
+
+      .section-space {
+        margin-top: 24px;
+      }
+
+      .info-block {
+        padding: 28px 0;
+      }
+
+      .info-block h3 {
+        margin: 0 0 12px;
+        font-size: 24px;
+        letter-spacing: 0;
+      }
+
+      .info-block > .badge,
+      .info-block > .tag {
+        display: inline-flex;
+        margin-bottom: 12px;
+      }
+
+      .info-block p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.78;
+      }
+
+      .axis {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin: 18px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .axis span {
+        padding: 8px 0;
+        text-align: center;
+        border: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .axis b {
+        color: var(--primary);
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill,
+      .tag,
+      .badge {
+        padding: 5px 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .tag,
+      .badge {
+        color: var(--ink);
+        border-color: var(--line-strong);
+        background: transparent;
+      }
+
+      .text-list li {
+        color: var(--muted);
+      }
+
+      .text-list {
+        display: grid;
+        gap: 9px;
+        padding: 0;
+        margin: 10px 0 0;
+        list-style: none;
+      }
+
+      .text-list li {
+        position: relative;
+        padding-left: 14px;
+        line-height: 1.65;
+      }
+
+      .text-list li::before {
+        position: absolute;
+        top: 0.82em;
+        left: 2px;
+        width: 4px;
+        height: 4px;
+        content: "";
+        border-radius: 999px;
+        transform: translateY(-50%);
+      }
+
+      .text-list li::before {
+        background: var(--primary);
+      }
+
+      .list-label {
+        margin: 18px 0 0;
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .sticky-progress {
+        top: 74px;
+        z-index: 5;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        margin: 22px 0 0;
+        padding: 14px 0;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: rgba(251, 251, 248, 0.94);
+        box-shadow: none;
+        backdrop-filter: blur(12px);
+      }
+
+      .progress-track {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #e6e8e2;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--ink);
+        transition: width 0.25s ease;
+      }
+
+      .progress-copy {
+        color: var(--muted);
+        font-weight: 760;
+      }
+
+      .quiz {
+        display: grid;
+        gap: 0;
+      }
+
+      .question {
+        padding: 24px 0;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .question:hover {
+        transform: none;
+        border-color: var(--line);
+        background: transparent;
+      }
+
+      .question.missing {
+        border-color: var(--danger);
+        box-shadow: inset 4px 0 0 rgba(180, 35, 58, 0.92);
+      }
+
+      .question-top {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 16px;
+        align-items: start;
+      }
+
+      .question-number {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        color: var(--ink);
+        font-size: 13px;
+        border: 1px solid var(--line-strong);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .question-text {
+        margin: 2px 0 0;
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 760;
+        line-height: 1.55;
+      }
+
+      .question-meta {
+        display: inline-flex;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 650;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 16px;
+        margin-left: 50px;
+      }
+
+      .option {
+        position: relative;
+        display: flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        color: var(--soft);
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .option input {
+        position: static;
+        width: 15px;
+        height: 15px;
+        margin: 0 8px 0 0;
+        accent-color: var(--primary);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .option span {
+        display: block;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .option:hover {
+        transform: none;
+        border-color: var(--primary);
+      }
+
+      .option:has(input:checked) {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+      }
+
+      .submit-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hint {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hint.error {
+        color: var(--danger);
+      }
+
+      .result-summary {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+        gap: 34px;
+      }
+
+      .result-copy {
+        max-width: 720px;
+        margin: 18px 0 0;
+        color: var(--soft);
+        font-size: 17px;
+        line-height: 1.8;
+      }
+
+      .score-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .score-item {
+        padding: 0;
+      }
+
+      .score-item header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+      }
+
+      .score-line {
+        position: relative;
+        height: 7px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #d9dcd6, #eef0eb, #d9dcd6);
+      }
+
+      .score-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 16px;
+        height: 16px;
+        border: 3px solid var(--surface);
+        border-radius: 999px;
+        background: var(--ink);
+        box-shadow: none;
+        transform: translate(-50%, -50%);
+      }
+
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px;
+        margin-top: 0;
+      }
+
+      .chart-block {
+        padding: 30px 0 0;
+      }
+
+      .chart-block h2,
+      .empty-state h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      .chart-block p,
+      .empty-state p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        min-height: 360px;
+        border-top: 1px solid var(--line);
+      }
+
+      .empty-state {
+        text-align: left;
+      }
+
+      .empty-state .inline-actions {
+        justify-content: flex-start;
+      }
+
+      .footer {
+        margin-top: 30px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+        text-align: left;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 900px) {
+        .topbar-inner {
+          width: min(100% - 28px, 720px);
+          gap: 12px;
+          min-height: auto;
+          padding: 12px 0;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .shell {
+          width: min(100% - 28px, 720px);
+          padding-top: 24px;
+        }
+
+        .home-hero,
+        .section-header,
+        .result-summary,
+        .empty-state {
+          padding: 28px 0;
+        }
+
+        .stat-strip,
+        .result-summary,
+        .chart-grid,
+        .note-item {
+          grid-template-columns: 1fr;
+        }
+
+        .metric,
+        .metric + .metric {
+          padding: 16px 0;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+        }
+
+        .metric:first-child {
+          border-top: 0;
+        }
+
+        .sticky-progress {
+          top: 112px;
+        }
+
+        .question-top {
+          grid-template-columns: 38px minmax(0, 1fr);
+        }
+
+        .options {
+          grid-template-columns: 1fr;
+          margin-left: 50px;
+        }
+
+        .option {
+          justify-content: flex-start;
+          min-height: 42px;
+          padding: 0 10px;
+          text-align: left;
+        }
+
+        canvas {
+          min-height: 340px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar-inner {
+          align-items: stretch;
+        }
+
+        .brand {
+          justify-content: flex-start;
+        }
+
+        .nav {
+          justify-content: flex-start;
+        }
+
+        h1 {
+          font-size: 40px;
+        }
+
+        .question-top {
+          grid-template-columns: 1fr;
+        }
+
+        .options {
+          margin-left: 0;
+        }
+
+        .submit-panel {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .submit-panel .button {
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
     <header class="topbar">
       <div class="topbar-inner">
         <a class="brand" href="#home" data-route="home" aria-label="返回首页">
-          <span class="brand-mark" aria-hidden="true"><img src="assets/logo.png?v=1" alt="" /></span>
+          <span class="brand-mark" aria-hidden="true"><img src="assets/p-spectrum-icon.svg?v=1" alt="" /></span>
           <span>中文政治光谱</span>
         </a>
         <nav class="nav" aria-label="主导航">
@@ -863,24 +1729,26 @@
 
     <main class="shell">
       <section class="page active" id="home" data-page="home" aria-labelledby="homeTitle">
-        <div class="hero">
-          <div class="hero-card glass">
-            <p class="eyebrow">Local-only spectrum card</p>
+        <div class="home-hero">
+          <div class="hero-copy">
+            <div class="hero-kicker">
+              <img class="hero-mark" src="assets/p-spectrum-icon.svg?v=1" alt="" aria-hidden="true" />
+              <p class="eyebrow">Local-only test</p>
+            </div>
             <h1 id="homeTitle">
-              中文政治光谱
-              <span class="gradient-text">卡片测试</span>
+              中文政治光谱测试
             </h1>
             <p class="lead">
               用 40 道中文语境公共议题陈述题，观察你在经济组织、治理偏好、分配原则、文化变化和共同体边界上的默认倾向。
             </p>
-            <div class="hero-actions">
+            <div class="actions">
               <a class="button" href="#quiz">开始测试</a>
               <a class="button secondary" href="#dimensions">先看维度</a>
               <a class="button secondary" href="#ideologies">浏览百科</a>
             </div>
           </div>
 
-          <aside class="meta-card glass" aria-label="测试信息">
+          <aside class="stat-strip" aria-label="测试信息">
             <div class="metric">
               <strong>40</strong>
               <span>道题，每组维度 8 道，包含正反向陈述。</span>
@@ -896,20 +1764,20 @@
           </aside>
         </div>
 
-        <div class="quick-grid">
-          <article class="mini-card glass">
+        <div class="note-list">
+          <article class="note-item">
             <h3>不是立场审判</h3>
             <p>它更像一张价值排序速写：你更优先考虑什么、在哪些议题上更愿意承受成本。</p>
           </article>
-          <article class="mini-card glass">
+          <article class="note-item">
             <h3>不强行贴标签</h3>
             <p>结果只展示维度画像，不会宣称“你就是某主义者”。意识形态页用于延伸阅读。</p>
           </article>
-          <article class="mini-card glass">
+          <article class="note-item">
             <h3>本地完成</h3>
             <p>答案不会保存、上传或统计。刷新页面会清空未提交结果，适合私下自测。</p>
           </article>
-          <article class="mini-card glass">
+          <article class="note-item">
             <h3>可继续修改</h3>
             <p>题目、维度说明和百科词条都在单个 HTML 内，后续可以直接编辑。</p>
           </article>
@@ -917,11 +1785,11 @@
       </section>
 
       <section class="page" id="quiz" data-page="quiz" aria-labelledby="quizTitle">
-        <div class="intro-card glass">
+        <div class="section-header">
           <p class="eyebrow">No perfect answer</p>
           <h2 id="quizTitle" class="page-title">选择你当下最接近的直觉</h2>
           <p class="lead">
-            尽量不要揣摩“标准答案”。如果某题让你觉得“要看情况”，就选择中立或略微倾向的一边。
+            尽量不要揣摩“标准答案”。如果两个方向都不完全符合，就选更接近你直觉的一边；拿不准时再选择中立。
           </p>
         </div>
 
@@ -934,36 +1802,36 @@
 
         <form class="quiz" id="quizForm"></form>
 
-        <div class="submit-panel glass">
-          <p class="hint" id="submitHint">答完全部题目后，可以生成你的光谱卡片。</p>
+        <div class="submit-panel">
+          <p class="hint" id="submitHint">答完全部题目后，可以生成你的结果。</p>
           <button class="button" id="submitButton" type="button" disabled>生成结果</button>
         </div>
       </section>
 
       <section class="page" id="dimensions" data-page="dimensions" aria-labelledby="dimensionsTitle">
-        <div class="intro-card glass">
+        <div class="section-header">
           <p class="eyebrow">Five axes</p>
           <h2 id="dimensionsTitle" class="page-title">五组维度说明</h2>
           <p class="lead">
             每条轴都不是好坏判断，而是不同价值优先级的张力。一个人在某一端得分高，通常代表他更愿意为该端价值承担现实成本。
           </p>
         </div>
-        <div class="dimension-grid section-space" id="dimensionGrid"></div>
+        <div class="dimension-list section-space" id="dimensionGrid"></div>
       </section>
 
       <section class="page" id="ideologies" data-page="ideologies" aria-labelledby="ideologiesTitle">
-        <div class="intro-card glass">
+        <div class="section-header">
           <p class="eyebrow">Neutral glossary</p>
           <h2 id="ideologiesTitle" class="page-title">常见意识形态百科</h2>
           <p class="lead">
             这里的介绍用于理解政治词汇的常见含义、核心关切和内部差异。它们不是推荐清单，也不等同于你的测试结果。
           </p>
         </div>
-        <div class="ideology-grid section-space" id="ideologyGrid"></div>
+        <div class="ideology-list section-space" id="ideologyGrid"></div>
       </section>
 
       <section class="page" id="result" data-page="result" aria-labelledby="resultTitle">
-        <div class="empty-card glass" id="emptyResult">
+        <div class="empty-state" id="emptyResult">
           <h2>还没有生成结果</h2>
           <p>完成 40 道题后，这里会显示你的五维光谱图、二维坐标和文字画像。</p>
           <div class="inline-actions">
@@ -973,12 +1841,17 @@
         </div>
 
         <div id="resultContent" class="hidden">
-          <div class="result-hero glass">
+          <div class="result-summary">
             <div>
-              <span class="badge">你的光谱画像</span>
-              <h2 class="page-title gradient-text" id="resultTitle">中轴观察者</h2>
+              <div class="result-heading">
+                <img class="result-mark" src="assets/p-spectrum-icon.svg?v=1" alt="" aria-hidden="true" />
+                <div>
+                  <span class="badge">你的光谱画像</span>
+                  <h2 class="page-title accent-text" id="resultTitle">中轴观察者</h2>
+                </div>
+              </div>
               <p class="result-copy" id="resultCopy"></p>
-              <div class="hero-actions">
+              <div class="actions">
                 <button class="button" id="restartButton" type="button">重新测试</button>
                 <a class="button secondary" href="#dimensions">阅读维度说明</a>
                 <a class="button secondary" href="#ideologies">查看意识形态百科</a>
@@ -988,12 +1861,12 @@
           </div>
 
           <div class="chart-grid">
-            <article class="chart-card glass">
+            <article class="chart-block">
               <h2>五维光谱图</h2>
               <p>中心代表中立，越靠近轴端代表该方向越鲜明。</p>
               <canvas id="radarCanvas" aria-label="五维政治光谱图"></canvas>
             </article>
-            <article class="chart-card glass">
+            <article class="chart-block">
               <h2>经济 × 治理坐标</h2>
               <p>横轴为国家调节到市场自主，纵轴为个体自由到公共秩序。</p>
               <canvas id="compassCanvas" aria-label="经济与治理二维坐标图"></canvas>
@@ -1188,46 +2061,46 @@
       ];
 
       const questions = [
-        { dimension: "economy", text: "公共医疗和基础教育应由政府承担主要责任，即使这需要更高税负。", weights: { economy: -1 } },
-        { dimension: "economy", text: "多数行业只要存在充分竞争，价格和服务质量就应主要交给市场决定。", weights: { economy: 1 } },
-        { dimension: "economy", text: "能源、交通、金融等关键领域应保持较强公共控制。", weights: { economy: -1 } },
-        { dimension: "economy", text: "减少审批和准入限制，通常比增加补贴更能激发创业。", weights: { economy: 1 } },
-        { dimension: "economy", text: "政府应更积极参与住房供给，以降低基本居住压力。", weights: { economy: -1 } },
-        { dimension: "economy", text: "企业用工和薪酬安排应保留较大自主空间，以适应市场变化。", weights: { economy: 1 } },
-        { dimension: "economy", text: "当某些产业关系到长期公共利益时，国家可以通过产业政策进行扶持和引导。", weights: { economy: -1 } },
-        { dimension: "economy", text: "公共服务如果能由私营或社会机构更有效提供，就不必坚持由政府直接提供。", weights: { economy: 1 } },
-        { dimension: "authority", text: "个人生活方式只要不伤害他人，公共权力就不应主动干预。", weights: { authority: -1 } },
-        { dimension: "authority", text: "为了降低公共安全风险，可以接受更严格的社会管理措施。", weights: { authority: 1 } },
-        { dimension: "authority", text: "政策制定应尽量保留公开争论空间，即使争论会降低决策速度。", weights: { authority: -1 } },
-        { dimension: "authority", text: "重大危机中，集中统一的决策通常比广泛协商更重要。", weights: { authority: 1 } },
-        { dimension: "authority", text: "公共机构拥有的权力越大，越需要透明程序和外部监督。", weights: { authority: -1 } },
-        { dimension: "authority", text: "网络平台上的匿名表达应受到更严格的身份和责任约束。", weights: { authority: 1 } },
-        { dimension: "authority", text: "对公共机构保持怀疑和批评，是健康社会的一部分。", weights: { authority: -1 } },
-        { dimension: "authority", text: "学校和公共组织应更强调纪律、规则和服从集体安排。", weights: { authority: 1 } },
-        { dimension: "justice", text: "公共政策应更积极补偿出身、地区和家庭条件造成的不利影响。", weights: { justice: -1 } },
-        { dimension: "justice", text: "资源分配应更多奖励贡献和表现，而不是优先追求结果均衡。", weights: { justice: 1 } },
-        { dimension: "justice", text: "教育资源应向弱势家庭和落后地区倾斜，即使这会减少强势群体的优势。", weights: { justice: -1 } },
-        { dimension: "justice", text: "过高福利可能削弱个人努力和社会活力，因此需要谨慎扩张。", weights: { justice: 1 } },
-        { dimension: "justice", text: "住房、医疗和基础教育应首先被看作基本权利，而不是普通消费品。", weights: { justice: -1 } },
-        { dimension: "justice", text: "只要程序公平，竞争产生较大收入差距也是可以接受的。", weights: { justice: 1 } },
-        { dimension: "justice", text: "税收和转移支付应更明确地承担缩小贫富差距的功能。", weights: { justice: -1 } },
-        { dimension: "justice", text: "与其追求平均化，不如保证向上流动通道并让优秀者获得更高回报。", weights: { justice: 1 } },
-        { dimension: "culture", text: "性别、职业和家庭形态的边界应更开放，法律也应适应这种变化。", weights: { culture: -1 } },
-        { dimension: "culture", text: "传统家庭和社区规范仍是社会稳定的重要基础。", weights: { culture: 1 } },
-        { dimension: "culture", text: "艺术和公共表达应允许挑战主流审美与传统观念。", weights: { culture: -1 } },
-        { dimension: "culture", text: "快速改变长期形成的习俗，容易制造不必要的社会撕裂。", weights: { culture: 1 } },
-        { dimension: "culture", text: "面对新技术和新观念，制度应先留下实验空间，再逐步修正规则。", weights: { culture: -1 } },
-        { dimension: "culture", text: "学校教育应更重视共同价值、责任意识和文化传承。", weights: { culture: 1 } },
-        { dimension: "culture", text: "少数群体的生活方式即便不被多数理解，也应获得充分尊重。", weights: { culture: -1 } },
-        { dimension: "culture", text: "保护历史文化遗产有时应优先于追求商业开发和流行潮流。", weights: { culture: 1 } },
-        { dimension: "identity", text: "气候、公共卫生和金融风险等问题需要超越国界的合作治理。", weights: { identity: -1 } },
-        { dimension: "identity", text: "本国劳动者和关键产业应在政策安排中获得优先保护。", weights: { identity: 1 } },
-        { dimension: "identity", text: "移民、留学和跨文化交流总体上能丰富社会经验。", weights: { identity: -1 } },
-        { dimension: "identity", text: "当国际规则明显损害本地利益时，应优先维护本共同体的自主选择。", weights: { identity: 1 } },
-        { dimension: "identity", text: "一个人的道德责任不应因国界不同而有过大差别。", weights: { identity: -1 } },
-        { dimension: "identity", text: "国家认同和共同历史应在公共教育中占据重要位置。", weights: { identity: 1 } },
-        { dimension: "identity", text: "保护本土文化不应以排斥外来文化为代价。", weights: { identity: -1 } },
-        { dimension: "identity", text: "在供应链、粮食和能源问题上，本地安全冗余比全球最低成本更重要。", weights: { identity: 1 } },
+        { dimension: "economy", text: "在财政有限时，公共医疗和基础教育仍应优先由政府兜底，即使这意味着更高税负或压缩其他支出。", weights: { economy: -1 } },
+        { dimension: "economy", text: "只要规则透明且反垄断有效，价格、工资和服务质量应主要由市场竞争决定。", weights: { economy: 1 } },
+        { dimension: "economy", text: "能源、交通、金融等关键行业应保留强公共控制，即使短期效率不如完全市场化。", weights: { economy: -1 } },
+        { dimension: "economy", text: "面对就业和创业压力，减少准入审批通常比扩大补贴更能释放社会活力。", weights: { economy: 1 } },
+        { dimension: "economy", text: "政府应通过保障房或公共租赁供给压低基本居住成本，即使会影响部分地产收益。", weights: { economy: -1 } },
+        { dimension: "economy", text: "企业用工和薪酬需要足够弹性来应对市场变化，即使这会增加部分劳动者的不确定性。", weights: { economy: 1 } },
+        { dimension: "economy", text: "涉及芯片、能源、粮食等长期安全的产业，国家可以用产业政策承担试错成本。", weights: { economy: -1 } },
+        { dimension: "economy", text: "若私营或社会机构能以同等质量提供公共服务，政府不必坚持直接经营。", weights: { economy: 1 } },
+        { dimension: "authority", text: "成年人在生活方式、表达和私人选择上应享有较大空间，除非能证明会直接伤害他人。", weights: { authority: -1 } },
+        { dimension: "authority", text: "在治安、疫情或灾害风险较高时，临时强化管控是可以接受的，即使会减少个人便利。", weights: { authority: 1 } },
+        { dimension: "authority", text: "公共政策应保留公开质疑和申诉渠道，即使这会拖慢决策速度。", weights: { authority: -1 } },
+        { dimension: "authority", text: "重大危机中，统一指挥和快速执行通常比广泛协商更能降低损失。", weights: { authority: 1 } },
+        { dimension: "authority", text: "公共机构掌握的数据和权力越多，越需要独立监督、透明程序和可追责记录。", weights: { authority: -1 } },
+        { dimension: "authority", text: "匿名网络表达应承担更清晰责任，必要时可接受更严格的身份核验。", weights: { authority: 1 } },
+        { dimension: "authority", text: "媒体、学界和普通公民对权力保持怀疑，是防止政策失误扩大的必要机制。", weights: { authority: -1 } },
+        { dimension: "authority", text: "学校和公共组织应更明确训练纪律、规则和集体服从，否则制度很难稳定运行。", weights: { authority: 1 } },
+        { dimension: "justice", text: "公共政策应主动补偿出身、地区和家庭条件造成的不利处境，即使成本由全体纳税人分担。", weights: { justice: -1 } },
+        { dimension: "justice", text: "分配规则应更多奖励贡献、风险和表现，而不是优先压低收入差距。", weights: { justice: 1 } },
+        { dimension: "justice", text: "教育资源应向弱势家庭和落后地区倾斜，即使热门学校和优势地区获得的增量更少。", weights: { justice: -1 } },
+        { dimension: "justice", text: "福利制度应避免让长期依赖比劳动和自我改善更划算，因此扩张必须谨慎。", weights: { justice: 1 } },
+        { dimension: "justice", text: "住房、医疗和基础教育应首先被看作基本权利，不能完全按购买力分配。", weights: { justice: -1 } },
+        { dimension: "justice", text: "如果竞争程序公开且没有明显特权，较大的收入差距也可以被社会接受。", weights: { justice: 1 } },
+        { dimension: "justice", text: "税收和转移支付应明确承担缩小贫富差距的任务，即使会降低高收入者的部分激励。", weights: { justice: -1 } },
+        { dimension: "justice", text: "比起追求结果接近，制度更应保证向上流动通道，并允许优秀者获得显著回报。", weights: { justice: 1 } },
+        { dimension: "culture", text: "法律应为多样的性别、职业和家庭选择留下空间，即使这会挑战部分传统习惯。", weights: { culture: -1 } },
+        { dimension: "culture", text: "传统家庭、社区礼俗和代际责任仍是社会稳定的重要资源，不能轻易让位于个人偏好。", weights: { culture: 1 } },
+        { dimension: "culture", text: "艺术、教育和公共表达应允许挑战主流观念，只要不直接煽动伤害。", weights: { culture: -1 } },
+        { dimension: "culture", text: "快速推动价值观变革容易制造不必要的对立，社会规范应以渐进调整为主。", weights: { culture: 1 } },
+        { dimension: "culture", text: "面对新技术和新生活方式，制度应先允许小范围试验，再根据后果修正规则。", weights: { culture: -1 } },
+        { dimension: "culture", text: "学校教育应更重视共同价值、责任意识和文化传承，而不只是个人发展。", weights: { culture: 1 } },
+        { dimension: "culture", text: "少数群体的生活方式即便不被多数理解，也应在法律和公共服务中获得平等对待。", weights: { culture: -1 } },
+        { dimension: "culture", text: "历史街区、传统节庆和地方记忆有时应优先于商业开发和流行潮流。", weights: { culture: 1 } },
+        { dimension: "identity", text: "气候、公共卫生和金融风险等问题需要跨国规则共同承担成本，而不只看本国短期收益。", weights: { identity: -1 } },
+        { dimension: "identity", text: "就业、关键产业和基础资源应优先保障本共同体成员，即使会降低全球配置效率。", weights: { identity: 1 } },
+        { dimension: "identity", text: "移民、留学和跨文化交流总体能扩展社会经验，政策不应只用安全风险来衡量。", weights: { identity: -1 } },
+        { dimension: "identity", text: "当国际规则与本地产业、文化或安全利益冲突时，应优先维护本共同体的自主选择。", weights: { identity: 1 } },
+        { dimension: "identity", text: "人的基本处境不应因国界而被明显区别对待，富裕社会应承担更多跨境责任。", weights: { identity: -1 } },
+        { dimension: "identity", text: "国家认同、共同历史和边界意识应在公共教育中占据清晰位置。", weights: { identity: 1 } },
+        { dimension: "identity", text: "保护本土文化应通过自信和制度支持实现，而不是把外来文化当成主要威胁。", weights: { identity: -1 } },
+        { dimension: "identity", text: "供应链、粮食和能源政策应保留本地安全冗余，即使成本高于全球最低价。", weights: { identity: 1 } },
       ];
 
       const choices = [
@@ -1309,7 +2182,7 @@
         dimensionGrid.innerHTML = dimensions
           .map(
             (dimension) => `
-              <article class="detail-card glass">
+              <article class="info-block">
                 <span class="badge">${dimension.name}</span>
                 <h3>${dimension.negative} ↔ ${dimension.positive}</h3>
                 <p>${dimension.summary}</p>
@@ -1334,7 +2207,7 @@
         ideologyGrid.innerHTML = ideologies
           .map(
             (ideology) => `
-              <article class="detail-card glass">
+              <article class="info-block">
                 <span class="tag">${ideology.family}</span>
                 <h3>${ideology.name}</h3>
                 <p>${ideology.summary}</p>
@@ -1358,7 +2231,7 @@
         progressCopy.textContent = `${answered} / ${questions.length} 已回答`;
         submitButton.disabled = answered !== questions.length;
         submitHint.textContent =
-          answered === questions.length ? "已答完，可以生成你的光谱卡片。" : `还差 ${questions.length - answered} 题。`;
+          answered === questions.length ? "已答完，可以生成你的结果。" : `还差 ${questions.length - answered} 题。`;
         submitHint.classList.remove("error");
       }
 
@@ -1463,14 +2336,32 @@
 
       function drawRadar(scores) {
         const { context, width, height } = setupCanvas(radarCanvas);
+        const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
         const centerX = width / 2;
-        const centerY = height / 2 + 4;
-        const radius = Math.min(width, height) * 0.31;
+        const centerY = height / 2 + 2;
         const count = dimensions.length;
+        const labelGap = width < 420 ? 34 : 42;
+        const labelFont = width < 420 ? 12 : 13;
+        context.font = `700 ${labelFont}px Microsoft YaHei, sans-serif`;
+        const maxLabelWidth = Math.max(
+          ...dimensions.flatMap((dimension) => [
+            context.measureText(dimension.positive).width,
+            context.measureText(dimension.negative).width,
+          ])
+        );
+        const sidePadding = Math.max(48, maxLabelWidth / 2 + 12);
+        const verticalPadding = labelFont + 18;
+        const radius = Math.max(
+          70,
+          Math.min(
+            (width - sidePadding * 2) / 2 - labelGap,
+            (height - verticalPadding * 2) / 2 - labelGap
+          )
+        );
 
         context.lineWidth = 1;
-        context.strokeStyle = "rgba(255,255,255,0.1)";
-        context.fillStyle = "rgba(255,255,255,0.04)";
+        context.strokeStyle = "rgba(23,26,31,0.14)";
+        context.fillStyle = "rgba(23,26,31,0.018)";
 
         for (let ring = 1; ring <= 4; ring += 1) {
           context.beginPath();
@@ -1487,15 +2378,24 @@
           context.beginPath();
           context.moveTo(centerX - dx * radius, centerY - dy * radius);
           context.lineTo(centerX + dx * radius, centerY + dy * radius);
-          context.strokeStyle = "rgba(120,240,255,0.22)";
+          context.strokeStyle = "rgba(23,26,31,0.18)";
           context.stroke();
 
-          context.fillStyle = "rgba(238,244,255,0.82)";
-          context.font = "700 12px Microsoft YaHei, sans-serif";
-          context.textAlign = dx > 0.25 ? "left" : dx < -0.25 ? "right" : "center";
-          context.textBaseline = dy > 0.25 ? "top" : dy < -0.25 ? "bottom" : "middle";
-          context.fillText(dimension.positive, centerX + dx * (radius + 18), centerY + dy * (radius + 18));
-          context.fillText(dimension.negative, centerX - dx * (radius + 18), centerY - dy * (radius + 18));
+          const labelDistance = radius + labelGap;
+          const drawAxisLabel = (text, x, y) => {
+            const textWidth = context.measureText(text).width;
+            context.fillStyle = "rgba(57,65,77,0.94)";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(
+              text,
+              clamp(x, textWidth / 2 + 8, width - textWidth / 2 - 8),
+              clamp(y, labelFont + 8, height - labelFont - 8)
+            );
+          };
+
+          drawAxisLabel(dimension.positive, centerX + dx * labelDistance, centerY + dy * labelDistance);
+          drawAxisLabel(dimension.negative, centerX - dx * labelDistance, centerY - dy * labelDistance);
         });
 
         const points = dimensions.map((dimension, index) => {
@@ -1513,32 +2413,46 @@
           else context.lineTo(point.x, point.y);
         });
         context.closePath();
-        context.fillStyle = "rgba(120,240,255,0.26)";
-        context.strokeStyle = "rgba(120,240,255,0.92)";
-        context.lineWidth = 2.5;
+        context.fillStyle = "rgba(23,26,31,0.08)";
+        context.strokeStyle = "rgba(23,26,31,0.82)";
+        context.lineWidth = 2;
         context.fill();
         context.stroke();
 
         points.forEach((point) => {
           context.beginPath();
-          context.arc(point.x, point.y, 5, 0, Math.PI * 2);
-          context.fillStyle = "#ffcf70";
+          context.arc(point.x, point.y, 4.5, 0, Math.PI * 2);
+          context.fillStyle = "#b36b00";
           context.fill();
-          context.lineWidth = 2;
-          context.strokeStyle = "#07101b";
+          context.lineWidth = 1.8;
+          context.strokeStyle = "#ffffff";
           context.stroke();
         });
       }
 
       function drawCompass(scores) {
         const { context, width, height } = setupCanvas(compassCanvas);
-        const centerX = width / 2;
-        const centerY = height / 2;
-        const radius = Math.min(width, height) * 0.34;
+        const labelFont = width < 420 ? 12 : 13;
+        context.font = `800 ${labelFont}px Microsoft YaHei, sans-serif`;
+        const sideLabelWidth = Math.max(
+          context.measureText("国家调节").width,
+          context.measureText("市场自主").width
+        );
+        const leftGutter = sideLabelWidth + 26;
+        const rightGutter = sideLabelWidth + 26;
+        const topGutter = labelFont + 32;
+        const bottomGutter = labelFont + 32;
+        const gridSize = Math.max(
+          150,
+          Math.min(width - leftGutter - rightGutter, height - topGutter - bottomGutter)
+        );
+        const radius = gridSize / 2;
+        const centerX = leftGutter + radius;
+        const centerY = topGutter + radius;
         const x = centerX + (scores.economy / 100) * radius;
         const y = centerY - (scores.authority / 100) * radius;
 
-        context.strokeStyle = "rgba(255,255,255,0.11)";
+        context.strokeStyle = "rgba(23,26,31,0.14)";
         context.lineWidth = 1;
         for (let step = -2; step <= 2; step += 1) {
           const offset = (radius * step) / 2;
@@ -1552,8 +2466,8 @@
           context.stroke();
         }
 
-        context.strokeStyle = "rgba(120,240,255,0.55)";
-        context.lineWidth = 2;
+        context.strokeStyle = "rgba(23,26,31,0.64)";
+        context.lineWidth = 1.8;
         context.beginPath();
         context.moveTo(centerX - radius, centerY);
         context.lineTo(centerX + radius, centerY);
@@ -1561,33 +2475,31 @@
         context.lineTo(centerX, centerY + radius);
         context.stroke();
 
-        context.fillStyle = "rgba(238,244,255,0.88)";
-        context.font = "800 13px Microsoft YaHei, sans-serif";
+        context.fillStyle = "rgba(57,65,77,0.92)";
+        context.font = `800 ${labelFont}px Microsoft YaHei, sans-serif`;
         context.textAlign = "center";
         context.textBaseline = "bottom";
-        context.fillText("公共秩序", centerX, centerY - radius - 12);
+        context.fillText("公共秩序", centerX, centerY - radius - 14);
         context.textBaseline = "top";
-        context.fillText("个体自由", centerX, centerY + radius + 12);
+        context.fillText("个体自由", centerX, centerY + radius + 14);
         context.textAlign = "right";
         context.textBaseline = "middle";
-        context.fillText("国家调节", centerX - radius - 12, centerY);
+        context.fillText("国家调节", centerX - radius - 16, centerY);
         context.textAlign = "left";
-        context.fillText("市场自主", centerX + radius + 12, centerY);
-
-        const gradient = context.createRadialGradient(x, y, 4, x, y, 34);
-        gradient.addColorStop(0, "rgba(255,207,112,1)");
-        gradient.addColorStop(1, "rgba(120,240,255,0)");
-        context.beginPath();
-        context.arc(x, y, 34, 0, Math.PI * 2);
-        context.fillStyle = gradient;
-        context.fill();
+        context.fillText("市场自主", centerX + radius + 16, centerY);
 
         context.beginPath();
-        context.arc(x, y, 9, 0, Math.PI * 2);
-        context.fillStyle = "#ffcf70";
+        context.arc(x, y, 8, 0, Math.PI * 2);
+        context.fillStyle = "#b36b00";
         context.fill();
         context.lineWidth = 3;
-        context.strokeStyle = "#07101b";
+        context.strokeStyle = "#ffffff";
+        context.stroke();
+
+        context.beginPath();
+        context.arc(x, y, 12, 0, Math.PI * 2);
+        context.lineWidth = 1;
+        context.strokeStyle = "rgba(23,26,31,0.45)";
         context.stroke();
       }
 

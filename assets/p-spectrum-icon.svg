@@ -1,0 +1,44 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">P spectrum axis icon</title>
+  <desc id="desc">A minimal letter P built from spectrum axis lines and small coordinate nodes.</desc>
+  <defs>
+    <path id="p-stem" d="M160 424V88"/>
+    <path id="p-bowl" d="M160 88H286C363 88 416 141 416 216C416 291 363 344 286 344H160"/>
+    <path id="p-axis-x" d="M160 216H380"/>
+    <path id="p-axis-y" d="M160 126V306"/>
+    <path id="p-spectrum" d="M210 272L268 210L326 246"/>
+    <path id="p-tick-top" d="M160 64V40"/>
+    <path id="p-tick-bottom" d="M160 472V448"/>
+    <path id="p-tick-right" d="M394 216H434"/>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#FBFBF8">
+      <use href="#p-stem" stroke-width="48"/>
+      <use href="#p-bowl" stroke-width="48"/>
+      <use href="#p-axis-x" stroke-width="26"/>
+      <use href="#p-axis-y" stroke-width="26"/>
+      <use href="#p-spectrum" stroke-width="24"/>
+      <circle cx="160" cy="216" r="25" fill="#FBFBF8" stroke-width="10"/>
+      <circle cx="210" cy="272" r="20" fill="#FBFBF8" stroke-width="10"/>
+      <circle cx="268" cy="210" r="20" fill="#FBFBF8" stroke-width="10"/>
+      <circle cx="326" cy="246" r="20" fill="#FBFBF8" stroke-width="10"/>
+      <use href="#p-tick-top" stroke-width="24"/>
+      <use href="#p-tick-bottom" stroke-width="24"/>
+      <use href="#p-tick-right" stroke-width="24"/>
+    </g>
+    <g stroke="#171A1F">
+      <use href="#p-stem" stroke-width="34"/>
+      <use href="#p-bowl" stroke-width="34"/>
+      <use href="#p-axis-x" stroke-width="14"/>
+      <use href="#p-axis-y" stroke-width="14"/>
+      <use href="#p-spectrum" stroke-width="12"/>
+      <circle cx="160" cy="216" r="18" fill="#FBFBF8" stroke-width="12"/>
+      <circle cx="210" cy="272" r="13" fill="#FBFBF8" stroke-width="10"/>
+      <circle cx="268" cy="210" r="13" fill="#FBFBF8" stroke-width="10"/>
+      <circle cx="326" cy="246" r="13" fill="#FBFBF8" stroke-width="10"/>
+      <use href="#p-tick-top" stroke-width="12"/>
+      <use href="#p-tick-bottom" stroke-width="12"/>
+      <use href="#p-tick-right" stroke-width="12"/>
+    </g>
+  </g>
+</svg>
