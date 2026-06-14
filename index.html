@@ -4433,6 +4433,87 @@
       function drawRadar(scores) {
         const { context, width, height } = setupCanvas(radarCanvas);
         const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+        const normalizeAngle = (angle) => {
+          const fullCircle = Math.PI * 2;
+          return ((angle % fullCircle) + fullCircle) % fullCircle;
+        };
+        const getCrossProduct = (origin, pointA, pointB) =>
+          (pointA.x - origin.x) * (pointB.y - origin.y) - (pointA.y - origin.y) * (pointB.x - origin.x);
+        const hasIntersection = (pointA, pointB, pointC, pointD) => {
+          const epsilon = 0.000001;
+          const abC = getCrossProduct(pointA, pointB, pointC);
+          const abD = getCrossProduct(pointA, pointB, pointD);
+          const cdA = getCrossProduct(pointC, pointD, pointA);
+          const cdB = getCrossProduct(pointC, pointD, pointB);
+
+          return abC * abD < -epsilon && cdA * cdB < -epsilon;
+        };
+        const hasPathIntersection = (pathPoints) => {
+          if (pathPoints.length < 4) return false;
+
+          for (let firstIndex = 0; firstIndex < pathPoints.length; firstIndex += 1) {
+            const firstNext = (firstIndex + 1) % pathPoints.length;
+
+            for (let secondIndex = firstIndex + 1; secondIndex < pathPoints.length; secondIndex += 1) {
+              const secondNext = (secondIndex + 1) % pathPoints.length;
+              const adjacent =
+                firstIndex === secondIndex || firstNext === secondIndex || secondNext === firstIndex;
+
+              if (
+                !adjacent &&
+                hasIntersection(
+                  pathPoints[firstIndex],
+                  pathPoints[firstNext],
+                  pathPoints[secondIndex],
+                  pathPoints[secondNext]
+                )
+              ) {
+                return true;
+              }
+            }
+          }
+
+          return false;
+        };
+        const getConvexHull = (pathPoints) => {
+          const uniquePoints = pathPoints
+            .filter(
+              (point, index) =>
+                pathPoints.findIndex(
+                  (other) => Math.abs(point.x - other.x) < 0.1 && Math.abs(point.y - other.y) < 0.1
+                ) === index
+            )
+            .sort((pointA, pointB) => pointA.x - pointB.x || pointA.y - pointB.y);
+
+          if (uniquePoints.length <= 2) return uniquePoints;
+
+          const lowerHull = [];
+          const upperHull = [];
+
+          uniquePoints.forEach((point) => {
+            while (
+              lowerHull.length >= 2 &&
+              getCrossProduct(lowerHull[lowerHull.length - 2], lowerHull[lowerHull.length - 1], point) <= 0
+            ) {
+              lowerHull.pop();
+            }
+
+            lowerHull.push(point);
+          });
+
+          [...uniquePoints].reverse().forEach((point) => {
+            while (
+              upperHull.length >= 2 &&
+              getCrossProduct(upperHull[upperHull.length - 2], upperHull[upperHull.length - 1], point) <= 0
+            ) {
+              upperHull.pop();
+            }
+
+            upperHull.push(point);
+          });
+
+          return lowerHull.slice(0, -1).concat(upperHull.slice(0, -1));
+        };
         const centerX = width / 2;
         const centerY = height / 2 + 2;
         const count = dimensions.length;
@@ -4494,28 +4575,48 @@
           drawAxisLabel(dimension.negative, centerX - dx * labelDistance, centerY - dy * labelDistance);
         });
 
-        const points = dimensions.map((dimension, index) => {
-          const angle = -Math.PI / 2 + (index * Math.PI * 2) / count;
-          const score = scores[dimension.id] / 100;
-          return {
-            x: centerX + Math.cos(angle) * radius * score,
-            y: centerY + Math.sin(angle) * radius * score,
-          };
-        });
+        const points = dimensions
+          .flatMap((dimension, index) => {
+            const angle = -Math.PI / 2 + (index * Math.PI * 2) / count;
+            const score = clamp(Number(scores[dimension.id]) || 0, -100, 100) / 100;
+            const sides = [
+              { angle, strength: Math.max(score, 0) },
+              { angle: angle + Math.PI, strength: Math.max(-score, 0) },
+            ];
 
-        context.beginPath();
-        points.forEach((point, index) => {
-          if (index === 0) context.moveTo(point.x, point.y);
-          else context.lineTo(point.x, point.y);
-        });
-        context.closePath();
-        context.fillStyle = "rgba(23,26,31,0.08)";
-        context.strokeStyle = "rgba(23,26,31,0.82)";
-        context.lineWidth = 2;
-        context.fill();
-        context.stroke();
+            return sides.map((side) => ({
+              angle: normalizeAngle(side.angle),
+              strength: side.strength,
+              x: centerX + Math.cos(side.angle) * radius * side.strength,
+              y: centerY + Math.sin(side.angle) * radius * side.strength,
+            }));
+          })
+          .sort((a, b) => a.angle - b.angle);
+        const activePoints = points.filter((point) => point.strength > 0.001);
+        const shapePoints =
+          activePoints.length >= 3 && hasPathIntersection(activePoints) ? getConvexHull(activePoints) : activePoints;
+        const dotPoints = activePoints.length ? activePoints : [{ x: centerX, y: centerY }];
 
-        points.forEach((point) => {
+        if (shapePoints.length >= 2) {
+          context.beginPath();
+          shapePoints.forEach((point, index) => {
+            if (index === 0) context.moveTo(point.x, point.y);
+            else context.lineTo(point.x, point.y);
+          });
+
+          context.strokeStyle = "rgba(23,26,31,0.82)";
+          context.lineWidth = 2;
+
+          if (shapePoints.length >= 3) {
+            context.closePath();
+            context.fillStyle = "rgba(23,26,31,0.08)";
+            context.fill();
+          }
+
+          context.stroke();
+        }
+
+        dotPoints.forEach((point) => {
           context.beginPath();
           context.arc(point.x, point.y, 4.5, 0, Math.PI * 2);
           context.fillStyle = "#b36b00";
