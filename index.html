@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="一个中文政治概念科普站，用政治光谱测试、五组价值维度、公共议题地图和意识形态词典帮助访客理解公共讨论。"
+      content="一个中文政治概念科普站，用价值测评、价值坐标、公共议题地图和政治概念库帮助访客理解公共讨论。"
     />
+    <meta property="og:title" content="政治概念地图" />
+    <meta
+      property="og:description"
+      content="用价值测评、价值坐标、公共议题地图和政治概念库，理解公共讨论中的价值取舍。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://maaoding.github.io/political-spectrum-test/assets/p-spectrum-favicon-512.png?v=2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="政治概念地图" />
+    <meta
+      name="twitter:description"
+      content="一个本地计算的价值测评与中文政治概念科普入口。"
+    />
+    <meta name="twitter:image" content="https://maaoding.github.io/political-spectrum-test/assets/p-spectrum-favicon-512.png?v=2" />
     <title>政治概念地图</title>
     <link rel="icon" type="image/svg+xml" href="assets/p-spectrum-favicon.svg?v=2" />
     <link rel="alternate icon" type="image/png" href="assets/p-spectrum-favicon-256.png?v=2" />
@@ -1005,14 +1019,14 @@
       .section-header,
       .result-summary,
       .empty-state {
-        padding: 38px 0;
+        padding: 30px 0;
         border-bottom: 1px solid var(--line);
       }
 
       .home-hero {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
-        gap: 34px;
+        gap: 24px;
       }
 
       .hero-kicker {
@@ -1035,17 +1049,21 @@
         gap: 10px;
         align-items: start;
         max-width: 720px;
+        min-width: 0;
       }
 
       .result-heading > div {
         display: grid;
         gap: 10px;
         justify-items: start;
+        min-width: 0;
       }
 
       .result-heading .badge {
         display: flex;
         margin: 0;
+        max-width: 100%;
+        white-space: normal;
       }
 
       .result-title {
@@ -1054,6 +1072,7 @@
         font-size: clamp(34px, 5.4vw, 64px);
         line-height: 1.04;
         overflow-wrap: anywhere;
+        word-break: break-word;
       }
 
       .hero-copy,
@@ -1084,8 +1103,8 @@
       h1 {
         max-width: 760px;
         margin: 0;
-        font-size: clamp(38px, 7vw, 70px);
-        line-height: 1.02;
+        font-size: clamp(36px, 6vw, 62px);
+        line-height: 1.04;
         letter-spacing: 0;
       }
 
@@ -1106,10 +1125,10 @@
 
       .lead {
         max-width: 760px;
-        margin: 18px 0 0;
+        margin: 14px 0 0;
         color: var(--soft);
-        font-size: clamp(16px, 2vw, 19px);
-        line-height: 1.72;
+        font-size: clamp(15px, 1.8vw, 18px);
+        line-height: 1.64;
       }
 
       .actions,
@@ -1118,7 +1137,7 @@
         flex-wrap: wrap;
         gap: 10px;
         align-items: center;
-        margin-top: 26px;
+        margin-top: 20px;
       }
 
       .button {
@@ -1165,6 +1184,22 @@
         background: transparent;
       }
 
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 760;
+        text-decoration: none;
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      .text-link:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
       .stat-strip {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1176,7 +1211,7 @@
       .metric,
       .note-item,
       .score-item {
-        padding: 18px 18px 18px 0;
+        padding: 14px 16px 14px 0;
         border: 0;
         border-radius: 0;
         background: transparent;
@@ -1189,9 +1224,9 @@
 
       .metric strong {
         display: block;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
         color: var(--text);
-        font-size: 28px;
+        font-size: 24px;
         letter-spacing: 0;
       }
 
@@ -1219,14 +1254,16 @@
 
       .ideology-guide,
       .result-reading,
-      .subsite-map {
-        padding: 24px 0;
+      .subsite-map,
+      .content-index {
+        padding: 20px 0;
         border-bottom: 1px solid var(--line);
       }
 
       .ideology-guide h3,
       .result-reading h3,
-      .subsite-map h2 {
+      .subsite-map h2,
+      .content-index h3 {
         margin: 0 0 8px;
         font-size: 18px;
         letter-spacing: 0;
@@ -1234,7 +1271,8 @@
 
       .ideology-guide p,
       .result-reading p,
-      .subsite-map p {
+      .subsite-map p,
+      .content-index p {
         max-width: 760px;
         margin: 0;
         color: var(--muted);
@@ -1244,15 +1282,15 @@
       .module-list {
         display: grid;
         gap: 0;
-        margin-top: 20px;
+        margin-top: 16px;
         border-top: 1px solid var(--line);
       }
 
       .module-row {
         display: grid;
-        grid-template-columns: 96px minmax(0, 1fr) minmax(180px, 0.34fr);
-        gap: 18px;
-        padding: 18px 0;
+        grid-template-columns: 68px minmax(0, 1fr) minmax(170px, 0.3fr);
+        gap: 14px;
+        padding: 14px 0;
         border-bottom: 1px solid var(--line);
       }
 
@@ -1263,8 +1301,8 @@
       }
 
       .module-row h3 {
-        margin: 0 0 8px;
-        font-size: 17px;
+        margin: 0 0 6px;
+        font-size: 16px;
         letter-spacing: 0;
       }
 
@@ -1272,9 +1310,175 @@
         max-width: none;
       }
 
+      .concept-section {
+        padding-top: 22px;
+        border-bottom: 1px solid var(--line);
+        scroll-margin-top: 92px;
+      }
+
+      .concept-section:focus {
+        outline: 2px solid rgba(23, 26, 31, 0.18);
+        outline-offset: 6px;
+      }
+
+      .concept-section > h3 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      .concept-section > p {
+        max-width: 780px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
       .module-row .link-row {
         align-content: start;
         margin-top: 0;
+      }
+
+      .section-index {
+        display: grid;
+        gap: 0;
+        margin-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-index a {
+        display: grid;
+        grid-template-columns: 46px minmax(0, 1fr) minmax(120px, 0.3fr);
+        gap: 12px;
+        align-items: baseline;
+        padding: 12px 0;
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-index a:hover {
+        color: var(--primary);
+      }
+
+      .section-index span,
+      .section-index em {
+        color: var(--muted);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 760;
+      }
+
+      .section-index strong {
+        font-size: 15px;
+      }
+
+      .index-controls {
+        display: grid;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .search-field {
+        width: 100%;
+        min-height: 44px;
+        padding: 0 12px;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .search-field::placeholder {
+        color: var(--muted);
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .filter-button {
+        min-height: 34px;
+        padding: 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 760;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .filter-button:hover,
+      .filter-button.active {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .index-meta {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .index-list {
+        display: grid;
+        gap: 0;
+        margin-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .index-row {
+        display: grid;
+        grid-template-columns: minmax(78px, 0.18fr) minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        width: 100%;
+        padding: 16px 0;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+      }
+
+      .index-row:hover .index-title,
+      .index-row:focus-visible .index-title {
+        color: var(--primary);
+      }
+
+      .index-copy {
+        display: grid;
+        gap: 6px;
+      }
+
+      .index-title {
+        color: var(--ink);
+        font-size: 16px;
+        letter-spacing: 0;
+      }
+
+      .index-summary {
+        color: var(--muted);
+        max-width: none;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .index-type,
+      .index-arrow {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .empty-index {
+        padding: 18px 0;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
       }
 
       .quick-nav,
@@ -1776,6 +1980,12 @@
         display: grid;
         grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
         gap: 34px;
+        min-width: 0;
+      }
+
+      .result-summary > *,
+      .score-grid {
+        min-width: 0;
       }
 
       .result-copy {
@@ -1791,6 +2001,66 @@
         gap: 0;
         margin-top: 24px;
         border-top: 1px solid var(--line);
+      }
+
+      .result-quick-read,
+      .dimension-notes,
+      .result-next-steps {
+        display: grid;
+        gap: 0;
+        margin-top: 24px;
+        border-top: 1px solid var(--line);
+      }
+
+      .result-quick-read h3,
+      .dimension-notes h3,
+      .result-next-steps h3 {
+        margin: 0;
+        padding: 18px 0 0;
+        color: var(--ink);
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .quick-read-list,
+      .dimension-note-list,
+      .next-step-list {
+        display: grid;
+        gap: 0;
+      }
+
+      .quick-read-item,
+      .dimension-note,
+      .next-step {
+        display: grid;
+        grid-template-columns: minmax(112px, 0.24fr) minmax(0, 1fr);
+        gap: 18px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .quick-read-item span,
+      .dimension-note span,
+      .next-step span {
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .quick-read-item strong,
+      .dimension-note strong,
+      .next-step strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+      }
+
+      .quick-read-item p,
+      .dimension-note p,
+      .next-step p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.72;
       }
 
       .report-row {
@@ -1851,6 +2121,7 @@
 
       .score-item header {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         gap: 12px;
         margin-bottom: 10px;
@@ -1864,6 +2135,13 @@
         height: 7px;
         border-radius: 999px;
         background: linear-gradient(90deg, #d9dcd6, #eef0eb, #d9dcd6);
+      }
+
+      .score-note {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
       }
 
       .score-dot {
@@ -1907,6 +2185,7 @@
       canvas {
         display: block;
         width: 100%;
+        max-width: 100%;
         min-height: 360px;
         border-top: 1px solid var(--line);
       }
@@ -1929,6 +2208,13 @@
 
       .hidden {
         display: none !important;
+      }
+
+      @media (max-width: 980px) {
+        .result-summary,
+        .chart-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 900px) {
@@ -1954,8 +2240,6 @@
         }
 
         .stat-strip,
-        .result-summary,
-        .chart-grid,
         .note-item,
         .module-row {
           grid-template-columns: 1fr;
@@ -1967,6 +2251,24 @@
 
         .module-row .link-row {
           margin-top: 4px;
+        }
+
+        .section-index a {
+          grid-template-columns: 42px minmax(0, 1fr);
+          gap: 8px;
+        }
+
+        .section-index em {
+          grid-column: 2;
+        }
+
+        .index-row {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .index-arrow {
+          justify-self: start;
         }
 
         .metric,
@@ -2028,13 +2330,46 @@
         }
 
         .result-mark {
-          width: 34px;
-          height: 34px;
+          width: 32px;
+          height: 32px;
+        }
+
+        .result-heading {
+          gap: 8px;
+          max-width: 100%;
+        }
+
+        .result-heading > div {
+          gap: 8px;
+        }
+
+        .result-heading .badge {
+          font-size: 11px;
+          line-height: 1.35;
         }
 
         .result-title {
-          font-size: clamp(30px, 10vw, 44px);
-          line-height: 1.08;
+          font-size: clamp(26px, 8.5vw, 38px);
+          line-height: 1.16;
+        }
+
+        .result-copy {
+          font-size: 15px;
+          line-height: 1.75;
+        }
+
+        .score-grid {
+          gap: 16px;
+        }
+
+        .score-item header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+
+        canvas {
+          min-height: clamp(300px, 86vw, 360px);
         }
 
         .question-top {
@@ -2049,6 +2384,13 @@
         .lens-row {
           grid-template-columns: 1fr;
           gap: 6px;
+        }
+
+        .quick-read-item,
+        .dimension-note,
+        .next-step {
+          grid-template-columns: 1fr;
+          gap: 8px;
         }
 
         .report-row {
@@ -2080,20 +2422,16 @@
         </a>
         <nav class="nav" aria-label="主导航">
           <a class="nav-link" href="#home" data-route="home">首页</a>
-          <a class="nav-link" href="#guide" data-route="guide">导读推荐</a>
-          <a class="nav-link" href="#quiz" data-route="quiz">光谱测试</a>
-          <a class="nav-link" href="#dimensions" data-route="dimensions">五组维度</a>
+          <a class="nav-link" href="#quiz" data-route="quiz">价值测评</a>
           <a class="nav-link" href="#issues" data-route="issues">议题地图</a>
-          <a class="nav-link" href="#ideologies" data-route="ideologies">词条百科</a>
-          <a class="nav-link" href="#comparisons" data-route="comparisons">概念对照</a>
-          <a class="nav-link" href="#method" data-route="method">方法说明</a>
-          <a class="nav-link" href="#result" data-route="result">结果</a>
+          <a class="nav-link" href="#concepts" data-route="concepts">概念库</a>
+          <a class="nav-link" href="#method" data-route="method">如何阅读</a>
         </nav>
       </div>
     </header>
 
     <main class="shell">
-      <section class="page active" id="home" data-page="home" aria-labelledby="homeTitle">
+      <section class="page active" id="page-home" data-page="home" aria-labelledby="homeTitle">
         <div class="home-hero">
           <div class="hero-copy">
             <div class="hero-kicker">
@@ -2104,76 +2442,72 @@
               政治概念地图
             </h1>
             <p class="lead">
-              用一个本地计算的光谱测试、五组价值维度、公共议题地图和概念词典，理解政治讨论中常见的价值取舍，而不是急着给自己或他人贴标签。
+              先完成 40 题价值测评，再把结果转成议题、坐标和概念库的阅读路线。
             </p>
             <div class="actions">
-              <a class="button" href="#quiz">做光谱测试</a>
-              <a class="button secondary" href="#guide">看导读推荐</a>
-              <a class="button secondary" href="#issues">看议题地图</a>
-              <a class="button secondary" href="#ideologies">查政治词条</a>
+              <a class="button" href="#quiz">开始价值测评</a>
+              <a class="text-link" href="#guide">查看测评路线</a>
             </div>
           </div>
 
-          <aside class="stat-strip" aria-label="测试信息">
+          <aside class="stat-strip" aria-label="测评信息">
             <div class="metric">
               <strong>1</strong>
-              <span>个互动测试，用 40 道陈述题生成你的阅读路径。</span>
+              <span>个价值测评，用 40 道陈述题生成你的测评路线。</span>
             </div>
             <div class="metric">
               <strong>5</strong>
-              <span>组价值维度，把抽象立场拆成可比较的公共判断。</span>
+              <span>组价值坐标，把抽象立场拆成可比较的公共判断。</span>
             </div>
             <div class="metric">
               <strong>3</strong>
-              <span>类阅读入口：议题、词条、概念对照，彼此交叉链接。</span>
+              <span>条阅读路线：测评前、测评后、按议题或概念查内容。</span>
             </div>
           </aside>
         </div>
 
-        <div class="note-list">
-          <article class="note-item">
-            <h3>先从议题进入</h3>
-            <p>住房、医疗、教育、移民和技术治理，比单个主义更接近真实公共讨论。</p>
-          </article>
-          <article class="note-item">
-            <h3>再看概念边界</h3>
-            <p>自由主义、保守主义、社会民主主义等词条会标出相邻概念和常见误读。</p>
-          </article>
-          <article class="note-item">
-            <h3>测试只是入口</h3>
-            <p>结果页不会宣布你属于哪个主义，而是把你的价值倾向转成继续阅读的线索。</p>
-          </article>
-          <article class="note-item">
-            <h3>本地完成</h3>
-            <p>测试答案只在当前浏览器中计算，不保存、不上传、不统计；刷新页面会清空未提交结果。</p>
-          </article>
-        </div>
-
         <section class="subsite-map section-space" aria-labelledby="subsiteMapTitle">
-          <p class="eyebrow">Subsite structure</p>
-          <h2 id="subsiteMapTitle">作为政治科普网站子版块，可以这样使用</h2>
+          <p class="eyebrow">Route index</p>
+          <h2 id="subsiteMapTitle">三条测评路线</h2>
           <p>
-            这个页面适合作为主站里的互动入口：测试负责引发兴趣，维度负责解释判断框架，议题负责连接现实问题，词条和方法说明负责沉淀可继续阅读的知识层。
+            不需要从头读完。先测、测后读、直接查内容，三种路径都能回到同一张政治概念地图。
           </p>
           <div class="module-list" id="moduleGrid"></div>
         </section>
       </section>
 
-      <section class="page" id="guide" data-page="guide" aria-labelledby="guideTitle">
+      <section class="page" id="page-guide" data-page="guide" aria-labelledby="guideTitle">
         <div class="section-header">
-          <p class="eyebrow">Reading guide</p>
-          <h2 id="guideTitle" class="page-title">导读推荐</h2>
+          <p class="eyebrow">Route index</p>
+          <h2 id="guideTitle" class="page-title">测评路线</h2>
           <p class="lead">
-            不同访客来到这里的起点不一样：有人想先测，有人想先看概念，有人只想理解一个公共议题。按下面的路径读，会比从头到尾刷页面更舒服。
+            这里保留完整索引，但路线压缩为三种：测评前看什么、测评后读什么、直接按议题或概念查什么。
           </p>
         </div>
+        <section class="content-index" aria-labelledby="contentIndexTitle">
+          <h3 id="contentIndexTitle">站内索引</h3>
+          <p>输入关键词或选择类型，快速跳到测评路线、价值坐标、议题、词条、概念对照和如何阅读中的具体条目。</p>
+          <div class="index-controls">
+            <input
+              class="search-field"
+              id="contentSearch"
+              type="search"
+              autocomplete="off"
+              placeholder="搜索：住房、自由、秩序、测评..."
+              aria-label="搜索站内内容"
+            />
+            <div class="filter-row" id="contentFilters" aria-label="内容类型筛选"></div>
+          </div>
+          <p class="index-meta" id="contentIndexMeta"></p>
+          <div class="index-list" id="contentIndexList"></div>
+        </section>
         <div class="guide-list section-space" id="guideGrid"></div>
       </section>
 
-      <section class="page" id="quiz" data-page="quiz" aria-labelledby="quizTitle">
+      <section class="page" id="page-quiz" data-page="quiz" aria-labelledby="quizTitle">
         <div class="section-header">
           <p class="eyebrow">No perfect answer</p>
-          <h2 id="quizTitle" class="page-title">选择你当下最接近的直觉</h2>
+          <h2 id="quizTitle" class="page-title">价值测评：选择你当下最接近的直觉</h2>
           <p class="lead">
             尽量不要揣摩“标准答案”。如果两个方向都不完全符合，就选更接近你直觉的一边；拿不准时再选择中立。
           </p>
@@ -2196,66 +2530,77 @@
         </div>
       </section>
 
-      <section class="page" id="dimensions" data-page="dimensions" aria-labelledby="dimensionsTitle">
+      <section class="page" id="page-concepts" data-page="concepts" aria-labelledby="conceptsTitle">
         <div class="section-header">
-          <p class="eyebrow">Five axes</p>
-          <h2 id="dimensionsTitle" class="page-title">五组维度说明</h2>
+          <p class="eyebrow">Concept library</p>
+          <h2 id="conceptsTitle" class="page-title">政治概念库</h2>
           <p class="lead">
-            每条轴都不是好坏判断，而是不同价值优先级的张力。一个人在某一端得分高，通常代表他更愿意为该端价值承担现实成本。
+            价值坐标解释测评结果，政治词条说明常见语言，概念对照用来分辨边界。
           </p>
         </div>
-        <div class="dimension-list section-space" id="dimensionGrid"></div>
+        <div class="section-index concept-toc" aria-label="政治概念库目录">
+          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-dimensions">
+            <span>01</span>
+            <strong>价值坐标</strong>
+            <em>5 组取舍轴</em>
+          </a>
+          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-ideologies">
+            <span>02</span>
+            <strong>政治词条</strong>
+            <em>12 个常见概念</em>
+          </a>
+          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">
+            <span>03</span>
+            <strong>概念对照</strong>
+            <em>相邻概念边界</em>
+          </a>
+        </div>
+        <section class="concept-section section-space" id="concept-dimensions" tabindex="-1" aria-labelledby="conceptDimensionsTitle">
+          <p class="eyebrow">Five axes</p>
+          <h3 id="conceptDimensionsTitle">价值坐标</h3>
+          <p>每条轴都不是好坏判断，而是不同价值优先级的张力。某一端得分高，通常代表你更愿意为该端价值承担现实成本。</p>
+          <div class="dimension-list section-space" id="dimensionGrid"></div>
+        </section>
+        <section class="concept-section section-space" id="concept-ideologies" tabindex="-1" aria-labelledby="conceptIdeologiesTitle">
+          <p class="eyebrow">Neutral glossary</p>
+          <h3 id="conceptIdeologiesTitle">政治词条</h3>
+          <p>这些词条用于理解政治词汇的常见含义、核心关切和内部差异。它们不是推荐清单，也不等同于你的测试结果。</p>
+          <div class="ideology-guide">
+            <h3>政治词条索引</h3>
+            <div class="quick-nav" id="ideologyQuickNav" aria-label="政治词条快速索引"></div>
+          </div>
+          <div class="ideology-list section-space" id="ideologyGrid"></div>
+        </section>
+        <section class="concept-section section-space" id="concept-comparisons" tabindex="-1" aria-labelledby="conceptComparisonsTitle">
+          <p class="eyebrow">Concept pairs</p>
+          <h3 id="conceptComparisonsTitle">概念对照</h3>
+          <p>政治词汇最容易混淆的地方，往往不在定义本身，而在两个相邻词之间的边界。这里用成对比较帮助你抓住差别。</p>
+          <div class="comparison-list section-space" id="comparisonGrid"></div>
+        </section>
       </section>
 
-      <section class="page" id="issues" data-page="issues" aria-labelledby="issuesTitle">
+      <section class="page" id="page-issues" data-page="issues" aria-labelledby="issuesTitle">
         <div class="section-header">
           <p class="eyebrow">Issue map</p>
           <h2 id="issuesTitle" class="page-title">公共议题地图</h2>
           <p class="lead">
-            同一个政策议题往往会同时触发多组价值维度。这里不替你给出结论，而是展示不同视角通常会追问什么。
+            同一个政策议题往往会同时触发多组价值坐标。这里不替你给出结论，而是展示不同视角通常会追问什么。
           </p>
         </div>
         <div class="ideology-guide">
           <h3>怎么读</h3>
-          <p>先选一个你熟悉的议题，看它牵动哪些价值轴；再点回维度或词条，对照不同政治语言如何解释同一组现实问题。</p>
-          <div class="quick-nav" id="issueQuickNav" aria-label="公共议题快速索引"></div>
+          <p>先选一个你熟悉的议题，看它牵动哪些价值轴；再点回价值坐标或政治词条，对照不同政治语言如何解释同一组现实问题。</p>
+          <div class="section-index issue-index" id="issueQuickNav" aria-label="公共议题快速索引"></div>
         </div>
         <div class="issue-list section-space" id="issueGrid"></div>
       </section>
 
-      <section class="page" id="ideologies" data-page="ideologies" aria-labelledby="ideologiesTitle">
-        <div class="section-header">
-          <p class="eyebrow">Neutral glossary</p>
-          <h2 id="ideologiesTitle" class="page-title">常见意识形态百科</h2>
-          <p class="lead">
-            这里的介绍用于理解政治词汇的常见含义、核心关切和内部差异。它们不是推荐清单，也不等同于你的测试结果。
-          </p>
-        </div>
-        <div class="ideology-guide">
-          <h3>阅读路径</h3>
-          <p>先看与你结果中最明显维度相关的词条，再回到维度说明对照。每个词条下方的维度标签只表示常见议题关联，不代表你属于该立场。</p>
-          <div class="quick-nav" id="ideologyQuickNav" aria-label="意识形态快速索引"></div>
-        </div>
-        <div class="ideology-list section-space" id="ideologyGrid"></div>
-      </section>
-
-      <section class="page" id="comparisons" data-page="comparisons" aria-labelledby="comparisonsTitle">
-        <div class="section-header">
-          <p class="eyebrow">Concept pairs</p>
-          <h2 id="comparisonsTitle" class="page-title">概念对照</h2>
-          <p class="lead">
-            政治词汇最容易混淆的地方，往往不在定义本身，而在两个相邻词之间的边界。这里用成对比较帮助你抓住差别。
-          </p>
-        </div>
-        <div class="comparison-list section-space" id="comparisonGrid"></div>
-      </section>
-
-      <section class="page" id="method" data-page="method" aria-labelledby="methodTitle">
+      <section class="page" id="page-method" data-page="method" aria-labelledby="methodTitle">
         <div class="section-header">
           <p class="eyebrow">How to read</p>
-          <h2 id="methodTitle" class="page-title">方法说明</h2>
+          <h2 id="methodTitle" class="page-title">如何阅读本站</h2>
           <p class="lead">
-            这个站点把政治测试当作阅读入口，而不是身份判定器。分数越高，只表示你在相应议题上更愿意优先考虑某一端价值。
+            这个站点把价值测评当作阅读入口，而不是身份判定器。分数越高，只表示你在相应议题上更愿意优先考虑某一端价值。
           </p>
         </div>
         <div class="method-list section-space" id="methodGrid"></div>
@@ -2266,14 +2611,14 @@
         </div>
       </section>
 
-      <section class="page" id="result" data-page="result" aria-labelledby="resultTitle">
+      <section class="page" id="page-result" data-page="result" aria-labelledby="resultTitle">
         <div class="empty-state" id="emptyResult">
           <h2>还没有生成结果</h2>
-          <p>完成 40 道题后，这里会显示你的五维光谱图、二维坐标、文字画像和继续阅读路径。</p>
+          <p>完成 40 道题后，这里会显示你的五维光谱图、二维坐标、文字画像和继续阅读线索。</p>
           <div class="inline-actions">
-            <a class="button" href="#quiz">去测试</a>
+            <a class="button" href="#quiz">去测评</a>
             <a class="button secondary" href="#issues">看议题地图</a>
-            <a class="button secondary" href="#dimensions">先看维度</a>
+            <a class="button secondary" href="#guide">看测评路线</a>
           </div>
         </div>
 
@@ -2288,14 +2633,17 @@
                 </div>
               </div>
               <p class="result-copy" id="resultCopy"></p>
+              <div class="result-quick-read" id="resultQuickRead"></div>
               <div class="result-report" id="resultReport"></div>
+              <div class="dimension-notes" id="dimensionNotes"></div>
               <div class="result-reading" id="resultReading"></div>
+              <div class="result-next-steps" id="resultNextSteps"></div>
               <div class="actions">
                 <button class="button" id="restartButton" type="button">重新测试</button>
-                <a class="button secondary" href="#guide">查看导读推荐</a>
-                <a class="button secondary" href="#dimensions">阅读维度说明</a>
+                <a class="button secondary" href="#guide">查看测评路线</a>
+                <a class="button secondary" href="#concepts" data-route-link="concepts" data-scroll-target="concept-dimensions">阅读价值坐标</a>
                 <a class="button secondary" href="#issues">阅读相关议题</a>
-                <a class="button secondary" href="#ideologies">查看词条百科</a>
+                <a class="button secondary" href="#concepts" data-route-link="concepts" data-scroll-target="concept-ideologies">查看政治词条</a>
               </div>
             </div>
             <div class="score-grid" id="scoreGrid"></div>
@@ -2317,7 +2665,7 @@
       </section>
 
       <p class="footer">
-        说明：本站用于政治概念科普和自我观察，不构成学术测量、政治建议或价值评判。测试答案不保存、不上传、不追踪。
+        说明：本站用于政治概念科普和自我观察，不构成学术测量、政治建议或价值评判。测评答案不保存、不上传、不追踪。
       </p>
     </main>
 
@@ -2578,6 +2926,9 @@
 
       const answers = Array(questions.length).fill(null);
       let latestScores = null;
+      let activeIndexType = "all";
+      let contentIndex = [];
+      let pendingScrollTarget = "";
 
       const pages = [...document.querySelectorAll("[data-page]")];
       const navLinks = [...document.querySelectorAll("[data-route]")];
@@ -2589,11 +2940,17 @@
       const questionIndex = document.querySelector("#questionIndex");
       const moduleGrid = document.querySelector("#moduleGrid");
       const guideGrid = document.querySelector("#guideGrid");
+      const contentSearch = document.querySelector("#contentSearch");
+      const contentFilters = document.querySelector("#contentFilters");
+      const contentIndexMeta = document.querySelector("#contentIndexMeta");
+      const contentIndexList = document.querySelector("#contentIndexList");
       const resultContent = document.querySelector("#resultContent");
       const emptyResult = document.querySelector("#emptyResult");
       const resultTitle = document.querySelector("#resultTitle");
       const resultCopy = document.querySelector("#resultCopy");
+      const resultQuickRead = document.querySelector("#resultQuickRead");
       const resultReport = document.querySelector("#resultReport");
+      const dimensionNotes = document.querySelector("#dimensionNotes");
       const scoreGrid = document.querySelector("#scoreGrid");
       const dimensionGrid = document.querySelector("#dimensionGrid");
       const issueGrid = document.querySelector("#issueGrid");
@@ -2604,6 +2961,7 @@
       const methodGrid = document.querySelector("#methodGrid");
       const referenceLinks = document.querySelector("#referenceLinks");
       const resultReading = document.querySelector("#resultReading");
+      const resultNextSteps = document.querySelector("#resultNextSteps");
       const radarCanvas = document.querySelector("#radarCanvas");
       const compassCanvas = document.querySelector("#compassCanvas");
 
@@ -2647,91 +3005,61 @@
 
       const siteModules = [
         {
-          title: "互动入口",
-          summary: "用 40 道题让访客先形成一张自己的价值速写，降低第一次进入政治概念讨论的门槛。",
+          title: "先完成测评",
+          summary: "40 道陈述题会生成五维坐标、文字画像和下一步阅读线索。",
           links: [
-            { label: "做光谱测试", route: "quiz" },
-            { label: "查看结果", route: "result" },
+            { label: "开始测评", route: "quiz" },
+            { label: "如何阅读", route: "method" },
           ],
         },
         {
-          title: "解释框架",
-          summary: "用五组维度解释结果背后的价值取舍，让访客知道自己是在什么轴线上做判断。",
+          title: "测后继续阅读",
+          summary: "结果页会把鲜明坐标转成议题、政治词条和概念对照，不停在一个标签上。",
           links: [
-            { label: "五组维度", route: "dimensions" },
-            { label: "方法说明", route: "method" },
+            { label: "结果页", route: "result" },
+            { label: "议题地图", route: "issues" },
           ],
         },
         {
-          title: "现实议题",
-          summary: "把抽象维度落到住房、医疗、教育、平台治理等问题上，适合作为主站专题文章的入口。",
+          title: "直接查内容",
+          summary: "如果你已经有问题，可以从住房、教育、自由、秩序等关键词进入内容索引。",
           links: [
             { label: "议题地图", route: "issues" },
-            { label: "导读推荐", route: "guide" },
-          ],
-        },
-        {
-          title: "概念词库",
-          summary: "用词条、相邻概念和概念对照沉淀长期内容，避免测试结果被误读成简单身份标签。",
-          links: [
-            { label: "词条百科", route: "ideologies" },
-            { label: "概念对照", route: "comparisons" },
+            { label: "概念库", route: "concepts" },
           ],
         },
       ];
 
       const readingGuides = [
         {
-          id: "first-visit",
-          title: "第一次来：先建立地图感",
-          summary: "适合还不确定要不要测试、也不熟悉政治词汇的访客。",
-          steps: ["先读五组维度，理解每条轴不是好坏判断", "再看一两个公共议题，观察同一政策如何触发多种价值", "最后做测试，把结果当作继续阅读的索引"],
+          id: "before-test",
+          title: "测评前：先知道它测什么",
+          summary: "适合第一次来、担心被贴标签，或者想先理解页面用途的访客。",
+          steps: ["先读如何阅读，确认测评只生成阅读线索", "再进入价值测评，按直觉回答 40 道题", "完成后把结果当作索引，而不是身份判定"],
           links: [
-            { label: "五组维度", route: "dimensions" },
-            { label: "议题地图", route: "issues" },
-            { label: "开始测试", route: "quiz" },
+            { label: "如何阅读", route: "method" },
+            { label: "开始测评", route: "quiz" },
           ],
         },
         {
           id: "after-test",
-          title: "刚测完：从结果回到现实议题",
-          summary: "适合已经生成结果，但不想停在一个标题或图表上的访客。",
-          steps: ["先看结果页的价值排序和可能张力", "点开结果页推荐的相关议题，理解你的倾向会在哪些问题上出现", "再读相关词条，辨认这些词汇的边界和误读"],
+          title: "测评后：从结果进入内容",
+          summary: "适合已经生成结果，但不想停在标题、图表或单个主义名称上的访客。",
+          steps: ["先看结果页的速读、张力和五维解释", "再点开推荐议题，观察价值取舍如何进入现实讨论", "最后读政治词条和概念对照，辨认词汇边界"],
           links: [
             { label: "结果页", route: "result" },
             { label: "议题地图", route: "issues" },
-            { label: "词条百科", route: "ideologies" },
+            { label: "政治词条", route: "concepts", target: "concept-ideologies" },
           ],
         },
         {
-          id: "concepts",
-          title: "想查概念：先看边界，再看词条",
-          summary: "适合看到自由主义、保守主义、社会民主主义等词但总觉得混在一起的访客。",
-          steps: ["从概念对照看相邻词之间的差异", "进入单个词条看核心关切、政策倾向和内部差异", "顺着相邻词条继续读，不把任何词当作单一阵营"],
-          links: [
-            { label: "概念对照", route: "comparisons" },
-            { label: "词条百科", route: "ideologies" },
-          ],
-        },
-        {
-          id: "issues",
-          title: "想讨论议题：从问题而不是主义出发",
-          summary: "适合关心住房、医疗、教育、移民、平台治理等公共问题的访客。",
-          steps: ["选一个熟悉的议题", "看它同时牵动哪些价值轴", "再对照相关词条，理解不同政治语言如何解释同一个现实问题"],
+          id: "lookup",
+          title: "直接查：从议题或概念进入",
+          summary: "适合已经有关键词，想快速查住房、自由、秩序、保守主义等内容的访客。",
+          steps: ["从站内索引搜索关键词", "优先打开一个现实议题或价值坐标", "再顺着相关词条、对照和方法说明补全语境"],
           links: [
             { label: "议题地图", route: "issues" },
-            { label: "五组维度", route: "dimensions" },
-            { label: "词条百科", route: "ideologies" },
-          ],
-        },
-        {
-          id: "skeptical",
-          title: "对测试有疑问：先读方法说明",
-          summary: "适合担心题目过于简化、结果贴标签，或者想知道本页面如何设计的人。",
-          steps: ["先看方法说明，理解为什么测试只能给阅读线索", "再做测试或重测时按直觉选择", "如果结果不贴合自己，把它当作题目设计反馈，而不是身份判决"],
-          links: [
-            { label: "方法说明", route: "method" },
-            { label: "开始测试", route: "quiz" },
+            { label: "概念库", route: "concepts" },
           ],
         },
       ];
@@ -2916,16 +3244,16 @@
 
       const methodNotes = [
         {
-          title: "测试是阅读入口",
+          title: "测评是阅读入口",
           text: "40 道题只用于生成一组价值倾向和阅读线索，不等于严肃量表，也不能推出完整政治身份。",
         },
         {
-          title: "维度不是好坏轴",
+          title: "价值坐标不是好坏轴",
           text: "每条轴的两端都代表一种价值优先级。分数越高，只说明你更愿意为该端价值承担相应成本。",
         },
         {
           title: "词条不是阵营排名",
-          text: "意识形态词条用于理解政治语言的常见用法、内部差异和误读，不用于给访客贴标签。",
+          text: "政治词条用于理解政治语言的常见用法、内部差异和误读，不用于给访客贴标签。",
         },
         {
           title: "议题地图看取舍",
@@ -2937,7 +3265,7 @@
         },
         {
           title: "结构参考而非复制",
-          text: "页面结构参考了多轴政治测试、Pew 类型学测验的作答提示、以及百科式词条的概念组织方式；题目和中文说明均按本站的五维框架重新写作。",
+          text: "页面结构参考了多轴政治测评、Pew 类型学测验的作答提示、以及百科式词条的概念组织方式；题目和中文说明均按本站的五维框架重新写作。",
         },
       ];
 
@@ -2953,12 +3281,43 @@
         { label: "Political ideologies", url: "https://en.wikipedia.org/wiki/List_of_political_ideologies" },
       ];
 
+      const indexTypes = [
+        { id: "all", label: "全部" },
+        { id: "guide", label: "路线" },
+        { id: "dimension", label: "坐标" },
+        { id: "issue", label: "议题" },
+        { id: "ideology", label: "词条" },
+        { id: "comparison", label: "对照" },
+        { id: "method", label: "方法" },
+      ];
+
+      const routeAliases = {
+        dimensions: "concepts",
+        ideologies: "concepts",
+        comparisons: "concepts",
+      };
+
+      const routeAliasTargets = {
+        dimensions: "concept-dimensions",
+        ideologies: "concept-ideologies",
+        comparisons: "concept-comparisons",
+      };
+
+      function getRawRoute() {
+        return window.location.hash.replace("#", "") || "home";
+      }
+
+      function normalizeRoute(route) {
+        return routeAliases[route] || route;
+      }
+
       function getRoute() {
-        const route = window.location.hash.replace("#", "") || "home";
+        const route = normalizeRoute(getRawRoute());
         return pages.some((page) => page.dataset.page === route) ? route : "home";
       }
 
       function routeTo(route = getRoute()) {
+        const rawRoute = getRawRoute();
         pages.forEach((page) => page.classList.toggle("active", page.dataset.page === route));
         navLinks.forEach((link) => link.classList.toggle("active", link.dataset.route === route));
 
@@ -2966,7 +3325,14 @@
           renderResultState();
         }
 
-        window.scrollTo({ top: 0, behavior: "auto" });
+        const scrollTarget = routeAliasTargets[rawRoute] || pendingScrollTarget;
+        pendingScrollTarget = "";
+
+        if (scrollTarget) {
+          window.setTimeout(() => scrollToElementById(scrollTarget), 140);
+        } else {
+          window.setTimeout(() => scrollToPageStart(route), 120);
+        }
       }
 
       function getIdeologyById(id) {
@@ -2985,22 +3351,60 @@
         return issues.filter((issue) => issue.relatedIdeologies.includes(id));
       }
 
-      function scrollToIdeology(id) {
-        const target = document.querySelector(`#ideology-${id}`);
+      function getDimensionsByAxes(axisLabels) {
+        return dimensions.filter((dimension) =>
+          axisLabels.some((label) => [dimension.name, dimension.negative, dimension.positive].includes(label))
+        );
+      }
+
+      function getIssuesByDimension(dimension) {
+        return issues.filter((issue) =>
+          issue.axes.some((axis) => [dimension.name, dimension.negative, dimension.positive].includes(axis))
+        );
+      }
+
+      function getComparisonsByIdeologyIds(ids) {
+        return comparisons.filter((comparison) => comparison.links.some((id) => ids.includes(id)));
+      }
+
+      function scrollToElementById(id) {
+        const target = document.querySelector(`#${id}`);
         if (!target) return;
 
         target.scrollIntoView({ behavior: "smooth", block: "start" });
         target.focus({ preventScroll: true });
       }
 
-      function goToIdeology(id) {
-        if (getRoute() !== "ideologies") {
-          window.location.hash = "ideologies";
-          window.setTimeout(() => scrollToIdeology(id), 80);
+      function scrollToPageStart(route) {
+        const target = document.querySelector(`[data-page="${route}"]`);
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+      }
+
+      function goToTarget(route, targetId) {
+        const normalizedRoute = normalizeRoute(route);
+        if (getRoute() !== normalizedRoute) {
+          pendingScrollTarget = targetId;
+          window.location.hash = normalizedRoute;
           return;
         }
 
-        scrollToIdeology(id);
+        scrollToElementById(targetId);
+      }
+
+      function goToRoute(route, targetId = "") {
+        const normalizedRoute = normalizeRoute(route);
+        if (targetId) {
+          goToTarget(normalizedRoute, targetId);
+          return;
+        }
+
+        window.location.hash = normalizedRoute;
+      }
+
+      function goToIdeology(id) {
+        goToTarget("concepts", `ideology-${id}`);
       }
 
       function scrollToIssue(id) {
@@ -3019,6 +3423,35 @@
         }
 
         scrollToIssue(id);
+      }
+
+      function goToGuide(id) {
+        goToTarget("guide", `guide-${id}`);
+      }
+
+      function goToDimension(id) {
+        goToTarget("concepts", `dimension-${id}`);
+      }
+
+      function goToComparison(id) {
+        goToTarget("concepts", `comparison-${id}`);
+      }
+
+      function goToMethod(id) {
+        goToTarget("method", `method-${id}`);
+      }
+
+      function goToContentItem(id) {
+        const item = contentIndex.find((entry) => entry.id === id);
+        if (!item) return;
+
+        if (item.type === "guide") goToGuide(item.targetId.replace("guide-", ""));
+        else if (item.type === "dimension") goToDimension(item.targetId.replace("dimension-", ""));
+        else if (item.type === "issue") goToIssue(item.targetId.replace("issue-", ""));
+        else if (item.type === "ideology") goToIdeology(item.targetId.replace("ideology-", ""));
+        else if (item.type === "comparison") goToComparison(item.targetId.replace("comparison-", ""));
+        else if (item.type === "method") goToMethod(item.targetId.replace("method-", ""));
+        else window.location.hash = item.route;
       }
 
       function scrollToQuestion(index) {
@@ -3082,6 +3515,159 @@
           .join("");
       }
 
+      function normalizeIndexText(value) {
+        return String(value || "")
+          .toLowerCase()
+          .replace(/\s+/g, "");
+      }
+
+      function buildContentIndex() {
+        const getTypeLabel = (type) => indexTypes.find((item) => item.id === type)?.label || type;
+
+        return [
+          ...readingGuides.map((guide) => ({
+            id: `guide-${guide.id}`,
+            type: "guide",
+            typeLabel: getTypeLabel("guide"),
+            route: "guide",
+            targetId: `guide-${guide.id}`,
+            title: guide.title,
+            summary: guide.summary,
+            keywords: guide.steps,
+          })),
+          ...dimensions.map((dimension) => ({
+            id: `dimension-${dimension.id}`,
+            type: "dimension",
+            typeLabel: getTypeLabel("dimension"),
+            route: "concepts",
+            targetId: `dimension-${dimension.id}`,
+            title: `${dimension.negative} ↔ ${dimension.positive}`,
+            summary: dimension.summary,
+            keywords: [
+              dimension.name,
+              dimension.negative,
+              dimension.positive,
+              dimension.negativeMeaning,
+              dimension.positiveMeaning,
+              dimension.caveat,
+              ...dimension.topics,
+            ],
+          })),
+          ...issues.map((issue) => ({
+            id: `issue-${issue.id}`,
+            type: "issue",
+            typeLabel: getTypeLabel("issue"),
+            route: "issues",
+            targetId: `issue-${issue.id}`,
+            title: issue.title,
+            summary: issue.summary,
+            keywords: [
+              ...issue.axes,
+              ...issue.questions,
+              ...issue.lenses.flatMap((lens) => [lens.label, lens.text]),
+              ...issue.relatedIdeologies.map((id) => getIdeologyById(id)?.name || id),
+            ],
+          })),
+          ...ideologies.map((ideology) => ({
+            id: `ideology-${ideology.id}`,
+            type: "ideology",
+            typeLabel: getTypeLabel("ideology"),
+            route: "concepts",
+            targetId: `ideology-${ideology.id}`,
+            title: ideology.name,
+            summary: ideology.summary,
+            keywords: [
+              ideology.family,
+              ideology.core,
+              ideology.variants,
+              ideology.caution,
+              ...ideology.axes,
+              ...ideology.policies,
+            ],
+          })),
+          ...comparisons.map((comparison) => ({
+            id: `comparison-${comparison.id}`,
+            type: "comparison",
+            typeLabel: getTypeLabel("comparison"),
+            route: "concepts",
+            targetId: `comparison-${comparison.id}`,
+            title: `${comparison.left} vs ${comparison.right}`,
+            summary: comparison.difference,
+            keywords: [comparison.shared, comparison.watch, ...comparison.links.map((id) => getIdeologyById(id)?.name || id)],
+          })),
+          ...methodNotes.map((note, index) => ({
+            id: `method-${index}`,
+            type: "method",
+            typeLabel: getTypeLabel("method"),
+            route: "method",
+            targetId: `method-${index}`,
+            title: note.title,
+            summary: note.text,
+            keywords: [String(index + 1).padStart(2, "0")],
+          })),
+        ];
+      }
+
+      function filterContentIndex() {
+        const query = normalizeIndexText(contentSearch.value.trim());
+        const typeCounts = Object.fromEntries(
+          indexTypes
+            .filter((type) => type.id !== "all")
+            .map((type) => [type.id, contentIndex.filter((item) => item.type === type.id).length])
+        );
+        const filtered = contentIndex.filter((item) => {
+          const matchType = activeIndexType === "all" || item.type === activeIndexType;
+          const matchQuery =
+            !query ||
+            normalizeIndexText([item.typeLabel, item.title, item.summary, ...item.keywords].join(" ")).includes(query);
+
+          return matchType && matchQuery;
+        });
+
+        contentFilters.innerHTML = indexTypes
+          .map((type) => {
+            const count = type.id === "all" ? contentIndex.length : typeCounts[type.id] || 0;
+            return `
+              <button class="filter-button${activeIndexType === type.id ? " active" : ""}" type="button" data-index-filter="${type.id}">
+                ${type.label} ${count}
+              </button>
+            `;
+          })
+          .join("");
+
+        contentIndexMeta.textContent = filtered.length
+          ? `显示 ${filtered.length} / ${contentIndex.length} 条内容。`
+          : `没有找到匹配内容。可以换一个更宽的关键词，例如“自由”“秩序”“住房”。`;
+
+        contentIndexList.innerHTML = filtered.length
+          ? filtered
+              .map(
+                (item) => `
+                  <button class="index-row" type="button" data-index-item="${item.id}">
+                    <span class="index-type">${item.typeLabel}</span>
+                    <span class="index-copy">
+                      <span class="index-title">${item.title}</span>
+                      <span class="index-summary">${item.summary}</span>
+                    </span>
+                    <span class="index-arrow">打开</span>
+                  </button>
+                `
+              )
+              .join("")
+          : `<div class="empty-index">当前筛选没有结果。</div>`;
+      }
+
+      function renderContentIndex() {
+        contentIndex = buildContentIndex();
+        filterContentIndex();
+      }
+
+      function renderRouteLink(link) {
+        const target = link.target ? ` data-scroll-target="${link.target}"` : "";
+        const href = normalizeRoute(link.route);
+        return `<a href="#${href}" data-route-link="${link.route}"${target}>${link.label}</a>`;
+      }
+
       function renderModules() {
         moduleGrid.innerHTML = siteModules
           .map(
@@ -3093,7 +3679,7 @@
                   <p>${module.summary}</p>
                 </div>
                 <div class="link-row">
-                  ${module.links.map((link) => `<a href="#${link.route}" data-route-link="${link.route}">${link.label}</a>`).join("")}
+                  ${module.links.map(renderRouteLink).join("")}
                 </div>
               </article>
             `
@@ -3104,16 +3690,18 @@
       function renderGuides() {
         guideGrid.innerHTML = readingGuides
           .map(
-            (guide) => `
-              <article class="info-block guide-path" id="guide-${guide.id}">
-                <span class="tag">导读路线</span>
-                <h3>${guide.title}</h3>
-                <p>${guide.summary}</p>
-                <ol>
-                  ${guide.steps.map((step) => `<li>${step}</li>`).join("")}
-                </ol>
+            (guide, index) => `
+              <article class="module-row guide-path" id="guide-${guide.id}" tabindex="-1">
+                <span class="module-index">${String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>${guide.title}</h3>
+                  <p>${guide.summary}</p>
+                  <ol>
+                    ${guide.steps.map((step) => `<li>${step}</li>`).join("")}
+                  </ol>
+                </div>
                 <div class="link-row">
-                  ${guide.links.map((link) => `<a href="#${link.route}" data-route-link="${link.route}">${link.label}</a>`).join("")}
+                  ${guide.links.map(renderRouteLink).join("")}
                 </div>
               </article>
             `
@@ -3124,67 +3712,118 @@
       function renderDimensions() {
         dimensionGrid.innerHTML = dimensions
           .map(
-            (dimension) => `
-              <article class="info-block">
-                <span class="badge">${dimension.name}</span>
-                <h3>${dimension.negative} ↔ ${dimension.positive}</h3>
-                <p>${dimension.summary}</p>
-                <div class="axis">
-                  <span>${dimension.negative}</span>
-                  <b>↔</b>
-                  <span>${dimension.positive}</span>
-                </div>
-                <p><strong>${dimension.negative}端：</strong>${dimension.negativeMeaning}</p>
-                <p class="section-space"><strong>${dimension.positive}端：</strong>${dimension.positiveMeaning}</p>
-                <div class="pill-list">
-                  ${dimension.topics.map((topic) => `<span class="pill">${topic}</span>`).join("")}
-                </div>
-                <p class="section-space"><strong>误读提醒：</strong>${dimension.caveat}</p>
-              </article>
-            `
+            (dimension) => {
+              const relatedIssues = getIssuesByDimension(dimension);
+
+              return `
+                <article class="info-block" id="dimension-${dimension.id}" tabindex="-1">
+                  <span class="badge">${dimension.name}</span>
+                  <h3>${dimension.negative} ↔ ${dimension.positive}</h3>
+                  <p>${dimension.summary}</p>
+                  <div class="axis">
+                    <span>${dimension.negative}</span>
+                    <b>↔</b>
+                    <span>${dimension.positive}</span>
+                  </div>
+                  <p><strong>${dimension.negative}端：</strong>${dimension.negativeMeaning}</p>
+                  <p class="section-space"><strong>${dimension.positive}端：</strong>${dimension.positiveMeaning}</p>
+                  <div class="pill-list">
+                    ${dimension.topics.map((topic) => `<span class="pill">${topic}</span>`).join("")}
+                  </div>
+                  <p class="section-space"><strong>误读提醒：</strong>${dimension.caveat}</p>
+                  ${relatedIssues.length
+                    ? `
+                      <div class="adjacent-links">
+                        <span class="adjacent-label">相关议题</span>
+                        <div class="reading-links">
+                          ${relatedIssues
+                            .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
+                            .join("")}
+                        </div>
+                      </div>
+                    `
+                    : ""}
+                </article>
+              `;
+            }
           )
           .join("");
       }
 
       function renderIssues() {
         issueQuickNav.innerHTML = issues
-          .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
+          .map(
+            (issue, index) => `
+              <a href="#issues" data-issue-link="${issue.id}">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <strong>${issue.title}</strong>
+                <em>${issue.axes.join(" / ")}</em>
+              </a>
+            `
+          )
           .join("");
 
         issueGrid.innerHTML = issues
           .map(
-            (issue) => `
-              <article class="info-block" id="issue-${issue.id}" tabindex="-1">
-                <span class="tag">议题地图</span>
-                <h3>${issue.title}</h3>
-                <p>${issue.summary}</p>
-                <div class="pill-list">
-                  ${issue.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
-                </div>
-                <h4 class="list-label">不同视角</h4>
-                <div class="lens-list">
-                  ${issue.lenses
-                    .map(
-                      (lens) => `
-                        <div class="lens-row">
-                          <strong>${lens.label}</strong>
-                          <span>${lens.text}</span>
+            (issue) => {
+              const relatedDimensions = getDimensionsByAxes(issue.axes);
+              const relatedComparisons = getComparisonsByIdeologyIds(issue.relatedIdeologies).slice(0, 3);
+
+              return `
+                <article class="info-block" id="issue-${issue.id}" tabindex="-1">
+                  <span class="tag">议题地图</span>
+                  <h3>${issue.title}</h3>
+                  <p>${issue.summary}</p>
+                  <div class="pill-list">
+                    ${issue.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
+                  </div>
+                  <h4 class="list-label">不同视角</h4>
+                  <div class="lens-list">
+                    ${issue.lenses
+                      .map(
+                        (lens) => `
+                          <div class="lens-row">
+                            <strong>${lens.label}</strong>
+                            <span>${lens.text}</span>
+                          </div>
+                        `
+                      )
+                      .join("")}
+                  </div>
+                  <p class="section-space"><strong>关键追问：</strong>${issue.questions.join("；")}。</p>
+                  <p class="section-space"><strong>专题写法：</strong>可以先用一个现实场景切入，再把争议拆成「${issue.axes.join(" / ")}」几条线，最后回到制度边界、成本分配和可能的副作用。</p>
+                  <div class="adjacent-links" aria-label="${issue.title}下一步阅读">
+                    <span class="adjacent-label">相关价值坐标</span>
+                    <div class="reading-links">
+                      ${relatedDimensions
+                        .map((dimension) => `<a href="#concepts" data-dimension-link="${dimension.id}">${dimension.name}</a>`)
+                        .join("")}
+                    </div>
+                    <span class="adjacent-label">相关政治词条</span>
+                    <div class="reading-links">
+                      ${issue.relatedIdeologies
+                        .map(getIdeologyById)
+                        .filter(Boolean)
+                        .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+                        .join("")}
+                    </div>
+                    ${relatedComparisons.length
+                      ? `
+                        <span class="adjacent-label">概念对照</span>
+                        <div class="reading-links">
+                          ${relatedComparisons
+                            .map(
+                              (comparison) =>
+                                `<a href="#concepts" data-comparison-link="${comparison.id}">${comparison.left} vs ${comparison.right}</a>`
+                            )
+                            .join("")}
                         </div>
                       `
-                    )
-                    .join("")}
-                </div>
-                <p class="section-space"><strong>关键追问：</strong>${issue.questions.join("；")}。</p>
-                <p class="section-space"><strong>专题写法：</strong>可以先用一个现实场景切入，再把争议拆成「${issue.axes.join(" / ")}」几条线，最后回到制度边界、成本分配和可能的副作用。</p>
-                <div class="link-row" aria-label="${issue.title}相关词条">
-                  ${issue.relatedIdeologies
-                    .map(getIdeologyById)
-                    .filter(Boolean)
-                    .map((ideology) => `<a href="#ideologies" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
-                    .join("")}
-                </div>
-              </article>
-            `
+                      : ""}
+                  </div>
+                </article>
+              `;
+            }
           )
           .join("");
       }
@@ -3193,7 +3832,7 @@
         ideologyQuickNav.innerHTML = ideologies
           .map(
             (ideology) => `
-              <a href="#ideologies" data-ideology-link="${ideology.id}">${ideology.name}</a>
+              <a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>
             `
           )
           .join("");
@@ -3222,11 +3861,11 @@
                   <p class="section-space"><strong>内部差异：</strong>${ideology.variants}</p>
                   <p class="section-space"><strong>注意事项：</strong>${ideology.caution}</p>
                   <div class="adjacent-links">
-                    <span class="adjacent-label">相邻词条</span>
+                    <span class="adjacent-label">相邻政治词条</span>
                     <div class="reading-links">
                       ${related
                         .map(
-                          (item) => `<a href="#ideologies" data-ideology-link="${item.id}">${item.name}</a>`
+                          (item) => `<a href="#concepts" data-ideology-link="${item.id}">${item.name}</a>`
                         )
                         .join("")}
                     </div>
@@ -3252,7 +3891,7 @@
         comparisonGrid.innerHTML = comparisons
           .map(
             (comparison) => `
-              <article class="info-block" id="comparison-${comparison.id}">
+              <article class="info-block" id="comparison-${comparison.id}" tabindex="-1">
                 <div class="comparison-title">
                   <h3>${comparison.left}</h3>
                   <span>vs</span>
@@ -3265,7 +3904,7 @@
                   ${comparison.links
                     .map(getIdeologyById)
                     .filter(Boolean)
-                    .map((ideology) => `<a href="#ideologies" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+                    .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
                     .join("")}
                 </div>
               </article>
@@ -3278,7 +3917,7 @@
         methodGrid.innerHTML = methodNotes
           .map(
             (note, index) => `
-              <article class="info-block">
+              <article class="info-block" id="method-${index}" tabindex="-1">
                 <span class="badge">${String(index + 1).padStart(2, "0")}</span>
                 <h3>${note.title}</h3>
                 <p>${note.text}</p>
@@ -3401,7 +4040,7 @@
         if (ranked[0].strength < 18) {
           return {
             title: "中轴调停者",
-            text: "你的答案整体靠近光谱中心，说明你更倾向按议题、情境和现实成本来判断，而不是被单一原则完全牵引。你的政治直觉可能比较重视平衡、可操作性和避免过度极化。",
+            text: "你的答案整体靠近坐标中心，说明你更倾向按议题、情境和现实成本来判断，而不是被单一原则完全牵引。你的政治直觉可能比较重视平衡、可操作性和避免过度极化。",
           };
         }
 
@@ -3410,13 +4049,122 @@
         const emphasis = leading.map((item) => `${item.name}偏向「${item.pole}」`).join("、");
         const moderation =
           ranked[0].strength >= 62
-            ? "其中至少一个维度相当鲜明，说明你在相关议题上有比较稳定的优先级。"
+            ? "其中至少一个价值坐标相当鲜明，说明你在相关议题上有比较稳定的优先级。"
             : "这些倾向并不极端，更像是一组默认偏好，具体议题上仍可能保留弹性。";
 
         return {
           title,
-          text: `你的主要画像是「${title}」。从答案看，你的${emphasis}。${moderation}这不是政治身份标签，而是一张帮助你观察自己价值排序的速写；如果想理解相关词汇，可以继续阅读维度说明和意识形态百科。`,
+          text: `你的主要画像是「${title}」。从答案看，你的${emphasis}。${moderation}这不是政治身份标签，而是一张帮助你观察自己价值排序的速写；如果想理解相关词汇，可以继续阅读政治概念库和议题地图。`,
         };
+      }
+
+      function getResultSummaryCards(scores) {
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
+
+        return [
+          {
+            label: "最鲜明",
+            title:
+              strongest.strength < 18
+                ? "整体接近中轴"
+                : `${strongest.name}偏向「${strongest.pole}」`,
+            text:
+              strongest.strength < 18
+                ? "这次结果没有特别突出的单一坐标，更适合从具体议题继续观察自己的判断。"
+                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。读相关议题时，可以先观察你是否愿意为「${getPoleText(strongest)}」承担成本。`,
+          },
+          {
+            label: "最平衡",
+            title: `${centered.name}接近中轴`,
+            text: `强度 ${centered.strength}/100。这条轴上的答案更依赖情境、制度细节和现实后果，不适合直接归类。`,
+          },
+          {
+            label: "主要张力",
+            title:
+              leading.length >= 2
+                ? `${leading[0].name} × ${leading[1].name}`
+                : "暂时没有尖锐双轴拉扯",
+            text: getTensionInsight(ranked),
+          },
+        ];
+      }
+
+      function getDimensionReadingNotes(scores) {
+        return getRankedDimensions(scores)
+          .map((dimension) => {
+            const side = dimension.score >= 0 ? dimension.positive : dimension.negative;
+            const meaning = dimension.score >= 0 ? dimension.positiveMeaning : dimension.negativeMeaning;
+            const strengthText = getStrengthText(dimension.strength);
+            const title =
+              dimension.strength < 18
+                ? `${dimension.name}：接近中轴`
+                : `${dimension.name}：偏向「${side}」`;
+            const text =
+              dimension.strength < 18
+                ? `这组问题暂时没有明显单向牵引。阅读时可以把「${dimension.negative}」和「${dimension.positive}」都当作可能解释。`
+                : `${strengthText}，强度 ${dimension.strength}/100。${meaning}`;
+
+            return {
+              id: dimension.id,
+              label: dimension.name,
+              title,
+              text,
+            };
+          });
+      }
+
+      function getResultNextSteps(scores) {
+        const recommendation = getReadingRecommendations(scores);
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const second = ranked[1];
+        const firstIssue = recommendation.issues[0];
+        const firstIdeology = recommendation.ideologies[0];
+
+        if (recommendation.isCenter) {
+          return [
+            {
+              label: "第一步",
+              title: "先对照价值坐标",
+              text: "你的结果较接近中轴，先看每条轴两端如何定义，比直接寻找立场名称更有帮助。",
+            },
+            {
+              label: "第二步",
+              title: "选一个现实议题",
+              text: "从住房、教育、医疗或平台治理中选一个熟悉问题，观察不同价值如何同时出现。",
+            },
+            {
+              label: "第三步",
+              title: "读相邻政治词条",
+              text: "再把自由主义、社会民主主义、保守主义和社群主义当作四个参照点，而不是身份标签。",
+            },
+          ];
+        }
+
+        return [
+          {
+            label: "第一步",
+            title: `先读「${strongest.name}」`,
+            text: `这是当前最鲜明的价值坐标。先理解「${strongest.negative}」和「${strongest.positive}」的取舍，再看具体议题。`,
+          },
+          {
+            label: "第二步",
+            title: firstIssue ? `回到「${firstIssue.title}」` : "回到相关议题",
+            text: firstIssue
+              ? `这个议题能帮助你观察「${getPoleText(strongest)}」在现实政策里会遇到哪些成本和边界。`
+              : `选择一个相关公共议题，观察你的价值优先级如何进入现实讨论。`,
+          },
+          {
+            label: "第三步",
+            title: firstIdeology ? `再读「${firstIdeology.name}」及相邻概念` : `再对照「${second.name}」`,
+            text: firstIdeology
+              ? "把政治词条当作政治语言的解释工具，重点看它与相邻概念的边界。"
+              : `如果「${second.name}」也较明显，就把它作为第二条线索一起阅读。`,
+          },
+        ];
       }
 
       function getReadingRecommendations(scores) {
@@ -3471,14 +4219,15 @@
         resultReading.innerHTML = `
           <h3>继续阅读</h3>
           <p>${isCenter
-            ? "你的主要维度较接近中轴，下面这些词条适合作为不同方向的参照。"
+            ? "你的主要价值坐标较接近中轴，下面这些词条适合作为不同方向的参照。"
             : sourceText
             ? `这些词条根据${sourceText}生成，`
             : ""}只是帮助你理解相关政治词汇的阅读线索，不是身份判定，也不是立场排名。</p>
-          <span class="adjacent-label">相关词条</span>
+          <p class="section-space">想理解词汇边界，先看政治词条；想回到现实争议，先看相关议题；想分辨容易混淆的概念，再看概念对照。</p>
+          <span class="adjacent-label">相关政治词条</span>
           <div class="reading-links">
             ${matchedIdeologies
-              .map((ideology) => `<a href="#ideologies" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+              .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
               .join("")}
           </div>
           <span class="adjacent-label">相关议题</span>
@@ -3489,8 +4238,77 @@
           </div>
           <span class="adjacent-label">推荐路径</span>
           <div class="reading-links">
-            <a href="#guide" data-route-link="guide">按导读继续阅读</a>
-            <a href="#comparisons" data-route-link="comparisons">看概念对照</a>
+            <a href="#guide" data-route-link="guide">按测评路线继续阅读</a>
+            <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">看概念对照</a>
+          </div>
+        `;
+      }
+
+      function renderResultQuickRead(scores) {
+        const cards = getResultSummaryCards(scores);
+
+        resultQuickRead.innerHTML = `
+          <h3>结果速读</h3>
+          <div class="quick-read-list">
+            ${cards
+              .map(
+                (card) => `
+                  <div class="quick-read-item">
+                    <span>${card.label}</span>
+                    <div>
+                      <strong>${card.title}</strong>
+                      <p>${card.text}</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderDimensionNotes(scores) {
+        const notes = getDimensionReadingNotes(scores);
+
+        dimensionNotes.innerHTML = `
+          <h3>五维解释</h3>
+          <div class="dimension-note-list">
+            ${notes
+              .map(
+                (note) => `
+                  <div class="dimension-note">
+                    <span>${note.label}</span>
+                    <div>
+                      <strong>${note.title}</strong>
+                      <p>${note.text}</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderResultNextSteps(scores) {
+        const steps = getResultNextSteps(scores);
+
+        resultNextSteps.innerHTML = `
+          <h3>阅读顺序</h3>
+          <div class="next-step-list">
+            ${steps
+              .map(
+                (step) => `
+                  <div class="next-step">
+                    <span>${step.label}</span>
+                    <div>
+                      <strong>${step.title}</strong>
+                      <p>${step.text}</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
           </div>
         `;
       }
@@ -3516,15 +4334,15 @@
 
         resultReport.innerHTML = `
           <div class="report-row">
-            <h3>价值排序</h3>
+            <h3>怎么看排序</h3>
             <ul class="report-list">${strongestList}</ul>
           </div>
           <div class="report-row">
-            <h3>最接近中轴</h3>
+            <h3>怎么看中轴</h3>
             <p>${centered.name}最接近中轴（强度 ${centered.strength}/100）。这通常意味着你在这组问题上更依赖具体情境、制度细节或现实后果来判断。</p>
           </div>
           <div class="report-row">
-            <h3>可能的张力</h3>
+            <h3>怎么看张力</h3>
             <p>${getTensionInsight(ranked)}</p>
           </div>
         `;
@@ -3535,6 +4353,12 @@
           .map((dimension) => {
             const score = scores[dimension.id];
             const left = ((score + 100) / 200) * 100;
+            const strength = Math.abs(score);
+            const pole = score > 0 ? dimension.positive : score < 0 ? dimension.negative : "中轴";
+            const note =
+              strength < 18
+                ? `接近中轴：这组议题更适合结合具体情境阅读。`
+                : `${getStrengthText(strength)}偏向「${pole}」：读相关议题时留意这端价值的现实成本。`;
 
             return `
               <div class="score-item">
@@ -3546,6 +4370,7 @@
                 <div class="score-line">
                   <span class="score-dot" style="left:${left}%"></span>
                 </div>
+                <p class="score-note">${note}</p>
               </div>
             `;
           })
@@ -3558,8 +4383,11 @@
         resultContent.classList.toggle("hidden", !hasResult);
 
         if (!hasResult) {
+          resultQuickRead.innerHTML = "";
           resultReading.innerHTML = "";
           resultReport.innerHTML = "";
+          dimensionNotes.innerHTML = "";
+          resultNextSteps.innerHTML = "";
           return;
         }
 
@@ -3574,8 +4402,9 @@
       function setupCanvas(canvas) {
         const rect = canvas.getBoundingClientRect();
         const ratio = window.devicePixelRatio || 1;
-        const width = Math.max(320, Math.floor(rect.width));
-        const height = Math.max(300, Math.floor(rect.height || 360));
+        const width = Math.max(260, Math.floor(rect.width || canvas.clientWidth || 320));
+        const cssHeight = rect.height || canvas.clientHeight || Math.min(380, Math.max(300, width * 0.9));
+        const height = Math.max(280, Math.floor(cssHeight));
         canvas.width = width * ratio;
         canvas.height = height * ratio;
         const context = canvas.getContext("2d");
@@ -3692,10 +4521,8 @@
         const rightGutter = sideLabelWidth + 26;
         const topGutter = labelFont + 32;
         const bottomGutter = labelFont + 32;
-        const gridSize = Math.max(
-          150,
-          Math.min(width - leftGutter - rightGutter, height - topGutter - bottomGutter)
-        );
+        const availableGrid = Math.min(width - leftGutter - rightGutter, height - topGutter - bottomGutter);
+        const gridSize = Math.max(96, availableGrid);
         const radius = gridSize / 2;
         const centerX = leftGutter + radius;
         const centerY = topGutter + radius;
@@ -3772,9 +4599,12 @@
         const description = describeScores(latestScores);
         resultTitle.textContent = description.title;
         resultCopy.textContent = description.text;
+        renderResultQuickRead(latestScores);
         renderResultReport(latestScores);
         renderScores(latestScores);
+        renderDimensionNotes(latestScores);
         renderResultReading(latestScores);
+        renderResultNextSteps(latestScores);
         window.location.hash = "result";
         renderResultState();
       }
@@ -3783,8 +4613,13 @@
         answers.fill(null);
         quizForm.reset();
         latestScores = null;
+        resultQuickRead.innerHTML = "";
         resultReading.innerHTML = "";
         resultReport.innerHTML = "";
+        dimensionNotes.innerHTML = "";
+        resultNextSteps.innerHTML = "";
+        emptyResult.classList.remove("hidden");
+        resultContent.classList.add("hidden");
         document.querySelectorAll(".question").forEach((element) => element.classList.remove("missing"));
         questionIndex.querySelectorAll("[data-question-jump]").forEach((button) => button.classList.remove("missing"));
         updateProgress();
@@ -3803,12 +4638,27 @@
 
       submitButton.addEventListener("click", showResults);
       document.querySelector("#restartButton").addEventListener("click", restart);
+      contentSearch.addEventListener("input", filterContentIndex);
+      contentFilters.addEventListener("click", (event) => {
+        const filterButton = event.target.closest("[data-index-filter]");
+        if (!filterButton) return;
+
+        activeIndexType = filterButton.dataset.indexFilter;
+        filterContentIndex();
+      });
       document.addEventListener("click", (event) => {
         if (!(event.target instanceof Element)) return;
+        const indexItem = event.target.closest("[data-index-item]");
+        if (indexItem) {
+          event.preventDefault();
+          goToContentItem(indexItem.dataset.indexItem);
+          return;
+        }
+
         const routeLink = event.target.closest("[data-route-link]");
         if (routeLink) {
           event.preventDefault();
-          window.location.hash = routeLink.dataset.routeLink;
+          goToRoute(routeLink.dataset.routeLink, routeLink.dataset.scrollTarget || "");
           return;
         }
 
@@ -3823,6 +4673,20 @@
         if (issueLink) {
           event.preventDefault();
           goToIssue(issueLink.dataset.issueLink);
+          return;
+        }
+
+        const dimensionLink = event.target.closest("[data-dimension-link]");
+        if (dimensionLink) {
+          event.preventDefault();
+          goToDimension(dimensionLink.dataset.dimensionLink);
+          return;
+        }
+
+        const comparisonLink = event.target.closest("[data-comparison-link]");
+        if (comparisonLink) {
+          event.preventDefault();
+          goToComparison(comparisonLink.dataset.comparisonLink);
           return;
         }
 
@@ -3841,6 +4705,7 @@
 
       renderQuiz();
       renderQuestionIndex();
+      renderContentIndex();
       renderModules();
       renderGuides();
       renderDimensions();
