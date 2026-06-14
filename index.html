@@ -1978,8 +1978,9 @@
 
       .result-summary {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
-        gap: 34px;
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+        gap: 38px;
+        align-items: start;
         min-width: 0;
       }
 
@@ -2112,7 +2113,11 @@
 
       .score-grid {
         display: grid;
-        gap: 18px;
+        align-content: start;
+        justify-self: end;
+        width: 100%;
+        max-width: 320px;
+        gap: 20px;
       }
 
       .score-item {
@@ -2120,19 +2125,26 @@
       }
 
       .score-item header {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 12px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
         margin-bottom: 10px;
         color: var(--muted);
         font-size: 12px;
         font-weight: 760;
       }
 
+      .score-item header span:nth-child(2) {
+        text-align: center;
+      }
+
+      .score-item header span:nth-child(3) {
+        text-align: right;
+      }
+
       .score-line {
         position: relative;
-        height: 7px;
+        height: 6px;
         border-radius: 999px;
         background: linear-gradient(90deg, #d9dcd6, #eef0eb, #d9dcd6);
       }
@@ -2148,8 +2160,8 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         border: 3px solid var(--surface);
         border-radius: 999px;
         background: var(--ink);
@@ -2214,6 +2226,11 @@
         .result-summary,
         .chart-grid {
           grid-template-columns: 1fr;
+        }
+
+        .score-grid {
+          justify-self: stretch;
+          max-width: none;
         }
       }
 
