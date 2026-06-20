@@ -14,11 +14,11 @@
 
 这是一个单文件静态页面，不需要安装依赖或启动构建工具。
 
-直接用浏览器打开 `political-concept-map/index.html` 即可使用。
+直接用浏览器打开 `index.html` 即可使用。
 
 ## 在线地址
 
-https://maaoding.icu/political-concept-map/
+https://political-concept-map.maaoding.icu/
 
 ## 隐私说明
 

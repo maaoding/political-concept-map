@@ -3,56 +3,4838 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="maaoding.icu 站点索引" />
-    <title>maaoding.icu</title>
+    <meta
+      name="description"
+      content="中文政治概念地图：以价值测评、议题地图和概念库理解公共讨论。"
+    />
+    <meta property="og:title" content="政治概念地图" />
+    <meta
+      property="og:description"
+      content="中文政治概念地图：以价值测评、议题地图和概念库理解公共讨论。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://political-concept-map.maaoding.icu/" />
+    <meta property="og:image" content="https://political-concept-map.maaoding.icu/assets/p-spectrum-favicon-512.png?v=2" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="政治概念地图" />
+    <meta
+      name="twitter:description"
+      content="中文政治概念地图：以价值测评、议题地图和概念库理解公共讨论。"
+    />
+    <meta name="twitter:image" content="https://political-concept-map.maaoding.icu/assets/p-spectrum-favicon-512.png?v=2" />
+    <title>政治概念地图</title>
+    <link rel="canonical" href="https://political-concept-map.maaoding.icu/" />
+    <link rel="icon" type="image/svg+xml" href="assets/p-spectrum-favicon.svg?v=2" />
+    <link rel="alternate icon" type="image/png" href="assets/p-spectrum-favicon-256.png?v=2" />
+    <link rel="apple-touch-icon" href="assets/p-spectrum-favicon-512.png?v=2" />
     <style>
+      @media not all {
       :root {
-        color: #18181b;
-        background: #fafafa;
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color-scheme: dark;
+        --bg: #070914;
+        --panel: rgba(18, 25, 47, 0.72);
+        --panel-strong: rgba(26, 35, 64, 0.92);
+        --panel-soft: rgba(255, 255, 255, 0.055);
+        --border: rgba(167, 196, 255, 0.18);
+        --border-strong: rgba(120, 240, 255, 0.34);
+        --text: #eef4ff;
+        --muted: #9da9c5;
+        --soft: #cbd6ee;
+        --primary: #78f0ff;
+        --secondary: #b178ff;
+        --accent: #ffcf70;
+        --danger: #ff7d9c;
+        --ok: #80ffb7;
+        --shadow: 0 22px 90px rgba(0, 0, 0, 0.48);
+        --radius: 28px;
       }
 
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
 
       body {
-        min-height: 100vh;
         margin: 0;
-        display: grid;
-        place-items: center;
-        padding: 24px;
+        min-height: 100vh;
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+        background:
+          radial-gradient(circle at 18% 8%, rgba(120, 240, 255, 0.24), transparent 34rem),
+          radial-gradient(circle at 88% 6%, rgba(177, 120, 255, 0.25), transparent 30rem),
+          radial-gradient(circle at 58% 92%, rgba(255, 207, 112, 0.12), transparent 34rem),
+          linear-gradient(135deg, #070914 0%, #11162b 52%, #080a16 100%);
+        overflow-x: hidden;
       }
 
-      main {
-        width: min(680px, 100%);
-        border-top: 1px solid #18181b;
-        border-bottom: 1px solid #d4d4d8;
-        padding: 28px 0;
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        content: "";
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(circle at top, black 0%, transparent 72%);
       }
 
-      p { margin: 0 0 12px; color: #71717a; }
-      h1 { margin: 0 0 28px; font-size: clamp(32px, 8vw, 64px); font-weight: 500; }
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+      }
 
       a {
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 16px 0;
-        border-top: 1px solid #d4d4d8;
         color: inherit;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(167, 196, 255, 0.14);
+        background: rgba(7, 9, 20, 0.78);
+        backdrop-filter: blur(22px);
+      }
+
+      .topbar-inner {
+        display: flex;
+        width: min(1180px, calc(100% - 32px));
+        min-height: 72px;
+        margin: 0 auto;
+        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        min-width: max-content;
+        color: #ffffff;
+        font-weight: 900;
+        letter-spacing: -0.04em;
         text-decoration: none;
       }
 
-      a:hover, a:focus-visible { color: #2563eb; }
+      .brand-mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 14px;
+        background:
+          radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.16), transparent 56%),
+          rgba(255, 255, 255, 0.07);
+        box-shadow: 0 12px 34px rgba(120, 240, 255, 0.2);
+      }
+
+      .brand-mark img {
+        display: block;
+        width: 34px;
+        height: 34px;
+        object-fit: contain;
+      }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-end;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-link {
+        min-width: max-content;
+        padding: 9px 12px;
+        color: var(--soft);
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: none;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        transition:
+          color 0.2s ease,
+          border-color 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: #061019;
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 38px 0 72px;
+      }
+
+      .page {
+        display: none;
+        animation: rise 0.3s ease both;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .glass {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+          var(--panel);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px);
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+        gap: 28px;
+        align-items: stretch;
+      }
+
+      .hero-card,
+      .intro-card {
+        position: relative;
+        overflow: hidden;
+        padding: 42px;
+      }
+
+      .hero-card::after,
+      .intro-card::after {
+        position: absolute;
+        right: -76px;
+        bottom: -100px;
+        width: 280px;
+        height: 280px;
+        content: "";
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(120, 240, 255, 0.22), transparent 68%);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        gap: 8px;
+        align-items: center;
+        margin: 0 0 18px;
+        padding: 8px 12px;
+        color: var(--primary);
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 1px solid rgba(120, 240, 255, 0.28);
+        border-radius: 999px;
+        background: rgba(120, 240, 255, 0.08);
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #ffffff;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(42px, 7vw, 84px);
+        line-height: 0.95;
+        letter-spacing: -0.075em;
+      }
+
+      .page-title {
+        margin: 0;
+        font-size: clamp(34px, 5vw, 58px);
+        line-height: 1;
+        letter-spacing: -0.06em;
+      }
+
+      .gradient-text {
+        color: transparent;
+        background: linear-gradient(100deg, #ffffff 0%, #78f0ff 38%, #b178ff 72%, #ffcf70 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 22px 0 0;
+        color: var(--soft);
+        font-size: clamp(17px, 2vw, 21px);
+        line-height: 1.75;
+      }
+
+      .hero-actions,
+      .inline-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        margin-top: 30px;
+      }
+
+      .button {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 20px;
+        color: #061019;
+        font-weight: 900;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        box-shadow: 0 14px 34px rgba(120, 240, 255, 0.22);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          opacity 0.2s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 46px rgba(120, 240, 255, 0.3);
+      }
+
+      .button.secondary {
+        color: var(--text);
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: none;
+      }
+
+      .button:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+        transform: none;
+        box-shadow: none;
+      }
+
+      .meta-card,
+      .stack {
+        display: grid;
+        gap: 16px;
+      }
+
+      .metric,
+      .mini-card,
+      .score-item {
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 22px;
+        background: var(--panel-soft);
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #ffffff;
+        font-size: 30px;
+        letter-spacing: -0.04em;
+      }
+
+      .metric span,
+      .mini-card p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .mini-card h3 {
+        margin: 0 0 8px;
+        font-size: 17px;
+      }
+
+      .section-space {
+        margin-top: 24px;
+      }
+
+      .quick-grid,
+      .dimension-grid,
+      .ideology-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .quick-grid {
+        margin-top: 24px;
+      }
+
+      .detail-card {
+        padding: 24px;
+      }
+
+      .detail-card h3 {
+        margin: 0 0 12px;
+        font-size: 24px;
+        letter-spacing: -0.04em;
+      }
+
+      .detail-card > .badge,
+      .detail-card > .tag {
+        display: flex;
+        width: fit-content;
+        margin-bottom: 14px;
+      }
+
+      .detail-card p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.78;
+      }
+
+      .axis {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin: 16px 0;
+        color: var(--soft);
+        font-size: 14px;
+        font-weight: 850;
+      }
+
+      .axis span {
+        padding: 9px 10px;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.055);
+      }
+
+      .axis b {
+        color: var(--primary);
+      }
+
+      .tag-row,
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .pill,
+      .tag {
+        padding: 8px 12px;
+        color: var(--soft);
+        font-size: 13px;
+        font-weight: 800;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .tag {
+        color: #07101b;
+        padding: 7px 11px;
+        font-size: 12px;
+        line-height: 1;
+        background: linear-gradient(135deg, rgba(120, 240, 255, 0.95), rgba(255, 207, 112, 0.9));
+      }
+
+      .text-list {
+        display: grid;
+        gap: 9px;
+        padding: 0;
+        margin: 10px 0 0;
+        list-style: none;
+      }
+
+      .text-list li {
+        position: relative;
+        padding-left: 14px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .text-list li::before {
+        position: absolute;
+        top: 0.82em;
+        left: 2px;
+        width: 4px;
+        height: 4px;
+        content: "";
+        border-radius: 999px;
+        background: var(--primary);
+        transform: translateY(-50%);
+      }
+
+      .list-label {
+        margin: 18px 0 0;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .sticky-progress {
+        position: sticky;
+        top: 86px;
+        z-index: 5;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        margin: 22px 0 18px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        background: rgba(10, 14, 29, 0.84);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.26);
+        backdrop-filter: blur(18px);
+      }
+
+      .progress-track {
+        height: 12px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        transition: width 0.25s ease;
+      }
+
+      .progress-copy {
+        min-width: 116px;
+        color: var(--soft);
+        font-weight: 800;
+        text-align: right;
+      }
+
+      .quiz {
+        display: grid;
+        gap: 16px;
+      }
+
+      .question {
+        padding: 22px;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.065);
+        transition:
+          border-color 0.2s ease,
+          transform 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .question:hover {
+        transform: translateY(-1px);
+        border-color: var(--border-strong);
+        background: rgba(255, 255, 255, 0.085);
+      }
+
+      .question.missing {
+        border-color: rgba(255, 125, 156, 0.78);
+        box-shadow: 0 0 0 4px rgba(255, 125, 156, 0.08);
+      }
+
+      .question-top {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      .question-number {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        color: #04131c;
+        font-size: 14px;
+        font-weight: 950;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+      }
+
+      .question-text {
+        margin: 2px 0 0;
+        color: #f7fbff;
+        font-size: 18px;
+        font-weight: 780;
+        line-height: 1.55;
+      }
+
+      .question-meta {
+        display: inline-flex;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 750;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .option {
+        position: relative;
+        min-height: 54px;
+        overflow: hidden;
+        color: var(--soft);
+        font-size: 14px;
+        font-weight: 800;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.055);
+        transition:
+          color 0.2s ease,
+          border-color 0.2s ease,
+          background 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .option span {
+        display: grid;
+        min-height: 54px;
+        padding: 8px;
+        place-items: center;
+      }
+
+      .option:hover {
+        transform: translateY(-1px);
+        border-color: var(--border-strong);
+      }
+
+      .option:has(input:checked) {
+        color: #061019;
+        border-color: transparent;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+      }
+
+      .submit-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 22px;
+        padding: 24px;
+      }
+
+      .hint {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hint.error {
+        color: var(--danger);
+      }
+
+      .result-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(280px, 0.68fr);
+        gap: 20px;
+        padding: 30px;
+      }
+
+      .badge {
+        display: inline-flex;
+        width: fit-content;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 8px 12px;
+        color: var(--accent);
+        font-size: 13px;
+        font-weight: 850;
+        border: 1px solid rgba(255, 207, 112, 0.28);
+        border-radius: 999px;
+        background: rgba(255, 207, 112, 0.08);
+      }
+
+      .result-copy {
+        max-width: 780px;
+        margin: 18px 0 0;
+        color: var(--soft);
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .score-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .score-item header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+        color: var(--soft);
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .score-line {
+        position: relative;
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          rgba(120, 240, 255, 0.62),
+          rgba(255, 255, 255, 0.12),
+          rgba(255, 207, 112, 0.68)
+        );
+      }
+
+      .score-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 18px;
+        height: 18px;
+        border: 3px solid #07101b;
+        border-radius: 999px;
+        background: #ffffff;
+        box-shadow: 0 0 22px rgba(120, 240, 255, 0.54);
+        transform: translate(-50%, -50%);
+      }
+
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .chart-card {
+        padding: 24px;
+      }
+
+      .chart-card h2,
+      .empty-card h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        letter-spacing: -0.03em;
+      }
+
+      .chart-card p,
+      .empty-card p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        min-height: 360px;
+      }
+
+      .empty-card {
+        padding: 36px;
+        text-align: center;
+      }
+
+      .empty-card .inline-actions {
+        justify-content: center;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .footer {
+        margin-top: 34px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+        text-align: center;
+      }
+
+      @media (max-width: 900px) {
+        .topbar-inner {
+          width: min(100% - 22px, 720px);
+          min-height: auto;
+          padding: 12px 0;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .brand {
+          justify-content: center;
+        }
+
+        .nav {
+          justify-content: flex-start;
+        }
+
+        .shell {
+          width: min(100% - 22px, 720px);
+          padding-top: 24px;
+        }
+
+        .hero,
+        .result-hero,
+        .chart-grid,
+        .quick-grid,
+        .dimension-grid,
+        .ideology-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-card,
+        .intro-card,
+        .result-hero,
+        .chart-card,
+        .empty-card {
+          padding: 24px;
+        }
+
+        .sticky-progress {
+          top: 112px;
+          grid-template-columns: 1fr;
+        }
+
+        .progress-copy {
+          min-width: 0;
+          text-align: left;
+        }
+
+        .options {
+          grid-template-columns: 1fr;
+        }
+
+        .option,
+        .option span {
+          min-height: 46px;
+        }
+
+        .question-text {
+          font-size: 16px;
+        }
+
+        canvas {
+          min-height: 310px;
+        }
+      }
+      }
+
+      /* Light minimal redesign */
+      :root {
+        color-scheme: light;
+        --bg: #fbfbf8;
+        --surface: #ffffff;
+        --surface-soft: #f5f6f3;
+        --line: #e2e4df;
+        --line-strong: #b8beb4;
+        --text: #171a1f;
+        --muted: #626b74;
+        --soft: #39414d;
+        --primary: #2457d6;
+        --ink: #171a1f;
+        --secondary: #69707a;
+        --accent: #b36b00;
+        --danger: #b4233a;
+        --ok: #187248;
+        --shadow: none;
+        --radius: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--bg);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+        background: var(--bg);
+        overflow-x: hidden;
+      }
+
+      body::before {
+        display: none;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        border: 0;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 2px solid var(--primary);
+        outline-offset: 3px;
+      }
+
+      .topbar {
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 251, 248, 0.92);
+        backdrop-filter: blur(12px);
+      }
+
+      .topbar-inner {
+        display: flex;
+        width: min(1040px, calc(100% - 40px));
+        min-height: 64px;
+        margin: 0 auto;
+        gap: 22px;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        min-width: max-content;
+        color: var(--text);
+        font-weight: 820;
+        letter-spacing: 0;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 36px;
+        height: 36px;
+        place-items: center;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+        box-shadow: none;
+      }
+
+      .brand-mark img {
+        display: block;
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+      }
+
+      .nav {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        justify-content: flex-end;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
+      .nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .nav-link {
+        min-width: max-content;
+        padding: 8px 10px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: var(--ink);
+        background: transparent;
+        box-shadow: inset 0 -2px 0 var(--ink);
+      }
+
+      .shell {
+        width: min(1040px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 36px 0 56px;
+      }
+
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: block;
+      }
+
+      .home-hero,
+      .section-header,
+      .result-summary,
+      .empty-state {
+        padding: 30px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .home-hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .hero-mark,
+      .result-mark {
+        display: block;
+        width: 44px;
+        height: 44px;
+        object-fit: contain;
+      }
+
+      .result-heading {
+        display: grid;
+        gap: 10px;
+        align-items: start;
+        max-width: 720px;
+        min-width: 0;
+      }
+
+      .result-heading > div {
+        display: grid;
+        gap: 10px;
+        justify-items: start;
+        min-width: 0;
+      }
+
+      .result-heading .badge {
+        display: flex;
+        margin: 0;
+        max-width: 100%;
+        white-space: normal;
+      }
+
+      .result-title {
+        margin: 0;
+        max-width: 100%;
+        font-size: clamp(34px, 5.4vw, 64px);
+        line-height: 1.04;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .hero-copy,
+      .section-header {
+        max-width: 760px;
+      }
+
+      .eyebrow {
+        display: block;
+        margin: 0;
+        padding: 0;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: var(--text);
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0;
+        font-size: clamp(36px, 6vw, 62px);
+        line-height: 1.04;
+        letter-spacing: 0;
+      }
+
+      .page-title {
+        margin: 0;
+        font-size: clamp(30px, 4.6vw, 48px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .accent-text,
+      .gradient-text {
+        color: var(--ink);
+        background: none;
+        -webkit-background-clip: initial;
+        background-clip: initial;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 14px 0 0;
+        color: var(--soft);
+        font-size: clamp(15px, 1.8vw, 18px);
+        line-height: 1.64;
+      }
+
+      .actions,
+      .inline-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 20px;
+      }
+
+      .button {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 15px;
+        color: var(--ink);
+        font-weight: 760;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .button:hover {
+        transform: none;
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .button.secondary {
+        color: var(--text);
+        border-color: var(--line-strong);
+        background: transparent;
+      }
+
+      .button.secondary:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+      }
+
+      .button:disabled {
+        color: #89919b;
+        cursor: not-allowed;
+        border-color: var(--line);
+        background: transparent;
+      }
+
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 760;
+        text-decoration: none;
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      .text-link:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .stat-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .metric,
+      .note-item,
+      .score-item {
+        padding: 14px 16px 14px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .metric + .metric {
+        padding-left: 18px;
+        border-left: 1px solid var(--line);
+      }
+
+      .metric strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--text);
+        font-size: 24px;
+        letter-spacing: 0;
+      }
+
+      .metric span,
+      .note-item p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .note-list,
+      .guide-list,
+      .dimension-list,
+      .ideology-list,
+      .issue-list,
+      .comparison-list,
+      .method-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .note-list {
+        margin-top: 12px;
+      }
+
+      .ideology-guide,
+      .result-reading,
+      .subsite-map,
+      .content-index {
+        padding: 20px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .ideology-guide h3,
+      .result-reading h3,
+      .subsite-map h2,
+      .content-index h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .ideology-guide p,
+      .result-reading p,
+      .subsite-map p,
+      .content-index p {
+        max-width: 760px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .module-list {
+        display: grid;
+        gap: 0;
+        margin-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .module-row {
+        display: grid;
+        grid-template-columns: 68px minmax(0, 1fr) minmax(170px, 0.3fr);
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .module-index {
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .module-row h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        letter-spacing: 0;
+      }
+
+      .module-row p {
+        max-width: none;
+      }
+
+      .concept-section {
+        padding-top: 22px;
+        border-bottom: 1px solid var(--line);
+        scroll-margin-top: 92px;
+      }
+
+      .concept-section:focus {
+        outline: 2px solid rgba(23, 26, 31, 0.18);
+        outline-offset: 6px;
+      }
+
+      .concept-section > h3 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      .concept-section > p {
+        max-width: 780px;
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .module-row .link-row {
+        align-content: start;
+        margin-top: 0;
+      }
+
+      .section-index {
+        display: grid;
+        gap: 0;
+        margin-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-index a {
+        display: grid;
+        grid-template-columns: 46px minmax(0, 1fr) minmax(120px, 0.3fr);
+        gap: 12px;
+        align-items: baseline;
+        padding: 12px 0;
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-index a:hover {
+        color: var(--primary);
+      }
+
+      .section-index span,
+      .section-index em {
+        color: var(--muted);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 760;
+      }
+
+      .section-index strong {
+        font-size: 15px;
+      }
+
+      .index-controls {
+        display: grid;
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .search-field {
+        width: 100%;
+        min-height: 44px;
+        padding: 0 12px;
+        color: var(--text);
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .search-field::placeholder {
+        color: var(--muted);
+      }
+
+      .filter-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .filter-button {
+        min-height: 34px;
+        padding: 0 10px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 760;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .filter-button:hover,
+      .filter-button.active {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .index-meta {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .index-list {
+        display: grid;
+        gap: 0;
+        margin-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .index-row {
+        display: grid;
+        grid-template-columns: minmax(78px, 0.18fr) minmax(0, 1fr) auto;
+        gap: 16px;
+        align-items: start;
+        width: 100%;
+        padding: 16px 0;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        background: transparent;
+      }
+
+      .index-row:hover .index-title,
+      .index-row:focus-visible .index-title {
+        color: var(--primary);
+      }
+
+      .index-copy {
+        display: grid;
+        gap: 6px;
+      }
+
+      .index-title {
+        color: var(--ink);
+        font-size: 16px;
+        letter-spacing: 0;
+      }
+
+      .index-summary {
+        color: var(--muted);
+        max-width: none;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .index-type,
+      .index-arrow {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .empty-index {
+        padding: 18px 0;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .quick-nav,
+      .reading-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .quick-nav a,
+      .reading-links a {
+        padding: 6px 9px;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 760;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        background: transparent;
+      }
+
+      .quick-nav a:hover,
+      .reading-links a:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .link-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+      }
+
+      .link-row a {
+        padding: 6px 9px;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 760;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        background: transparent;
+      }
+
+      .link-row a:hover {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .guide-path {
+        display: grid;
+        gap: 12px;
+      }
+
+      .guide-path ol {
+        display: grid;
+        gap: 8px;
+        padding-left: 20px;
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.7;
+      }
+
+      .guide-path li::marker {
+        color: var(--primary);
+        font-weight: 800;
+      }
+
+      .lens-list {
+        display: grid;
+        gap: 0;
+        margin-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .lens-row {
+        display: grid;
+        grid-template-columns: minmax(128px, 0.26fr) minmax(0, 1fr);
+        gap: 18px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .lens-row strong {
+        color: var(--ink);
+      }
+
+      .lens-row span {
+        color: var(--soft);
+        line-height: 1.7;
+      }
+
+      .adjacent-links {
+        display: grid;
+        gap: 10px;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+      }
+
+      .adjacent-label {
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .result-reading .adjacent-label {
+        display: block;
+        margin-top: 18px;
+      }
+
+      .adjacent-links .reading-links {
+        margin-top: 0;
+      }
+
+      .note-item,
+      .info-block,
+      .chart-block {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .note-item {
+        display: grid;
+        grid-template-columns: minmax(170px, 0.28fr) minmax(0, 1fr);
+        gap: 18px;
+        padding: 22px 0;
+      }
+
+      .note-item h3 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .note-item p {
+        margin: 0;
+      }
+
+      .section-space {
+        margin-top: 24px;
+      }
+
+      .info-block {
+        padding: 28px 0;
+        scroll-margin-top: 92px;
+      }
+
+      .info-block:focus {
+        outline: 2px solid rgba(23, 26, 31, 0.18);
+        outline-offset: 6px;
+      }
+
+      .info-block h3 {
+        margin: 0 0 12px;
+        font-size: 24px;
+        letter-spacing: 0;
+      }
+
+      .ideology-heading {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .info-block > .badge,
+      .info-block > .tag {
+        display: inline-flex;
+        margin-bottom: 12px;
+      }
+
+      .info-block p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.78;
+      }
+
+      .info-block p.section-space {
+        margin-top: 18px;
+      }
+
+      .comparison-title {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: baseline;
+      }
+
+      .comparison-title span {
+        color: var(--muted);
+        font-size: 18px;
+        font-weight: 760;
+      }
+
+      .axis {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 10px;
+        align-items: center;
+        margin: 18px 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .axis span {
+        padding: 8px 0;
+        text-align: center;
+        border: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .axis b {
+        color: var(--primary);
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .info-block > .pill-list {
+        margin-top: 14px;
+      }
+
+      .pill,
+      .tag,
+      .badge {
+        padding: 5px 8px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .tag,
+      .badge {
+        color: var(--ink);
+        border-color: var(--line-strong);
+        background: transparent;
+      }
+
+      .text-list li {
+        color: var(--muted);
+      }
+
+      .text-list {
+        display: grid;
+        gap: 9px;
+        padding: 0;
+        margin: 10px 0 0;
+        list-style: none;
+      }
+
+      .text-list li {
+        position: relative;
+        padding-left: 14px;
+        line-height: 1.65;
+      }
+
+      .text-list li::before {
+        position: absolute;
+        top: 0.82em;
+        left: 2px;
+        width: 4px;
+        height: 4px;
+        content: "";
+        border-radius: 999px;
+        transform: translateY(-50%);
+      }
+
+      .text-list li::before {
+        background: var(--primary);
+      }
+
+      .list-label {
+        margin: 18px 0 0;
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .sticky-progress {
+        top: 74px;
+        z-index: 5;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: center;
+        margin: 22px 0 0;
+        padding: 14px 0;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: rgba(251, 251, 248, 0.94);
+        box-shadow: none;
+        backdrop-filter: blur(12px);
+      }
+
+      .progress-track {
+        height: 8px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: #e6e8e2;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--ink);
+        transition: width 0.25s ease;
+      }
+
+      .progress-copy {
+        color: var(--muted);
+        font-weight: 760;
+      }
+
+      .question-index {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .question-index button {
+        display: inline-grid;
+        width: 34px;
+        height: 30px;
+        place-items: center;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .question-index button:hover,
+      .question-index button:focus-visible {
+        color: var(--primary);
+        border-color: var(--primary);
+        outline: none;
+      }
+
+      .question-index button.answered {
+        color: var(--ink);
+        border-color: var(--line-strong);
+        background: var(--surface);
+      }
+
+      .question-index button.missing {
+        color: var(--danger);
+        border-color: var(--danger);
+      }
+
+      .quiz {
+        display: grid;
+        gap: 0;
+      }
+
+      .question {
+        padding: 24px 0;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .question:hover {
+        transform: none;
+        border-color: var(--line);
+        background: transparent;
+      }
+
+      .question.missing {
+        border-color: var(--danger);
+        box-shadow: inset 4px 0 0 rgba(180, 35, 58, 0.92);
+      }
+
+      .question-top {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr);
+        gap: 16px;
+        align-items: start;
+      }
+
+      .question-number {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        color: var(--ink);
+        font-size: 13px;
+        border: 1px solid var(--line-strong);
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .question-text {
+        margin: 2px 0 0;
+        color: var(--text);
+        font-size: 18px;
+        font-weight: 760;
+        line-height: 1.55;
+      }
+
+      .question-meta {
+        display: inline-flex;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 650;
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 16px;
+        margin-left: 50px;
+      }
+
+      .option {
+        position: relative;
+        display: flex;
+        min-height: 42px;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        color: var(--soft);
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--surface);
+      }
+
+      .option input {
+        position: static;
+        width: 15px;
+        height: 15px;
+        margin: 0 8px 0 0;
+        accent-color: var(--primary);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .option span {
+        display: block;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .option:hover {
+        transform: none;
+        border-color: var(--primary);
+      }
+
+      .option:has(input:checked) {
+        color: var(--primary);
+        border-color: var(--primary);
+        background: transparent;
+      }
+
+      .submit-panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0;
+        padding: 24px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hint {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .hint.error {
+        color: var(--danger);
+      }
+
+      .result-summary {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 320px);
+        gap: 38px;
+        align-items: start;
+        min-width: 0;
+      }
+
+      .result-summary > *,
+      .score-grid {
+        min-width: 0;
+      }
+
+      .result-copy {
+        max-width: 720px;
+        margin: 18px 0 0;
+        color: var(--soft);
+        font-size: 17px;
+        line-height: 1.8;
+      }
+
+      .result-report {
+        display: grid;
+        gap: 0;
+        margin-top: 24px;
+        border-top: 1px solid var(--line);
+      }
+
+      .result-quick-read,
+      .dimension-notes,
+      .result-next-steps {
+        display: grid;
+        gap: 0;
+        margin-top: 24px;
+        border-top: 1px solid var(--line);
+      }
+
+      .result-quick-read h3,
+      .dimension-notes h3,
+      .result-next-steps h3 {
+        margin: 0;
+        padding: 18px 0 0;
+        color: var(--ink);
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .quick-read-list,
+      .dimension-note-list,
+      .next-step-list {
+        display: grid;
+        gap: 0;
+      }
+
+      .quick-read-item,
+      .dimension-note,
+      .next-step {
+        display: grid;
+        grid-template-columns: minmax(112px, 0.24fr) minmax(0, 1fr);
+        gap: 18px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .quick-read-item span,
+      .dimension-note span,
+      .next-step span {
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .quick-read-item strong,
+      .dimension-note strong,
+      .next-step strong {
+        display: block;
+        margin-bottom: 6px;
+        color: var(--ink);
+      }
+
+      .quick-read-item p,
+      .dimension-note p,
+      .next-step p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.72;
+      }
+
+      .report-row {
+        display: grid;
+        grid-template-columns: minmax(116px, 0.26fr) minmax(0, 1fr);
+        gap: 18px;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .report-row h3 {
+        margin: 0;
+        color: var(--ink);
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .report-row p {
+        margin: 0;
+        color: var(--soft);
+        line-height: 1.72;
+      }
+
+      .report-list {
+        display: grid;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .report-list li {
+        display: grid;
+        gap: 4px;
+        color: var(--soft);
+        line-height: 1.62;
+      }
+
+      .report-list strong {
+        color: var(--ink);
+      }
+
+      .result-reading {
+        margin-top: 24px;
+        padding-bottom: 0;
+        border-bottom: 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .score-grid {
+        display: grid;
+        align-content: start;
+        justify-self: end;
+        width: 100%;
+        max-width: 320px;
+        gap: 20px;
+      }
+
+      .score-item {
+        padding: 0;
+      }
+
+      .score-item header {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 10px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 760;
+      }
+
+      .score-item header span:nth-child(2) {
+        text-align: center;
+      }
+
+      .score-item header span:nth-child(3) {
+        text-align: right;
+      }
+
+      .score-line {
+        position: relative;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #d9dcd6, #eef0eb, #d9dcd6);
+      }
+
+      .score-note {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      .score-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 14px;
+        height: 14px;
+        border: 3px solid var(--surface);
+        border-radius: 999px;
+        background: var(--ink);
+        box-shadow: none;
+        transform: translate(-50%, -50%);
+      }
+
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px;
+        margin-top: 0;
+      }
+
+      .chart-block {
+        padding: 30px 0 0;
+      }
+
+      .chart-block h2,
+      .empty-state h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+        letter-spacing: 0;
+      }
+
+      .chart-block p,
+      .empty-state p {
+        margin: 0 0 18px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        min-height: 360px;
+        border-top: 1px solid var(--line);
+      }
+
+      .empty-state {
+        text-align: left;
+      }
+
+      .empty-state .inline-actions {
+        justify-content: flex-start;
+      }
+
+      .footer {
+        margin-top: 30px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+        text-align: left;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 980px) {
+        .result-summary,
+        .chart-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .score-grid {
+          justify-self: stretch;
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .topbar-inner {
+          width: min(100% - 28px, 720px);
+          gap: 12px;
+          min-height: auto;
+          padding: 12px 0;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .shell {
+          width: min(100% - 28px, 720px);
+          padding-top: 24px;
+        }
+
+        .home-hero,
+        .section-header,
+        .result-summary,
+        .empty-state {
+          padding: 28px 0;
+        }
+
+        .stat-strip,
+        .note-item,
+        .module-row {
+          grid-template-columns: 1fr;
+        }
+
+        .module-row {
+          gap: 8px;
+        }
+
+        .module-row .link-row {
+          margin-top: 4px;
+        }
+
+        .section-index a {
+          grid-template-columns: 42px minmax(0, 1fr);
+          gap: 8px;
+        }
+
+        .section-index em {
+          grid-column: 2;
+        }
+
+        .index-row {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .index-arrow {
+          justify-self: start;
+        }
+
+        .metric,
+        .metric + .metric {
+          padding: 16px 0;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+        }
+
+        .metric:first-child {
+          border-top: 0;
+        }
+
+        .sticky-progress {
+          top: 112px;
+        }
+
+        .question-top {
+          grid-template-columns: 38px minmax(0, 1fr);
+        }
+
+        .options {
+          grid-template-columns: 1fr;
+          margin-left: 50px;
+        }
+
+        .option {
+          justify-content: flex-start;
+          min-height: 42px;
+          padding: 0 10px;
+          text-align: left;
+        }
+
+        canvas {
+          min-height: 340px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar-inner {
+          align-items: stretch;
+        }
+
+        .brand {
+          justify-content: flex-start;
+        }
+
+        .nav {
+          justify-content: flex-start;
+        }
+
+        h1 {
+          font-size: 40px;
+        }
+
+        .hero-mark {
+          width: 38px;
+          height: 38px;
+        }
+
+        .result-mark {
+          width: 32px;
+          height: 32px;
+        }
+
+        .result-heading {
+          gap: 8px;
+          max-width: 100%;
+        }
+
+        .result-heading > div {
+          gap: 8px;
+        }
+
+        .result-heading .badge {
+          font-size: 11px;
+          line-height: 1.35;
+        }
+
+        .result-title {
+          font-size: clamp(26px, 8.5vw, 38px);
+          line-height: 1.16;
+        }
+
+        .result-copy {
+          font-size: 15px;
+          line-height: 1.75;
+        }
+
+        .score-grid {
+          gap: 16px;
+        }
+
+        .score-item header {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+
+        canvas {
+          min-height: clamp(300px, 86vw, 360px);
+        }
+
+        .question-top {
+          grid-template-columns: 1fr;
+        }
+
+        .question-index button {
+          width: 32px;
+          height: 30px;
+        }
+
+        .lens-row {
+          grid-template-columns: 1fr;
+          gap: 6px;
+        }
+
+        .quick-read-item,
+        .dimension-note,
+        .next-step {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .report-row {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .options {
+          margin-left: 0;
+        }
+
+        .submit-panel {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .submit-panel .button {
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
-    <main>
-      <p>Site index</p>
-      <h1>maaoding.icu</h1>
-      <a href="/political-concept-map/">
-        <span>政治概念地图</span>
-        <span>/political-concept-map/</span>
-      </a>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="#home" data-route="home" aria-label="返回首页">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/p-spectrum-icon.svg?v=1" alt="" /></span>
+          <span>政治概念地图</span>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a class="nav-link" href="#home" data-route="home">首页</a>
+          <a class="nav-link" href="#quiz" data-route="quiz">价值测评</a>
+          <a class="nav-link" href="#issues" data-route="issues">议题地图</a>
+          <a class="nav-link" href="#concepts" data-route="concepts">概念库</a>
+          <a class="nav-link" href="#method" data-route="method">如何阅读</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="page active" id="page-home" data-page="home" aria-labelledby="homeTitle">
+        <div class="home-hero">
+          <div class="hero-copy">
+            <div class="hero-kicker">
+              <img class="hero-mark" src="assets/p-spectrum-icon.svg?v=1" alt="" aria-hidden="true" />
+              <p class="eyebrow">Civic literacy map</p>
+            </div>
+            <h1 id="homeTitle">
+              政治概念地图
+            </h1>
+            <p class="lead">
+              先完成 40 题价值测评，再把结果转成议题、坐标和概念库的阅读路线。
+            </p>
+            <div class="actions">
+              <a class="button" href="#quiz">开始价值测评</a>
+              <a class="text-link" href="#guide">查看测评路线</a>
+            </div>
+          </div>
+
+          <aside class="stat-strip" aria-label="测评信息">
+            <div class="metric">
+              <strong>1</strong>
+              <span>个价值测评，用 40 道陈述题生成你的测评路线。</span>
+            </div>
+            <div class="metric">
+              <strong>5</strong>
+              <span>组价值坐标，把抽象立场拆成可比较的公共判断。</span>
+            </div>
+            <div class="metric">
+              <strong>3</strong>
+              <span>条阅读路线：测评前、测评后、按议题或概念查内容。</span>
+            </div>
+          </aside>
+        </div>
+
+        <section class="subsite-map section-space" aria-labelledby="subsiteMapTitle">
+          <p class="eyebrow">Route index</p>
+          <h2 id="subsiteMapTitle">三条测评路线</h2>
+          <p>
+            不需要从头读完。先测、测后读、直接查内容，三种路径都能回到同一张政治概念地图。
+          </p>
+          <div class="module-list" id="moduleGrid"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-guide" data-page="guide" aria-labelledby="guideTitle">
+        <div class="section-header">
+          <p class="eyebrow">Route index</p>
+          <h2 id="guideTitle" class="page-title">测评路线</h2>
+          <p class="lead">
+            这里保留完整索引，但路线压缩为三种：测评前看什么、测评后读什么、直接按议题或概念查什么。
+          </p>
+        </div>
+        <section class="content-index" aria-labelledby="contentIndexTitle">
+          <h3 id="contentIndexTitle">站内索引</h3>
+          <p>输入关键词或选择类型，快速跳到测评路线、价值坐标、议题、词条、概念对照和如何阅读中的具体条目。</p>
+          <div class="index-controls">
+            <input
+              class="search-field"
+              id="contentSearch"
+              type="search"
+              autocomplete="off"
+              placeholder="搜索：住房、自由、秩序、测评..."
+              aria-label="搜索站内内容"
+            />
+            <div class="filter-row" id="contentFilters" aria-label="内容类型筛选"></div>
+          </div>
+          <p class="index-meta" id="contentIndexMeta"></p>
+          <div class="index-list" id="contentIndexList"></div>
+        </section>
+        <div class="guide-list section-space" id="guideGrid"></div>
+      </section>
+
+      <section class="page" id="page-quiz" data-page="quiz" aria-labelledby="quizTitle">
+        <div class="section-header">
+          <p class="eyebrow">No perfect answer</p>
+          <h2 id="quizTitle" class="page-title">价值测评：选择你当下最接近的直觉</h2>
+          <p class="lead">
+            尽量不要揣摩“标准答案”。如果两个方向都不完全符合，就选更接近你直觉的一边；拿不准时再选择中立。
+          </p>
+        </div>
+
+        <div class="sticky-progress">
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <div class="progress-copy" id="progressCopy">0 / 40 已回答</div>
+        </div>
+
+        <nav class="question-index" id="questionIndex" aria-label="题目快速索引"></nav>
+
+        <form class="quiz" id="quizForm"></form>
+
+        <div class="submit-panel">
+          <p class="hint" id="submitHint">答完全部题目后，可以生成你的结果。</p>
+          <button class="button" id="submitButton" type="button" disabled>生成结果</button>
+        </div>
+      </section>
+
+      <section class="page" id="page-concepts" data-page="concepts" aria-labelledby="conceptsTitle">
+        <div class="section-header">
+          <p class="eyebrow">Concept library</p>
+          <h2 id="conceptsTitle" class="page-title">政治概念库</h2>
+          <p class="lead">
+            价值坐标解释测评结果，政治词条说明常见语言，概念对照用来分辨边界。
+          </p>
+        </div>
+        <div class="section-index concept-toc" aria-label="政治概念库目录">
+          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-dimensions">
+            <span>01</span>
+            <strong>价值坐标</strong>
+            <em>5 组取舍轴</em>
+          </a>
+          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-ideologies">
+            <span>02</span>
+            <strong>政治词条</strong>
+            <em>12 个常见概念</em>
+          </a>
+          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">
+            <span>03</span>
+            <strong>概念对照</strong>
+            <em>相邻概念边界</em>
+          </a>
+        </div>
+        <section class="concept-section section-space" id="concept-dimensions" tabindex="-1" aria-labelledby="conceptDimensionsTitle">
+          <p class="eyebrow">Five axes</p>
+          <h3 id="conceptDimensionsTitle">价值坐标</h3>
+          <p>每条轴都不是好坏判断，而是不同价值优先级的张力。某一端得分高，通常代表你更愿意为该端价值承担现实成本。</p>
+          <div class="dimension-list section-space" id="dimensionGrid"></div>
+        </section>
+        <section class="concept-section section-space" id="concept-ideologies" tabindex="-1" aria-labelledby="conceptIdeologiesTitle">
+          <p class="eyebrow">Neutral glossary</p>
+          <h3 id="conceptIdeologiesTitle">政治词条</h3>
+          <p>这些词条用于理解政治词汇的常见含义、核心关切和内部差异。它们不是推荐清单，也不等同于你的测试结果。</p>
+          <div class="ideology-guide">
+            <h3>政治词条索引</h3>
+            <div class="quick-nav" id="ideologyQuickNav" aria-label="政治词条快速索引"></div>
+          </div>
+          <div class="ideology-list section-space" id="ideologyGrid"></div>
+        </section>
+        <section class="concept-section section-space" id="concept-comparisons" tabindex="-1" aria-labelledby="conceptComparisonsTitle">
+          <p class="eyebrow">Concept pairs</p>
+          <h3 id="conceptComparisonsTitle">概念对照</h3>
+          <p>政治词汇最容易混淆的地方，往往不在定义本身，而在两个相邻词之间的边界。这里用成对比较帮助你抓住差别。</p>
+          <div class="comparison-list section-space" id="comparisonGrid"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-issues" data-page="issues" aria-labelledby="issuesTitle">
+        <div class="section-header">
+          <p class="eyebrow">Issue map</p>
+          <h2 id="issuesTitle" class="page-title">公共议题地图</h2>
+          <p class="lead">
+            同一个政策议题往往会同时触发多组价值坐标。这里不替你给出结论，而是展示不同视角通常会追问什么。
+          </p>
+        </div>
+        <div class="ideology-guide">
+          <h3>怎么读</h3>
+          <p>先选一个你熟悉的议题，看它牵动哪些价值轴；再点回价值坐标或政治词条，对照不同政治语言如何解释同一组现实问题。</p>
+          <div class="section-index issue-index" id="issueQuickNav" aria-label="公共议题快速索引"></div>
+        </div>
+        <div class="issue-list section-space" id="issueGrid"></div>
+      </section>
+
+      <section class="page" id="page-method" data-page="method" aria-labelledby="methodTitle">
+        <div class="section-header">
+          <p class="eyebrow">How to read</p>
+          <h2 id="methodTitle" class="page-title">如何阅读本站</h2>
+          <p class="lead">
+            这个站点把价值测评当作阅读入口，而不是身份判定器。分数越高，只表示你在相应议题上更愿意优先考虑某一端价值。
+          </p>
+        </div>
+        <div class="method-list section-space" id="methodGrid"></div>
+        <div class="ideology-guide">
+          <h3>结构参考</h3>
+          <p>这些链接帮助理解多轴测试、类型学测验和百科词条如何组织信息。本站只借鉴结构，不复制题目或结论。</p>
+          <div class="link-row" id="referenceLinks"></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-result" data-page="result" aria-labelledby="resultTitle">
+        <div class="empty-state" id="emptyResult">
+          <h2>还没有生成结果</h2>
+          <p>完成 40 道题后，这里会显示你的五维光谱图、二维坐标、文字画像和继续阅读线索。</p>
+          <div class="inline-actions">
+            <a class="button" href="#quiz">去测评</a>
+            <a class="button secondary" href="#issues">看议题地图</a>
+            <a class="button secondary" href="#guide">看测评路线</a>
+          </div>
+        </div>
+
+        <div id="resultContent" class="hidden">
+          <div class="result-summary">
+            <div>
+              <div class="result-heading">
+                <img class="result-mark" src="assets/p-spectrum-icon.svg?v=1" alt="" aria-hidden="true" />
+                <div>
+                  <span class="badge">你的光谱画像</span>
+                  <h2 class="page-title accent-text result-title" id="resultTitle">中轴观察者</h2>
+                </div>
+              </div>
+              <p class="result-copy" id="resultCopy"></p>
+              <div class="result-quick-read" id="resultQuickRead"></div>
+              <div class="result-report" id="resultReport"></div>
+              <div class="dimension-notes" id="dimensionNotes"></div>
+              <div class="result-reading" id="resultReading"></div>
+              <div class="result-next-steps" id="resultNextSteps"></div>
+              <div class="actions">
+                <button class="button" id="restartButton" type="button">重新测试</button>
+                <a class="button secondary" href="#guide">查看测评路线</a>
+                <a class="button secondary" href="#concepts" data-route-link="concepts" data-scroll-target="concept-dimensions">阅读价值坐标</a>
+                <a class="button secondary" href="#issues">阅读相关议题</a>
+                <a class="button secondary" href="#concepts" data-route-link="concepts" data-scroll-target="concept-ideologies">查看政治词条</a>
+              </div>
+            </div>
+            <div class="score-grid" id="scoreGrid"></div>
+          </div>
+
+          <div class="chart-grid">
+            <article class="chart-block">
+              <h2>五维光谱图</h2>
+              <p>中心代表中立，越靠近轴端代表该方向越鲜明。</p>
+              <canvas id="radarCanvas" aria-label="五维政治光谱图"></canvas>
+            </article>
+            <article class="chart-block">
+              <h2>经济 × 治理坐标</h2>
+              <p>横轴为国家调节到市场自主，纵轴为个体自由到公共秩序。</p>
+              <canvas id="compassCanvas" aria-label="经济与治理二维坐标图"></canvas>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <p class="footer">
+        说明：本站用于政治概念科普和自我观察，不构成学术测量、政治建议或价值评判。测评答案不保存、不上传、不追踪。
+      </p>
     </main>
+
+    <script>
+      const dimensions = [
+        {
+          id: "economy",
+          name: "经济组织",
+          negative: "国家调节",
+          positive: "市场自主",
+          negativeTrait: "公共保障",
+          positiveTrait: "市场自治",
+          summary: "观察你更信任公共部门规划和保障，还是更信任市场竞争、价格信号与私人选择。",
+          negativeMeaning: "国家调节端强调公共服务、产业政策、基础设施和关键资源的公共责任，通常更愿意用税收、监管和公共投资修正市场结果。",
+          positiveMeaning: "市场自主端强调竞争、创业、产权和价格机制，通常更担心过度管制降低效率、创新和个人选择空间。",
+          topics: ["税收与福利", "公共服务", "产业政策", "监管与创业"],
+          caveat: "支持市场并不等于反对所有公共服务；支持国家调节也不等于否认市场效率。",
+        },
+        {
+          id: "authority",
+          name: "治理偏好",
+          negative: "个体自由",
+          positive: "公共秩序",
+          negativeTrait: "自由优先",
+          positiveTrait: "秩序优先",
+          summary: "观察你在个人权利、表达空间与社会稳定、风险控制之间如何排序。",
+          negativeMeaning: "个体自由端强调权力边界、程序约束、表达权利和生活方式自主，通常更警惕公共权力过度扩张。",
+          positiveMeaning: "公共秩序端强调安全、纪律、协调和危机处置能力，通常更愿意为秩序和可预期性接受一定约束。",
+          topics: ["公共安全", "表达空间", "危机治理", "权力制衡"],
+          caveat: "自由与秩序并非互斥，差异常出现在风险来临时谁应优先让步。",
+        },
+        {
+          id: "justice",
+          name: "分配原则",
+          negative: "公平保障",
+          positive: "效率竞争",
+          negativeTrait: "平等敏感",
+          positiveTrait: "效率竞争",
+          summary: "观察你更关注弱势保障与结果差距，还是更关注激励、贡献和竞争效率。",
+          negativeMeaning: "公平保障端强调机会补偿、基本权利和再分配，通常认为社会应主动降低出身、地区和财富差异造成的不利影响。",
+          positiveMeaning: "效率竞争端强调规则一致、贡献回报和激励结构，通常担心过度平均化削弱努力、创新和整体产出。",
+          topics: ["教育公平", "收入差距", "再分配", "绩效激励"],
+          caveat: "重视公平不必然反对竞争；重视效率也不必然无视弱势处境。",
+        },
+        {
+          id: "culture",
+          name: "文化变化",
+          negative: "进步开放",
+          positive: "传统延续",
+          negativeTrait: "开放进步",
+          positiveTrait: "传统延续",
+          summary: "观察你面对新观念、新技术和生活方式变化时，是更强调开放实验还是延续稳定。",
+          negativeMeaning: "进步开放端强调多元身份、表达自由和制度适应，通常更愿意为少数选择和新观念留下空间。",
+          positiveMeaning: "传统延续端强调历史经验、家庭社区和文化连续性，通常更担心变化过快带来的失序与共同规范瓦解。",
+          topics: ["家庭与性别", "艺术表达", "教育价值", "技术变化"],
+          caveat: "开放不是否定传统，保守也不等于拒绝一切改变；关键在变化速度与社会承受能力。",
+        },
+        {
+          id: "identity",
+          name: "共同体边界",
+          negative: "世界主义",
+          positive: "共同体优先",
+          negativeTrait: "世界主义",
+          positiveTrait: "共同体优先",
+          summary: "观察你更强调跨国合作和普遍责任，还是更强调本地成员、产业与文化共同体的优先性。",
+          negativeMeaning: "世界主义端强调国际合作、跨文化交流和全球公共问题，通常更关注气候、卫生、迁移等跨边界议题。",
+          positiveMeaning: "共同体优先端强调本国劳动者、本土产业、文化认同和安全边界，通常更重视政策对既有成员的责任。",
+          topics: ["全球治理", "产业保护", "移民交流", "文化认同"],
+          caveat: "国际合作与本地责任可以同时存在；差异常出现在资源有限或利益冲突时。",
+        },
+      ];
+
+      const ideologies = [
+        {
+          id: "liberalism",
+          name: "自由主义",
+          family: "权利与制度",
+          axes: ["个体自由", "市场自主", "世界主义"],
+          summary: "自由主义通常强调个人权利、法治、有限政府和公共权力的程序约束。",
+          core: "核心关切是如何保护个人免受任意权力侵害，同时通过制度竞争、权利保障和公共讨论处理分歧。",
+          policies: ["宪政与法治", "表达和结社自由", "市场经济中的基础监管", "少数权利保护"],
+          variants: "内部差异很大：古典自由主义更重市场和有限政府，社会自由主义更愿意用公共政策保障实质机会。",
+          caution: "自由主义不等同于放任一切，它通常仍接受维护权利边界和公共秩序的制度安排。",
+        },
+        {
+          id: "conservatism",
+          name: "保守主义",
+          family: "传统与秩序",
+          axes: ["传统延续", "公共秩序", "共同体优先"],
+          summary: "保守主义倾向重视历史经验、社会连续性、家庭社区和渐进改革。",
+          core: "核心关切是社会秩序与文化传承，认为许多制度和习俗承载了长期试错后的隐性知识。",
+          policies: ["渐进式制度改革", "家庭和社区责任", "文化遗产保护", "强调社会稳定"],
+          variants: "有些保守主义强调宗教或道德传统，有些更强调国家制度、地方共同体或审慎治理。",
+          caution: "保守主义不必然反对所有变化，常见主张是变化应谨慎、可逆并尊重社会承受力。",
+        },
+        {
+          id: "social-democracy",
+          name: "社会民主主义",
+          family: "福利与市场",
+          axes: ["国家调节", "公平保障", "个体自由"],
+          summary: "社会民主主义通常接受市场经济，同时主张强福利、劳动保护和较积极的再分配。",
+          core: "核心关切是在保留市场活力的同时降低贫困、失业、疾病和教育差距带来的风险。",
+          policies: ["全民医疗或基础医疗保障", "累进税制", "劳动者保护", "公共教育和社会保险"],
+          variants: "不同传统在福利规模、工会角色和产业政策上差异较大。",
+          caution: "它不等同于取消市场，而是试图通过公共政策驯化市场带来的不平等与不安全感。",
+        },
+        {
+          id: "democratic-socialism",
+          name: "民主社会主义",
+          family: "平等与民主",
+          axes: ["国家调节", "公平保障", "进步开放"],
+          summary: "民主社会主义强调以民主方式扩大社会对经济权力和公共资源的控制。",
+          core: "核心关切是不仅政治权力需要民主监督，资本和生产资料形成的经济权力也需要被制衡。",
+          policies: ["关键行业公共所有或合作所有", "强化工会和职工参与", "高水平公共服务", "财富和资本收益再分配"],
+          variants: "一些路线强调议会改革，一些强调基层合作社、工人自治或公共投资机构。",
+          caution: "民主社会主义与威权式计划经济不同，其自我定义通常强调民主程序和公民参与。",
+        },
+        {
+          id: "marxism",
+          name: "马克思主义",
+          family: "阶级与资本",
+          axes: ["国家调节", "公平保障", "结构分析"],
+          summary: "马克思主义以阶级关系、资本积累和生产方式分析社会结构与历史变化。",
+          core: "核心关切是劳动、资本和所有制关系如何塑造不平等、意识形态和政治权力。",
+          policies: ["生产资料社会化的不同方案", "劳动者组织", "批判资本集中", "强调结构性不平等分析"],
+          variants: "包含经典马克思主义、西方马克思主义、分析马克思主义等多种理论传统，政策结论并不完全一致。",
+          caution: "马克思主义既是政治传统，也是社会理论谱系；不能简单等同于某一种历史政体。",
+        },
+        {
+          id: "libertarianism",
+          name: "自由意志主义",
+          family: "个人与市场",
+          axes: ["市场自主", "个体自由", "效率竞争"],
+          summary: "自由意志主义强调个人自主、私有产权、自愿交换和尽可能小的政府干预。",
+          core: "核心关切是减少强制，认为许多公共问题可以通过市场、自愿组织和个人责任解决。",
+          policies: ["低税收和小政府", "放松经济管制", "强产权保护", "反对家长式干预"],
+          variants: "有些更偏经济自由，有些同时强调个人生活方式自由；极端分支可能主张无政府资本主义。",
+          caution: "它重视自由选择，但常被批评低估结构性不平等和公共品供给难题。",
+        },
+        {
+          id: "communitarianism",
+          name: "社群主义",
+          family: "共同体与责任",
+          axes: ["共同体优先", "公共秩序", "公平保障"],
+          summary: "社群主义强调个人并非孤立存在，身份、责任和价值判断深受共同体塑造。",
+          core: "核心关切是在个人权利之外，如何维护社区纽带、公共责任和共享价值。",
+          policies: ["地方自治和社区参与", "公共服务中的互助责任", "重视公民教育", "平衡权利与义务"],
+          variants: "有偏进步的社群主义，也有偏保守的社群主义，差别在于共同体价值的内容和边界。",
+          caution: "强调共同体不必然否认个人权利，关键在共同体规范能否被公开讨论和民主修正。",
+        },
+        {
+          id: "nationalism",
+          name: "民族主义",
+          family: "认同与主权",
+          axes: ["共同体优先", "传统延续", "国家调节"],
+          summary: "民族主义强调民族共同体、国家主权、文化认同和成员间的特殊责任。",
+          core: "核心关切是政治共同体需要共享身份和边界，公共政策应优先回应本共同体成员。",
+          policies: ["产业和就业保护", "文化认同教育", "边境与移民管理", "维护主权自主"],
+          variants: "公民民族主义更强调政治共同体和法律身份，族群民族主义更强调血缘、语言或文化来源。",
+          caution: "民族主义可以表现为反殖民和自决诉求，也可能滑向排外；需要区分具体语境和边界设置。",
+        },
+        {
+          id: "ecologism",
+          name: "生态主义",
+          family: "环境与代际",
+          axes: ["世界主义", "公平保障", "进步开放"],
+          summary: "生态主义把环境承载力、代际公平和人与自然关系放在政治判断中心。",
+          core: "核心关切是经济增长、消费结构和能源体系是否超过生态边界，并把成本转嫁给未来。",
+          policies: ["减排和能源转型", "生态保护红线", "绿色公共交通", "循环经济和环境税"],
+          variants: "有些生态主义强调市场化碳定价，有些强调反消费主义、地方自治和增长模式转型。",
+          caution: "生态主义不只是环保技术方案，也常涉及发展模式、产业利益和公平分担问题。",
+        },
+        {
+          id: "progressivism",
+          name: "女权/进步主义",
+          family: "平等与承认",
+          axes: ["进步开放", "公平保障", "世界主义"],
+          summary: "女权和进步主义关注性别、身份、文化规范和制度安排中的不平等。",
+          core: "核心关切是某些群体的不利处境并非纯粹个人问题，而与法律、习俗、劳动分工和社会偏见有关。",
+          policies: ["反歧视规则", "性别平等和照护支持", "少数群体权利", "教育与职场机会平等"],
+          variants: "自由女权、社会主义女权、交叉性女权等分支对问题根源和政策路径理解不同。",
+          caution: "进步主义内部并不总是一致，常围绕表达边界、身份政治和制度优先级发生争论。",
+        },
+        {
+          id: "anarchism",
+          name: "无政府主义",
+          family: "反强制与自治",
+          axes: ["个体自由", "进步开放", "自治互助"],
+          summary: "无政府主义反对等级化强制权力，主张自愿合作、自治组织和去中心化秩序。",
+          core: "核心关切是国家、资本或其他等级结构可能把临时管理变成持久支配。",
+          policies: ["基层自治", "合作社和互助网络", "反对过度警治", "去中心化公共决策"],
+          variants: "包括无政府共产主义、无政府工团主义、个人主义无政府主义等，经济主张差异很大。",
+          caution: "无政府主义不等于混乱崇拜，它通常设想的是非国家形式的规则、互助和自我管理。",
+        },
+        {
+          id: "authoritarianism",
+          name: "威权主义",
+          family: "集中与控制",
+          axes: ["公共秩序", "共同体优先", "国家调节"],
+          summary: "威权主义强调集中权力、政治服从和以秩序或目标实现压倒多元竞争。",
+          core: "核心关切是快速决策、社会整合和风险控制，通常认为开放竞争会削弱效率或稳定。",
+          policies: ["集中决策", "限制反对力量", "强化社会管理", "以安全或发展目标约束权利"],
+          variants: "可以与不同经济政策、民族叙事或意识形态结合，因此并非单一经济立场。",
+          caution: "威权治理常被批评缺少权力制衡、问责机制和个人权利保障。",
+        },
+      ];
+
+      const questions = [
+        { dimension: "economy", text: "在财政有限时，公共医疗和基础教育仍应优先由政府兜底，即使这意味着更高税负或压缩其他支出。", weights: { economy: -1 } },
+        { dimension: "economy", text: "只要规则透明且反垄断有效，价格、工资和服务质量应主要由市场竞争决定。", weights: { economy: 1 } },
+        { dimension: "economy", text: "能源、交通、金融等关键行业应保留强公共控制，即使短期效率不如完全市场化。", weights: { economy: -1 } },
+        { dimension: "economy", text: "面对就业和创业压力，减少准入审批通常比扩大补贴更能释放社会活力。", weights: { economy: 1 } },
+        { dimension: "economy", text: "政府应通过保障房或公共租赁供给压低基本居住成本，即使会影响部分地产收益。", weights: { economy: -1 } },
+        { dimension: "economy", text: "企业用工和薪酬需要足够弹性来应对市场变化，即使这会增加部分劳动者的不确定性。", weights: { economy: 1 } },
+        { dimension: "economy", text: "涉及芯片、能源、粮食等长期安全的产业，国家可以用产业政策承担试错成本。", weights: { economy: -1 } },
+        { dimension: "economy", text: "若私营或社会机构能以同等质量提供公共服务，政府不必坚持直接经营。", weights: { economy: 1 } },
+        { dimension: "authority", text: "成年人在生活方式、表达和私人选择上应享有较大空间，除非能证明会直接伤害他人。", weights: { authority: -1 } },
+        { dimension: "authority", text: "在治安、疫情或灾害风险较高时，临时强化管控是可以接受的，即使会减少个人便利。", weights: { authority: 1 } },
+        { dimension: "authority", text: "公共政策应保留公开质疑和申诉渠道，即使这会拖慢决策速度。", weights: { authority: -1 } },
+        { dimension: "authority", text: "重大危机中，统一指挥和快速执行通常比广泛协商更能降低损失。", weights: { authority: 1 } },
+        { dimension: "authority", text: "公共机构掌握的数据和权力越多，越需要独立监督、透明程序和可追责记录。", weights: { authority: -1 } },
+        { dimension: "authority", text: "匿名网络表达应承担更清晰责任，必要时可接受更严格的身份核验。", weights: { authority: 1 } },
+        { dimension: "authority", text: "媒体、学界和普通公民对权力保持怀疑，是防止政策失误扩大的必要机制。", weights: { authority: -1 } },
+        { dimension: "authority", text: "学校和公共组织应更明确训练纪律、规则和集体服从，否则制度很难稳定运行。", weights: { authority: 1 } },
+        { dimension: "justice", text: "公共政策应主动补偿出身、地区和家庭条件造成的不利处境，即使成本由全体纳税人分担。", weights: { justice: -1 } },
+        { dimension: "justice", text: "分配规则应更多奖励贡献、风险和表现，而不是优先压低收入差距。", weights: { justice: 1 } },
+        { dimension: "justice", text: "教育资源应向弱势家庭和落后地区倾斜，即使热门学校和优势地区获得的增量更少。", weights: { justice: -1 } },
+        { dimension: "justice", text: "福利制度应避免让长期依赖比劳动和自我改善更划算，因此扩张必须谨慎。", weights: { justice: 1 } },
+        { dimension: "justice", text: "住房、医疗和基础教育应首先被看作基本权利，不能完全按购买力分配。", weights: { justice: -1 } },
+        { dimension: "justice", text: "如果竞争程序公开且没有明显特权，较大的收入差距也可以被社会接受。", weights: { justice: 1 } },
+        { dimension: "justice", text: "税收和转移支付应明确承担缩小贫富差距的任务，即使会降低高收入者的部分激励。", weights: { justice: -1 } },
+        { dimension: "justice", text: "比起追求结果接近，制度更应保证向上流动通道，并允许优秀者获得显著回报。", weights: { justice: 1 } },
+        { dimension: "culture", text: "法律应为多样的性别、职业和家庭选择留下空间，即使这会挑战部分传统习惯。", weights: { culture: -1 } },
+        { dimension: "culture", text: "传统家庭、社区礼俗和代际责任仍是社会稳定的重要资源，不能轻易让位于个人偏好。", weights: { culture: 1 } },
+        { dimension: "culture", text: "艺术、教育和公共表达应允许挑战主流观念，只要不直接煽动伤害。", weights: { culture: -1 } },
+        { dimension: "culture", text: "快速推动价值观变革容易制造不必要的对立，社会规范应以渐进调整为主。", weights: { culture: 1 } },
+        { dimension: "culture", text: "面对新技术和新生活方式，制度应先允许小范围试验，再根据后果修正规则。", weights: { culture: -1 } },
+        { dimension: "culture", text: "学校教育应更重视共同价值、责任意识和文化传承，而不只是个人发展。", weights: { culture: 1 } },
+        { dimension: "culture", text: "少数群体的生活方式即便不被多数理解，也应在法律和公共服务中获得平等对待。", weights: { culture: -1 } },
+        { dimension: "culture", text: "历史街区、传统节庆和地方记忆有时应优先于商业开发和流行潮流。", weights: { culture: 1 } },
+        { dimension: "identity", text: "气候、公共卫生和金融风险等问题需要跨国规则共同承担成本，而不只看本国短期收益。", weights: { identity: -1 } },
+        { dimension: "identity", text: "就业、关键产业和基础资源应优先保障本共同体成员，即使会降低全球配置效率。", weights: { identity: 1 } },
+        { dimension: "identity", text: "移民、留学和跨文化交流总体能扩展社会经验，政策不应只用安全风险来衡量。", weights: { identity: -1 } },
+        { dimension: "identity", text: "当国际规则与本地产业、文化或安全利益冲突时，应优先维护本共同体的自主选择。", weights: { identity: 1 } },
+        { dimension: "identity", text: "人的基本处境不应因国界而被明显区别对待，富裕社会应承担更多跨境责任。", weights: { identity: -1 } },
+        { dimension: "identity", text: "国家认同、共同历史和边界意识应在公共教育中占据清晰位置。", weights: { identity: 1 } },
+        { dimension: "identity", text: "保护本土文化应通过自信和制度支持实现，而不是把外来文化当成主要威胁。", weights: { identity: -1 } },
+        { dimension: "identity", text: "供应链、粮食和能源政策应保留本地安全冗余，即使成本高于全球最低价。", weights: { identity: 1 } },
+      ];
+
+      const choices = [
+        { label: "强烈不同意", value: -2 },
+        { label: "不同意", value: -1 },
+        { label: "中立", value: 0 },
+        { label: "同意", value: 1 },
+        { label: "强烈同意", value: 2 },
+      ];
+
+      const answers = Array(questions.length).fill(null);
+      let latestScores = null;
+      let activeIndexType = "all";
+      let contentIndex = [];
+      let pendingScrollTarget = "";
+
+      const pages = [...document.querySelectorAll("[data-page]")];
+      const navLinks = [...document.querySelectorAll("[data-route]")];
+      const quizForm = document.querySelector("#quizForm");
+      const progressBar = document.querySelector("#progressBar");
+      const progressCopy = document.querySelector("#progressCopy");
+      const submitButton = document.querySelector("#submitButton");
+      const submitHint = document.querySelector("#submitHint");
+      const questionIndex = document.querySelector("#questionIndex");
+      const moduleGrid = document.querySelector("#moduleGrid");
+      const guideGrid = document.querySelector("#guideGrid");
+      const contentSearch = document.querySelector("#contentSearch");
+      const contentFilters = document.querySelector("#contentFilters");
+      const contentIndexMeta = document.querySelector("#contentIndexMeta");
+      const contentIndexList = document.querySelector("#contentIndexList");
+      const resultContent = document.querySelector("#resultContent");
+      const emptyResult = document.querySelector("#emptyResult");
+      const resultTitle = document.querySelector("#resultTitle");
+      const resultCopy = document.querySelector("#resultCopy");
+      const resultQuickRead = document.querySelector("#resultQuickRead");
+      const resultReport = document.querySelector("#resultReport");
+      const dimensionNotes = document.querySelector("#dimensionNotes");
+      const scoreGrid = document.querySelector("#scoreGrid");
+      const dimensionGrid = document.querySelector("#dimensionGrid");
+      const issueGrid = document.querySelector("#issueGrid");
+      const issueQuickNav = document.querySelector("#issueQuickNav");
+      const ideologyGrid = document.querySelector("#ideologyGrid");
+      const ideologyQuickNav = document.querySelector("#ideologyQuickNav");
+      const comparisonGrid = document.querySelector("#comparisonGrid");
+      const methodGrid = document.querySelector("#methodGrid");
+      const referenceLinks = document.querySelector("#referenceLinks");
+      const resultReading = document.querySelector("#resultReading");
+      const resultNextSteps = document.querySelector("#resultNextSteps");
+      const radarCanvas = document.querySelector("#radarCanvas");
+      const compassCanvas = document.querySelector("#compassCanvas");
+
+      const ideologyRecommendations = {
+        economy: {
+          negative: ["social-democracy", "democratic-socialism", "marxism"],
+          positive: ["libertarianism", "liberalism"],
+        },
+        authority: {
+          negative: ["liberalism", "libertarianism", "anarchism"],
+          positive: ["authoritarianism", "conservatism", "communitarianism"],
+        },
+        justice: {
+          negative: ["social-democracy", "progressivism", "democratic-socialism"],
+          positive: ["libertarianism", "liberalism"],
+        },
+        culture: {
+          negative: ["progressivism", "liberalism", "anarchism"],
+          positive: ["conservatism", "communitarianism", "nationalism"],
+        },
+        identity: {
+          negative: ["ecologism", "liberalism", "progressivism"],
+          positive: ["nationalism", "communitarianism", "conservatism"],
+        },
+      };
+
+      const ideologyRelations = {
+        liberalism: ["libertarianism", "social-democracy", "progressivism"],
+        conservatism: ["communitarianism", "nationalism", "authoritarianism"],
+        "social-democracy": ["liberalism", "democratic-socialism", "ecologism"],
+        "democratic-socialism": ["social-democracy", "marxism", "progressivism"],
+        marxism: ["democratic-socialism", "social-democracy", "anarchism"],
+        libertarianism: ["liberalism", "anarchism", "conservatism"],
+        communitarianism: ["conservatism", "nationalism", "social-democracy"],
+        nationalism: ["conservatism", "communitarianism", "authoritarianism"],
+        ecologism: ["progressivism", "social-democracy", "democratic-socialism"],
+        progressivism: ["liberalism", "ecologism", "social-democracy"],
+        anarchism: ["libertarianism", "progressivism", "marxism"],
+        authoritarianism: ["conservatism", "nationalism", "communitarianism"],
+      };
+
+      const siteModules = [
+        {
+          title: "先完成测评",
+          summary: "40 道陈述题会生成五维坐标、文字画像和下一步阅读线索。",
+          links: [
+            { label: "开始测评", route: "quiz" },
+            { label: "如何阅读", route: "method" },
+          ],
+        },
+        {
+          title: "测后继续阅读",
+          summary: "结果页会把鲜明坐标转成议题、政治词条和概念对照，不停在一个标签上。",
+          links: [
+            { label: "结果页", route: "result" },
+            { label: "议题地图", route: "issues" },
+          ],
+        },
+        {
+          title: "直接查内容",
+          summary: "如果你已经有问题，可以从住房、教育、自由、秩序等关键词进入内容索引。",
+          links: [
+            { label: "议题地图", route: "issues" },
+            { label: "概念库", route: "concepts" },
+          ],
+        },
+      ];
+
+      const readingGuides = [
+        {
+          id: "before-test",
+          title: "测评前：先知道它测什么",
+          summary: "适合第一次来、担心被贴标签，或者想先理解页面用途的访客。",
+          steps: ["先读如何阅读，确认测评只生成阅读线索", "再进入价值测评，按直觉回答 40 道题", "完成后把结果当作索引，而不是身份判定"],
+          links: [
+            { label: "如何阅读", route: "method" },
+            { label: "开始测评", route: "quiz" },
+          ],
+        },
+        {
+          id: "after-test",
+          title: "测评后：从结果进入内容",
+          summary: "适合已经生成结果，但不想停在标题、图表或单个主义名称上的访客。",
+          steps: ["先看结果页的速读、张力和五维解释", "再点开推荐议题，观察价值取舍如何进入现实讨论", "最后读政治词条和概念对照，辨认词汇边界"],
+          links: [
+            { label: "结果页", route: "result" },
+            { label: "议题地图", route: "issues" },
+            { label: "政治词条", route: "concepts", target: "concept-ideologies" },
+          ],
+        },
+        {
+          id: "lookup",
+          title: "直接查：从议题或概念进入",
+          summary: "适合已经有关键词，想快速查住房、自由、秩序、保守主义等内容的访客。",
+          steps: ["从站内索引搜索关键词", "优先打开一个现实议题或价值坐标", "再顺着相关词条、对照和方法说明补全语境"],
+          links: [
+            { label: "议题地图", route: "issues" },
+            { label: "概念库", route: "concepts" },
+          ],
+        },
+      ];
+
+      const issues = [
+        {
+          id: "housing",
+          title: "住房与城市居住",
+          axes: ["国家调节", "公平保障", "市场自主"],
+          summary: "住房问题同时涉及基本生活保障、土地财政、金融风险和城市机会分配。",
+          lenses: [
+            { label: "公共保障", text: "会追问基本居住是否应被视为公共责任，以及保障房、公租房和租赁权利该覆盖到什么程度。" },
+            { label: "市场供给", text: "会追问土地、审批、金融和租赁规则是否压低了供给弹性，让价格不能通过竞争和建设缓解。" },
+            { label: "城市共同体", text: "会追问本地居民、新市民和外来人口在教育、落户、通勤和社区资源上如何排序。" },
+          ],
+          questions: ["谁应优先获得稀缺城市资源", "政府直接供给和市场供给如何分工", "房产收益与居住权利发生冲突时怎么处理"],
+          relatedIdeologies: ["social-democracy", "libertarianism", "communitarianism"],
+        },
+        {
+          id: "healthcare",
+          title: "医疗与公共卫生",
+          axes: ["公平保障", "国家调节", "个体自由"],
+          summary: "医疗政策常在普遍可及、财政承受、个人选择和危机管控之间寻找平衡。",
+          lenses: [
+            { label: "公平保障", text: "会强调疾病风险并非个人可控，基础医疗应尽量避免按支付能力分层。" },
+            { label: "效率竞争", text: "会担心过度统一采购、价格管制或行政分配降低创新、服务质量和响应速度。" },
+            { label: "公共秩序", text: "在疫情和重大风险中，会更关注数据、隔离、疫苗和资源调度的制度边界。" },
+          ],
+          questions: ["全民保障如何避免财政失控", "个人选择能否与统一控费并存", "危机管控结束后权力是否能退场"],
+          relatedIdeologies: ["social-democracy", "liberalism", "authoritarianism"],
+        },
+        {
+          id: "education",
+          title: "教育与向上流动",
+          axes: ["公平保障", "效率竞争", "传统延续"],
+          summary: "教育既是个人发展通道，也是社会筛选机制和共同价值传递机制。",
+          lenses: [
+            { label: "公平保障", text: "会关注家庭背景、地区差距和学校资源如何影响孩子的起点。" },
+            { label: "效率竞争", text: "会强调评价标准、激励和卓越通道，担心平均化削弱能力培养。" },
+            { label: "文化延续", text: "会追问学校应传递多少共同价值、纪律训练和历史文化记忆。" },
+          ],
+          questions: ["教育是公共权利还是竞争筛选", "资源倾斜会不会伤害卓越培养", "学校应如何处理多元表达与共同规范"],
+          relatedIdeologies: ["progressivism", "conservatism", "social-democracy"],
+        },
+        {
+          id: "migration",
+          title: "移民、户籍与边界",
+          axes: ["世界主义", "共同体优先", "公平保障"],
+          summary: "人口流动把人道责任、成员资格、公共资源和文化适应放到同一张桌上。",
+          lenses: [
+            { label: "世界主义", text: "会强调人的基本处境不应被出生地彻底决定，流动能扩展机会和文化经验。" },
+            { label: "共同体优先", text: "会强调公共资源来自成员长期贡献，边界和准入规则有其政治正当性。" },
+            { label: "公平保障", text: "会追问外来劳动者、难民、城市新市民和本地弱势群体之间的资源排序。" },
+          ],
+          questions: ["谁可以成为共同体成员", "公共福利应按居住、纳税还是身份分配", "文化冲突如何用制度而不是情绪处理"],
+          relatedIdeologies: ["liberalism", "nationalism", "communitarianism"],
+        },
+        {
+          id: "climate",
+          title: "气候、能源与生态转型",
+          axes: ["世界主义", "公平保障", "效率竞争"],
+          summary: "气候政策把跨国责任、产业成本、能源安全和代际公平紧紧绑在一起。",
+          lenses: [
+            { label: "生态边界", text: "会强调增长和消费不能无限把成本转嫁给自然系统和未来世代。" },
+            { label: "产业现实", text: "会追问减排成本如何分配，能源价格、就业和制造业竞争力能否承受。" },
+            { label: "国际责任", text: "会关注富裕社会、发展中经济体和高排放产业之间的责任比例。" },
+          ],
+          questions: ["谁为转型成本买单", "能源安全与减排速度如何排序", "国际规则是否会变成新的不平等"],
+          relatedIdeologies: ["ecologism", "social-democracy", "nationalism"],
+        },
+        {
+          id: "platforms",
+          title: "平台、数据与算法治理",
+          axes: ["个体自由", "公共秩序", "市场自主"],
+          summary: "平台治理同时牵涉言论边界、隐私、垄断、劳动关系和公共安全。",
+          lenses: [
+            { label: "个人权利", text: "会强调隐私、表达和申诉渠道，避免平台或政府用算法进行不可见控制。" },
+            { label: "公共秩序", text: "会关注诈骗、谣言、未成年人保护和社会动员风险。" },
+            { label: "市场竞争", text: "会追问反垄断、数据可携带和平台责任是否会抑制创新。" },
+          ],
+          questions: ["谁来决定内容边界", "算法透明如何不泄露商业机密", "平台劳动者是承包者还是雇员"],
+          relatedIdeologies: ["liberalism", "libertarianism", "authoritarianism"],
+        },
+        {
+          id: "industry",
+          title: "产业政策与国家能力",
+          axes: ["国家调节", "市场自主", "共同体优先"],
+          summary: "关键产业政策会在安全冗余、财政风险、企业创新和全球分工之间拉扯。",
+          lenses: [
+            { label: "国家调节", text: "会认为芯片、能源、粮食等领域需要长期投入和公共协调，不能只等短期利润信号。" },
+            { label: "市场自主", text: "会担心补贴寻租、低效投资和政府选错技术路线。" },
+            { label: "共同体优先", text: "会强调就业、安全和供应链韧性，有时愿意接受高于全球最低价的成本。" },
+          ],
+          questions: ["哪些产业值得公共试错", "补贴如何退出", "安全冗余和效率损失该如何比较"],
+          relatedIdeologies: ["nationalism", "social-democracy", "libertarianism"],
+        },
+        {
+          id: "security",
+          title: "治安、安全与权力边界",
+          axes: ["公共秩序", "个体自由", "传统延续"],
+          summary: "安全议题最容易把风险控制、程序正义、隐私和社会信任推向冲突。",
+          lenses: [
+            { label: "公共秩序", text: "会强调如果基本安全失效，其他自由和权利都难以稳定存在。" },
+            { label: "个体自由", text: "会担心监控、身份核验和预防性权力扩张后难以收回。" },
+            { label: "社会规范", text: "会追问家庭、学校、社区和执法之间的责任边界，而不只依赖惩罚。" },
+          ],
+          questions: ["风险多高时可以扩大管控", "紧急权力如何设置期限和问责", "安全感与权利边界如何同时维护"],
+          relatedIdeologies: ["conservatism", "liberalism", "authoritarianism"],
+        },
+      ];
+
+      const issueRecommendations = {
+        economy: {
+          negative: ["housing", "healthcare", "industry"],
+          positive: ["platforms", "industry", "housing"],
+        },
+        authority: {
+          negative: ["platforms", "security", "migration"],
+          positive: ["security", "healthcare", "platforms"],
+        },
+        justice: {
+          negative: ["housing", "education", "healthcare"],
+          positive: ["education", "industry", "platforms"],
+        },
+        culture: {
+          negative: ["education", "migration", "platforms"],
+          positive: ["education", "security", "migration"],
+        },
+        identity: {
+          negative: ["climate", "migration", "platforms"],
+          positive: ["industry", "migration", "security"],
+        },
+      };
+
+      const comparisons = [
+        {
+          id: "liberal-libertarian",
+          left: "自由主义",
+          right: "自由意志主义",
+          shared: "都重视个人权利、法治和任意权力的限制。",
+          difference: "自由主义通常接受较多公共监管和社会权利安排；自由意志主义更强调产权、自愿交换和小政府。",
+          watch: "讨论经济监管、福利国家和平台治理时，两者可能从相同的自由语言走向不同政策。",
+          links: ["liberalism", "libertarianism"],
+        },
+        {
+          id: "socialdem-demso",
+          left: "社会民主主义",
+          right: "民主社会主义",
+          shared: "都关心不平等、劳动保护和公共服务。",
+          difference: "社会民主主义多在市场经济内做再分配和福利修正；民主社会主义更关注经济权力本身的民主控制。",
+          watch: "关键区别常出现在所有制、工会权力和资本收益如何被约束。",
+          links: ["social-democracy", "democratic-socialism"],
+        },
+        {
+          id: "conservative-authoritarian",
+          left: "保守主义",
+          right: "威权主义",
+          shared: "都可能重视秩序、连续性和社会整合。",
+          difference: "保守主义不必然反对法治和权力制衡；威权主义更倾向集中权力并限制多元竞争。",
+          watch: "当传统、稳定和安全被用来取消问责机制时，两者的边界会变得关键。",
+          links: ["conservatism", "authoritarianism"],
+        },
+        {
+          id: "national-communitarian",
+          left: "民族主义",
+          right: "社群主义",
+          shared: "都认为个人离不开共同体，公共政策不能只从抽象个人出发。",
+          difference: "民族主义更强调国家、民族身份和边界；社群主义更强调社区、公共责任和共享价值的形成过程。",
+          watch: "判断一个主张时，要看它强调的是成员互助、地方自治，还是排他边界和主权优先。",
+          links: ["nationalism", "communitarianism"],
+        },
+        {
+          id: "progressive-ecology",
+          left: "进步主义",
+          right: "生态主义",
+          shared: "都可能批判既有制度带来的隐性成本和弱势处境。",
+          difference: "进步主义更关注身份、承认和制度平等；生态主义把生态边界、代际责任和发展模式放在中心。",
+          watch: "二者常在气候正义、城市规划和消费文化问题上重叠，但问题焦点并不相同。",
+          links: ["progressivism", "ecologism"],
+        },
+      ];
+
+      const methodNotes = [
+        {
+          title: "测评是阅读入口",
+          text: "40 道题只用于生成一组价值倾向和阅读线索，不等于严肃量表，也不能推出完整政治身份。",
+        },
+        {
+          title: "价值坐标不是好坏轴",
+          text: "每条轴的两端都代表一种价值优先级。分数越高，只说明你更愿意为该端价值承担相应成本。",
+        },
+        {
+          title: "词条不是阵营排名",
+          text: "政治词条用于理解政治语言的常见用法、内部差异和误读，不用于给访客贴标签。",
+        },
+        {
+          title: "议题地图看取舍",
+          text: "真实公共问题通常不是单维选择。一个住房、医疗或教育政策，会同时触发效率、公平、秩序和认同问题。",
+        },
+        {
+          title: "本地计算与可编辑",
+          text: "当前页面没有后端，答案不上传。题库、词条和议题内容都在静态 HTML 中，后续可以继续扩展。",
+        },
+        {
+          title: "结构参考而非复制",
+          text: "页面结构参考了多轴政治测评、Pew 类型学测验的作答提示、以及百科式词条的概念组织方式；题目和中文说明均按本站的五维框架重新写作。",
+        },
+      ];
+
+      const referenceSources = [
+        { label: "8values 多轴测试", url: "https://8values.github.io/" },
+        { label: "9Axes 多轴测试", url: "https://9axes.github.io/" },
+        { label: "Pew Political Typology", url: "https://www.pewresearch.org/politics/quiz/political-typology/" },
+        {
+          label: "Pew 题目设计说明",
+          url: "https://www.pewresearch.org/short-reads/2014/06/27/why-the-typology-quiz-questions-are-asked-the-way-they-are/",
+        },
+        { label: "Political spectrum", url: "https://en.wikipedia.org/wiki/Political_spectrum" },
+        { label: "Political ideologies", url: "https://en.wikipedia.org/wiki/List_of_political_ideologies" },
+      ];
+
+      const indexTypes = [
+        { id: "all", label: "全部" },
+        { id: "guide", label: "路线" },
+        { id: "dimension", label: "坐标" },
+        { id: "issue", label: "议题" },
+        { id: "ideology", label: "词条" },
+        { id: "comparison", label: "对照" },
+        { id: "method", label: "方法" },
+      ];
+
+      const routeAliases = {
+        dimensions: "concepts",
+        ideologies: "concepts",
+        comparisons: "concepts",
+      };
+
+      const routeAliasTargets = {
+        dimensions: "concept-dimensions",
+        ideologies: "concept-ideologies",
+        comparisons: "concept-comparisons",
+      };
+
+      function getRawRoute() {
+        return window.location.hash.replace("#", "") || "home";
+      }
+
+      function normalizeRoute(route) {
+        return routeAliases[route] || route;
+      }
+
+      function getRoute() {
+        const route = normalizeRoute(getRawRoute());
+        return pages.some((page) => page.dataset.page === route) ? route : "home";
+      }
+
+      function routeTo(route = getRoute()) {
+        const rawRoute = getRawRoute();
+        pages.forEach((page) => page.classList.toggle("active", page.dataset.page === route));
+        navLinks.forEach((link) => link.classList.toggle("active", link.dataset.route === route));
+
+        if (route === "result") {
+          renderResultState();
+        }
+
+        const scrollTarget = routeAliasTargets[rawRoute] || pendingScrollTarget;
+        pendingScrollTarget = "";
+
+        if (scrollTarget) {
+          window.setTimeout(() => scrollToElementById(scrollTarget), 140);
+        } else {
+          window.setTimeout(() => scrollToPageStart(route), 120);
+        }
+      }
+
+      function getIdeologyById(id) {
+        return ideologies.find((ideology) => ideology.id === id);
+      }
+
+      function getRelatedIdeologies(id) {
+        return (ideologyRelations[id] || []).map(getIdeologyById).filter(Boolean);
+      }
+
+      function getIssueById(id) {
+        return issues.find((issue) => issue.id === id);
+      }
+
+      function getIssuesByIdeologyId(id) {
+        return issues.filter((issue) => issue.relatedIdeologies.includes(id));
+      }
+
+      function getDimensionsByAxes(axisLabels) {
+        return dimensions.filter((dimension) =>
+          axisLabels.some((label) => [dimension.name, dimension.negative, dimension.positive].includes(label))
+        );
+      }
+
+      function getIssuesByDimension(dimension) {
+        return issues.filter((issue) =>
+          issue.axes.some((axis) => [dimension.name, dimension.negative, dimension.positive].includes(axis))
+        );
+      }
+
+      function getComparisonsByIdeologyIds(ids) {
+        return comparisons.filter((comparison) => comparison.links.some((id) => ids.includes(id)));
+      }
+
+      function scrollToElementById(id) {
+        const target = document.querySelector(`#${id}`);
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.focus({ preventScroll: true });
+      }
+
+      function scrollToPageStart(route) {
+        const target = document.querySelector(`[data-page="${route}"]`);
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: "auto", block: "start" });
+      }
+
+      function goToTarget(route, targetId) {
+        const normalizedRoute = normalizeRoute(route);
+        if (getRoute() !== normalizedRoute) {
+          pendingScrollTarget = targetId;
+          window.location.hash = normalizedRoute;
+          return;
+        }
+
+        scrollToElementById(targetId);
+      }
+
+      function goToRoute(route, targetId = "") {
+        const normalizedRoute = normalizeRoute(route);
+        if (targetId) {
+          goToTarget(normalizedRoute, targetId);
+          return;
+        }
+
+        window.location.hash = normalizedRoute;
+      }
+
+      function goToIdeology(id) {
+        goToTarget("concepts", `ideology-${id}`);
+      }
+
+      function scrollToIssue(id) {
+        const target = document.querySelector(`#issue-${id}`);
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.focus({ preventScroll: true });
+      }
+
+      function goToIssue(id) {
+        if (getRoute() !== "issues") {
+          window.location.hash = "issues";
+          window.setTimeout(() => scrollToIssue(id), 80);
+          return;
+        }
+
+        scrollToIssue(id);
+      }
+
+      function goToGuide(id) {
+        goToTarget("guide", `guide-${id}`);
+      }
+
+      function goToDimension(id) {
+        goToTarget("concepts", `dimension-${id}`);
+      }
+
+      function goToComparison(id) {
+        goToTarget("concepts", `comparison-${id}`);
+      }
+
+      function goToMethod(id) {
+        goToTarget("method", `method-${id}`);
+      }
+
+      function goToContentItem(id) {
+        const item = contentIndex.find((entry) => entry.id === id);
+        if (!item) return;
+
+        if (item.type === "guide") goToGuide(item.targetId.replace("guide-", ""));
+        else if (item.type === "dimension") goToDimension(item.targetId.replace("dimension-", ""));
+        else if (item.type === "issue") goToIssue(item.targetId.replace("issue-", ""));
+        else if (item.type === "ideology") goToIdeology(item.targetId.replace("ideology-", ""));
+        else if (item.type === "comparison") goToComparison(item.targetId.replace("comparison-", ""));
+        else if (item.type === "method") goToMethod(item.targetId.replace("method-", ""));
+        else window.location.hash = item.route;
+      }
+
+      function scrollToQuestion(index) {
+        const target = document.querySelector(`[data-question="${index}"]`);
+        if (!target) return;
+
+        target.scrollIntoView({ behavior: "smooth", block: "center" });
+        target.focus({ preventScroll: true });
+      }
+
+      function goToQuestion(index) {
+        if (getRoute() !== "quiz") {
+          window.location.hash = "quiz";
+          window.setTimeout(() => scrollToQuestion(index), 80);
+          return;
+        }
+
+        scrollToQuestion(index);
+      }
+
+      function renderQuiz() {
+        quizForm.innerHTML = questions
+          .map((question, index) => {
+            const dimension = dimensions.find((item) => item.id === question.dimension);
+            const options = choices
+              .map(
+                (choice) => `
+                  <label class="option">
+                    <input type="radio" name="q${index}" value="${choice.value}" aria-label="${choice.label}" />
+                    <span>${choice.label}</span>
+                  </label>
+                `
+              )
+              .join("");
+
+            return `
+              <article class="question" data-question="${index}" tabindex="-1">
+                <div class="question-top">
+                  <div class="question-number">${String(index + 1).padStart(2, "0")}</div>
+                  <div>
+                    <p class="question-text">${question.text}</p>
+                    <span class="question-meta">${dimension.name}：${dimension.negative} ↔ ${dimension.positive}</span>
+                  </div>
+                </div>
+                <div class="options">${options}</div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function renderQuestionIndex() {
+        questionIndex.innerHTML = questions
+          .map(
+            (_, index) => `
+              <button type="button" data-question-jump="${index}" aria-label="跳到第 ${index + 1} 题">
+                ${String(index + 1).padStart(2, "0")}
+              </button>
+            `
+          )
+          .join("");
+      }
+
+      function normalizeIndexText(value) {
+        return String(value || "")
+          .toLowerCase()
+          .replace(/\s+/g, "");
+      }
+
+      function buildContentIndex() {
+        const getTypeLabel = (type) => indexTypes.find((item) => item.id === type)?.label || type;
+
+        return [
+          ...readingGuides.map((guide) => ({
+            id: `guide-${guide.id}`,
+            type: "guide",
+            typeLabel: getTypeLabel("guide"),
+            route: "guide",
+            targetId: `guide-${guide.id}`,
+            title: guide.title,
+            summary: guide.summary,
+            keywords: guide.steps,
+          })),
+          ...dimensions.map((dimension) => ({
+            id: `dimension-${dimension.id}`,
+            type: "dimension",
+            typeLabel: getTypeLabel("dimension"),
+            route: "concepts",
+            targetId: `dimension-${dimension.id}`,
+            title: `${dimension.negative} ↔ ${dimension.positive}`,
+            summary: dimension.summary,
+            keywords: [
+              dimension.name,
+              dimension.negative,
+              dimension.positive,
+              dimension.negativeMeaning,
+              dimension.positiveMeaning,
+              dimension.caveat,
+              ...dimension.topics,
+            ],
+          })),
+          ...issues.map((issue) => ({
+            id: `issue-${issue.id}`,
+            type: "issue",
+            typeLabel: getTypeLabel("issue"),
+            route: "issues",
+            targetId: `issue-${issue.id}`,
+            title: issue.title,
+            summary: issue.summary,
+            keywords: [
+              ...issue.axes,
+              ...issue.questions,
+              ...issue.lenses.flatMap((lens) => [lens.label, lens.text]),
+              ...issue.relatedIdeologies.map((id) => getIdeologyById(id)?.name || id),
+            ],
+          })),
+          ...ideologies.map((ideology) => ({
+            id: `ideology-${ideology.id}`,
+            type: "ideology",
+            typeLabel: getTypeLabel("ideology"),
+            route: "concepts",
+            targetId: `ideology-${ideology.id}`,
+            title: ideology.name,
+            summary: ideology.summary,
+            keywords: [
+              ideology.family,
+              ideology.core,
+              ideology.variants,
+              ideology.caution,
+              ...ideology.axes,
+              ...ideology.policies,
+            ],
+          })),
+          ...comparisons.map((comparison) => ({
+            id: `comparison-${comparison.id}`,
+            type: "comparison",
+            typeLabel: getTypeLabel("comparison"),
+            route: "concepts",
+            targetId: `comparison-${comparison.id}`,
+            title: `${comparison.left} vs ${comparison.right}`,
+            summary: comparison.difference,
+            keywords: [comparison.shared, comparison.watch, ...comparison.links.map((id) => getIdeologyById(id)?.name || id)],
+          })),
+          ...methodNotes.map((note, index) => ({
+            id: `method-${index}`,
+            type: "method",
+            typeLabel: getTypeLabel("method"),
+            route: "method",
+            targetId: `method-${index}`,
+            title: note.title,
+            summary: note.text,
+            keywords: [String(index + 1).padStart(2, "0")],
+          })),
+        ];
+      }
+
+      function filterContentIndex() {
+        const query = normalizeIndexText(contentSearch.value.trim());
+        const typeCounts = Object.fromEntries(
+          indexTypes
+            .filter((type) => type.id !== "all")
+            .map((type) => [type.id, contentIndex.filter((item) => item.type === type.id).length])
+        );
+        const filtered = contentIndex.filter((item) => {
+          const matchType = activeIndexType === "all" || item.type === activeIndexType;
+          const matchQuery =
+            !query ||
+            normalizeIndexText([item.typeLabel, item.title, item.summary, ...item.keywords].join(" ")).includes(query);
+
+          return matchType && matchQuery;
+        });
+
+        contentFilters.innerHTML = indexTypes
+          .map((type) => {
+            const count = type.id === "all" ? contentIndex.length : typeCounts[type.id] || 0;
+            return `
+              <button class="filter-button${activeIndexType === type.id ? " active" : ""}" type="button" data-index-filter="${type.id}">
+                ${type.label} ${count}
+              </button>
+            `;
+          })
+          .join("");
+
+        contentIndexMeta.textContent = filtered.length
+          ? `显示 ${filtered.length} / ${contentIndex.length} 条内容。`
+          : `没有找到匹配内容。可以换一个更宽的关键词，例如“自由”“秩序”“住房”。`;
+
+        contentIndexList.innerHTML = filtered.length
+          ? filtered
+              .map(
+                (item) => `
+                  <button class="index-row" type="button" data-index-item="${item.id}">
+                    <span class="index-type">${item.typeLabel}</span>
+                    <span class="index-copy">
+                      <span class="index-title">${item.title}</span>
+                      <span class="index-summary">${item.summary}</span>
+                    </span>
+                    <span class="index-arrow">打开</span>
+                  </button>
+                `
+              )
+              .join("")
+          : `<div class="empty-index">当前筛选没有结果。</div>`;
+      }
+
+      function renderContentIndex() {
+        contentIndex = buildContentIndex();
+        filterContentIndex();
+      }
+
+      function renderRouteLink(link) {
+        const target = link.target ? ` data-scroll-target="${link.target}"` : "";
+        const href = normalizeRoute(link.route);
+        return `<a href="#${href}" data-route-link="${link.route}"${target}>${link.label}</a>`;
+      }
+
+      function renderModules() {
+        moduleGrid.innerHTML = siteModules
+          .map(
+            (module, index) => `
+              <article class="module-row">
+                <span class="module-index">${String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>${module.title}</h3>
+                  <p>${module.summary}</p>
+                </div>
+                <div class="link-row">
+                  ${module.links.map(renderRouteLink).join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderGuides() {
+        guideGrid.innerHTML = readingGuides
+          .map(
+            (guide, index) => `
+              <article class="module-row guide-path" id="guide-${guide.id}" tabindex="-1">
+                <span class="module-index">${String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>${guide.title}</h3>
+                  <p>${guide.summary}</p>
+                  <ol>
+                    ${guide.steps.map((step) => `<li>${step}</li>`).join("")}
+                  </ol>
+                </div>
+                <div class="link-row">
+                  ${guide.links.map(renderRouteLink).join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderDimensions() {
+        dimensionGrid.innerHTML = dimensions
+          .map(
+            (dimension) => {
+              const relatedIssues = getIssuesByDimension(dimension);
+
+              return `
+                <article class="info-block" id="dimension-${dimension.id}" tabindex="-1">
+                  <span class="badge">${dimension.name}</span>
+                  <h3>${dimension.negative} ↔ ${dimension.positive}</h3>
+                  <p>${dimension.summary}</p>
+                  <div class="axis">
+                    <span>${dimension.negative}</span>
+                    <b>↔</b>
+                    <span>${dimension.positive}</span>
+                  </div>
+                  <p><strong>${dimension.negative}端：</strong>${dimension.negativeMeaning}</p>
+                  <p class="section-space"><strong>${dimension.positive}端：</strong>${dimension.positiveMeaning}</p>
+                  <div class="pill-list">
+                    ${dimension.topics.map((topic) => `<span class="pill">${topic}</span>`).join("")}
+                  </div>
+                  <p class="section-space"><strong>误读提醒：</strong>${dimension.caveat}</p>
+                  ${relatedIssues.length
+                    ? `
+                      <div class="adjacent-links">
+                        <span class="adjacent-label">相关议题</span>
+                        <div class="reading-links">
+                          ${relatedIssues
+                            .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
+                            .join("")}
+                        </div>
+                      </div>
+                    `
+                    : ""}
+                </article>
+              `;
+            }
+          )
+          .join("");
+      }
+
+      function renderIssues() {
+        issueQuickNav.innerHTML = issues
+          .map(
+            (issue, index) => `
+              <a href="#issues" data-issue-link="${issue.id}">
+                <span>${String(index + 1).padStart(2, "0")}</span>
+                <strong>${issue.title}</strong>
+                <em>${issue.axes.join(" / ")}</em>
+              </a>
+            `
+          )
+          .join("");
+
+        issueGrid.innerHTML = issues
+          .map(
+            (issue) => {
+              const relatedDimensions = getDimensionsByAxes(issue.axes);
+              const relatedComparisons = getComparisonsByIdeologyIds(issue.relatedIdeologies).slice(0, 3);
+
+              return `
+                <article class="info-block" id="issue-${issue.id}" tabindex="-1">
+                  <span class="tag">议题地图</span>
+                  <h3>${issue.title}</h3>
+                  <p>${issue.summary}</p>
+                  <div class="pill-list">
+                    ${issue.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
+                  </div>
+                  <h4 class="list-label">不同视角</h4>
+                  <div class="lens-list">
+                    ${issue.lenses
+                      .map(
+                        (lens) => `
+                          <div class="lens-row">
+                            <strong>${lens.label}</strong>
+                            <span>${lens.text}</span>
+                          </div>
+                        `
+                      )
+                      .join("")}
+                  </div>
+                  <p class="section-space"><strong>关键追问：</strong>${issue.questions.join("；")}。</p>
+                  <p class="section-space"><strong>专题写法：</strong>可以先用一个现实场景切入，再把争议拆成「${issue.axes.join(" / ")}」几条线，最后回到制度边界、成本分配和可能的副作用。</p>
+                  <div class="adjacent-links" aria-label="${issue.title}下一步阅读">
+                    <span class="adjacent-label">相关价值坐标</span>
+                    <div class="reading-links">
+                      ${relatedDimensions
+                        .map((dimension) => `<a href="#concepts" data-dimension-link="${dimension.id}">${dimension.name}</a>`)
+                        .join("")}
+                    </div>
+                    <span class="adjacent-label">相关政治词条</span>
+                    <div class="reading-links">
+                      ${issue.relatedIdeologies
+                        .map(getIdeologyById)
+                        .filter(Boolean)
+                        .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+                        .join("")}
+                    </div>
+                    ${relatedComparisons.length
+                      ? `
+                        <span class="adjacent-label">概念对照</span>
+                        <div class="reading-links">
+                          ${relatedComparisons
+                            .map(
+                              (comparison) =>
+                                `<a href="#concepts" data-comparison-link="${comparison.id}">${comparison.left} vs ${comparison.right}</a>`
+                            )
+                            .join("")}
+                        </div>
+                      `
+                      : ""}
+                  </div>
+                </article>
+              `;
+            }
+          )
+          .join("");
+      }
+
+      function renderIdeologies() {
+        ideologyQuickNav.innerHTML = ideologies
+          .map(
+            (ideology) => `
+              <a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>
+            `
+          )
+          .join("");
+
+        ideologyGrid.innerHTML = ideologies
+          .map(
+            (ideology) => {
+              const related = getRelatedIdeologies(ideology.id);
+              const relatedIssues = getIssuesByIdeologyId(ideology.id);
+
+              return `
+                <article class="info-block" id="ideology-${ideology.id}" tabindex="-1">
+                  <div class="ideology-heading">
+                    <span class="tag">${ideology.family}</span>
+                    <h3>${ideology.name}</h3>
+                  </div>
+                  <p>${ideology.summary}</p>
+                  <div class="pill-list">
+                    ${ideology.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
+                  </div>
+                  <p class="section-space"><strong>关心的问题：</strong>${ideology.core}</p>
+                  <h4 class="list-label">常见政策倾向</h4>
+                  <ul class="text-list">
+                    ${ideology.policies.map((policy) => `<li>${policy}</li>`).join("")}
+                  </ul>
+                  <p class="section-space"><strong>内部差异：</strong>${ideology.variants}</p>
+                  <p class="section-space"><strong>注意事项：</strong>${ideology.caution}</p>
+                  <div class="adjacent-links">
+                    <span class="adjacent-label">相邻政治词条</span>
+                    <div class="reading-links">
+                      ${related
+                        .map(
+                          (item) => `<a href="#concepts" data-ideology-link="${item.id}">${item.name}</a>`
+                        )
+                        .join("")}
+                    </div>
+                    ${relatedIssues.length
+                      ? `
+                        <span class="adjacent-label">相关议题</span>
+                        <div class="reading-links">
+                          ${relatedIssues
+                            .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
+                            .join("")}
+                        </div>
+                      `
+                      : ""}
+                  </div>
+                </article>
+              `;
+            }
+          )
+          .join("");
+      }
+
+      function renderComparisons() {
+        comparisonGrid.innerHTML = comparisons
+          .map(
+            (comparison) => `
+              <article class="info-block" id="comparison-${comparison.id}" tabindex="-1">
+                <div class="comparison-title">
+                  <h3>${comparison.left}</h3>
+                  <span>vs</span>
+                  <h3>${comparison.right}</h3>
+                </div>
+                <p><strong>共同点：</strong>${comparison.shared}</p>
+                <p class="section-space"><strong>关键差别：</strong>${comparison.difference}</p>
+                <p class="section-space"><strong>阅读提醒：</strong>${comparison.watch}</p>
+                <div class="link-row">
+                  ${comparison.links
+                    .map(getIdeologyById)
+                    .filter(Boolean)
+                    .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+                    .join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderMethod() {
+        methodGrid.innerHTML = methodNotes
+          .map(
+            (note, index) => `
+              <article class="info-block" id="method-${index}" tabindex="-1">
+                <span class="badge">${String(index + 1).padStart(2, "0")}</span>
+                <h3>${note.title}</h3>
+                <p>${note.text}</p>
+              </article>
+            `
+          )
+          .join("");
+
+        referenceLinks.innerHTML = referenceSources
+          .map((source) => `<a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.label}</a>`)
+          .join("");
+      }
+
+      function updateProgress() {
+        const answered = answers.filter((answer) => answer !== null).length;
+        const percent = Math.round((answered / questions.length) * 100);
+        progressBar.style.width = `${percent}%`;
+        progressCopy.textContent = `${answered} / ${questions.length} 已回答`;
+        submitButton.disabled = answered !== questions.length;
+        submitHint.textContent =
+          answered === questions.length ? "已答完，可以生成你的结果。" : `还差 ${questions.length - answered} 题。`;
+        submitHint.classList.remove("error");
+
+        questionIndex.querySelectorAll("[data-question-jump]").forEach((button, index) => {
+          const answeredQuestion = answers[index] !== null;
+          button.classList.toggle("answered", answeredQuestion);
+          if (answeredQuestion) button.classList.remove("missing");
+          button.setAttribute(
+            "aria-label",
+            `${answeredQuestion ? "已回答" : "未回答"}，跳到第 ${index + 1} 题`
+          );
+        });
+      }
+
+      function calculateScores() {
+        const totals = Object.fromEntries(dimensions.map((dimension) => [dimension.id, 0]));
+        const maxes = Object.fromEntries(dimensions.map((dimension) => [dimension.id, 0]));
+
+        questions.forEach((question, index) => {
+          Object.entries(question.weights).forEach(([dimension, weight]) => {
+            totals[dimension] += answers[index] * weight;
+            maxes[dimension] += Math.abs(weight) * 2;
+          });
+        });
+
+        return Object.fromEntries(
+          dimensions.map((dimension) => {
+            const rawScore = maxes[dimension.id] === 0 ? 0 : (totals[dimension.id] / maxes[dimension.id]) * 100;
+            return [dimension.id, Math.round(Math.max(-100, Math.min(100, rawScore)))];
+          })
+        );
+      }
+
+      function getRankedDimensions(scores) {
+        return dimensions
+          .map((dimension) => ({
+            ...dimension,
+            score: scores[dimension.id],
+            strength: Math.abs(scores[dimension.id]),
+            trait: scores[dimension.id] >= 0 ? dimension.positiveTrait : dimension.negativeTrait,
+            pole: scores[dimension.id] >= 0 ? dimension.positive : dimension.negative,
+          }))
+          .sort((a, b) => b.strength - a.strength);
+      }
+
+      function getPoleText(dimension) {
+        if (dimension.score > 0) return dimension.positive;
+        if (dimension.score < 0) return dimension.negative;
+        return "中轴";
+      }
+
+      function getStrengthText(strength) {
+        if (strength >= 62) return "鲜明";
+        if (strength >= 38) return "清晰";
+        if (strength >= 18) return "温和";
+        return "接近中轴";
+      }
+
+      function getTensionInsight(ranked) {
+        const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
+
+        if (leading.length < 2) {
+          return "这次结果没有特别尖锐的双轴拉扯，更适合把它看成一组议题判断的起点，而不是固定身份。";
+        }
+
+        const key = leading
+          .map((dimension) => `${dimension.id}:${dimension.score >= 0 ? "positive" : "negative"}`)
+          .sort()
+          .join("|");
+        const notes = {
+          "authority:positive|economy:positive":
+            "你可能同时重视市场活力和公共秩序，因此在经济放开与安全治理之间会更强调边界条件。",
+          "authority:negative|economy:positive":
+            "你可能同时重视市场自主和个人自由，较容易支持低干预制度，但会继续面对公共品与弱势保护问题。",
+          "economy:negative|justice:negative":
+            "你可能把公共保障和分配公平放在较前位置，因此会更愿意接受财政、监管或集体安排带来的成本。",
+          "culture:negative|identity:negative":
+            "你可能更愿意从开放、多元和跨境责任理解政治问题，但仍需要判断开放带来的实际治理成本。",
+          "culture:positive|identity:positive":
+            "你可能更重视传统连续性和共同体边界，因此会更关注变化速度、社会凝聚和本地承受力。",
+          "authority:positive|identity:positive":
+            "你可能把公共秩序和共同体优先放在前面，因此会更接受以稳定、安全或成员责任为理由的制度约束。",
+          "authority:negative|culture:negative":
+            "你可能更相信个人选择和社会实验，因此会倾向把制度权力限制在较窄边界内。",
+          "economy:positive|justice:positive":
+            "你可能更看重效率竞争和市场激励，因此会倾向通过增长、创新和个人责任来回应分配议题。",
+        };
+
+        return (
+          notes[key] ||
+          `最值得继续观察的是「${leading[0].name}」与「${leading[1].name}」的取舍：当「${getPoleText(
+            leading[0]
+          )}」和「${getPoleText(leading[1])}」同时重要时，具体政策中的成本分配会决定你的最终选择。`
+        );
+      }
+
+      function describeScores(scores) {
+        const ranked = getRankedDimensions(scores);
+
+        if (ranked[0].strength < 18) {
+          return {
+            title: "中轴调停者",
+            text: "你的答案整体靠近坐标中心，说明你更倾向按议题、情境和现实成本来判断，而不是被单一原则完全牵引。你的政治直觉可能比较重视平衡、可操作性和避免过度极化。",
+          };
+        }
+
+        const leading = ranked.filter((item) => item.strength >= 18).slice(0, 3);
+        const title = leading.slice(0, 2).map((item) => item.trait).join(" × ");
+        const emphasis = leading.map((item) => `${item.name}偏向「${item.pole}」`).join("、");
+        const moderation =
+          ranked[0].strength >= 62
+            ? "其中至少一个价值坐标相当鲜明，说明你在相关议题上有比较稳定的优先级。"
+            : "这些倾向并不极端，更像是一组默认偏好，具体议题上仍可能保留弹性。";
+
+        return {
+          title,
+          text: `你的主要画像是「${title}」。从答案看，你的${emphasis}。${moderation}这不是政治身份标签，而是一张帮助你观察自己价值排序的速写；如果想理解相关词汇，可以继续阅读政治概念库和议题地图。`,
+        };
+      }
+
+      function getResultSummaryCards(scores) {
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
+
+        return [
+          {
+            label: "最鲜明",
+            title:
+              strongest.strength < 18
+                ? "整体接近中轴"
+                : `${strongest.name}偏向「${strongest.pole}」`,
+            text:
+              strongest.strength < 18
+                ? "这次结果没有特别突出的单一坐标，更适合从具体议题继续观察自己的判断。"
+                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。读相关议题时，可以先观察你是否愿意为「${getPoleText(strongest)}」承担成本。`,
+          },
+          {
+            label: "最平衡",
+            title: `${centered.name}接近中轴`,
+            text: `强度 ${centered.strength}/100。这条轴上的答案更依赖情境、制度细节和现实后果，不适合直接归类。`,
+          },
+          {
+            label: "主要张力",
+            title:
+              leading.length >= 2
+                ? `${leading[0].name} × ${leading[1].name}`
+                : "暂时没有尖锐双轴拉扯",
+            text: getTensionInsight(ranked),
+          },
+        ];
+      }
+
+      function getDimensionReadingNotes(scores) {
+        return getRankedDimensions(scores)
+          .map((dimension) => {
+            const side = dimension.score >= 0 ? dimension.positive : dimension.negative;
+            const meaning = dimension.score >= 0 ? dimension.positiveMeaning : dimension.negativeMeaning;
+            const strengthText = getStrengthText(dimension.strength);
+            const title =
+              dimension.strength < 18
+                ? `${dimension.name}：接近中轴`
+                : `${dimension.name}：偏向「${side}」`;
+            const text =
+              dimension.strength < 18
+                ? `这组问题暂时没有明显单向牵引。阅读时可以把「${dimension.negative}」和「${dimension.positive}」都当作可能解释。`
+                : `${strengthText}，强度 ${dimension.strength}/100。${meaning}`;
+
+            return {
+              id: dimension.id,
+              label: dimension.name,
+              title,
+              text,
+            };
+          });
+      }
+
+      function getResultNextSteps(scores) {
+        const recommendation = getReadingRecommendations(scores);
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const second = ranked[1];
+        const firstIssue = recommendation.issues[0];
+        const firstIdeology = recommendation.ideologies[0];
+
+        if (recommendation.isCenter) {
+          return [
+            {
+              label: "第一步",
+              title: "先对照价值坐标",
+              text: "你的结果较接近中轴，先看每条轴两端如何定义，比直接寻找立场名称更有帮助。",
+            },
+            {
+              label: "第二步",
+              title: "选一个现实议题",
+              text: "从住房、教育、医疗或平台治理中选一个熟悉问题，观察不同价值如何同时出现。",
+            },
+            {
+              label: "第三步",
+              title: "读相邻政治词条",
+              text: "再把自由主义、社会民主主义、保守主义和社群主义当作四个参照点，而不是身份标签。",
+            },
+          ];
+        }
+
+        return [
+          {
+            label: "第一步",
+            title: `先读「${strongest.name}」`,
+            text: `这是当前最鲜明的价值坐标。先理解「${strongest.negative}」和「${strongest.positive}」的取舍，再看具体议题。`,
+          },
+          {
+            label: "第二步",
+            title: firstIssue ? `回到「${firstIssue.title}」` : "回到相关议题",
+            text: firstIssue
+              ? `这个议题能帮助你观察「${getPoleText(strongest)}」在现实政策里会遇到哪些成本和边界。`
+              : `选择一个相关公共议题，观察你的价值优先级如何进入现实讨论。`,
+          },
+          {
+            label: "第三步",
+            title: firstIdeology ? `再读「${firstIdeology.name}」及相邻概念` : `再对照「${second.name}」`,
+            text: firstIdeology
+              ? "把政治词条当作政治语言的解释工具，重点看它与相邻概念的边界。"
+              : `如果「${second.name}」也较明显，就把它作为第二条线索一起阅读。`,
+          },
+        ];
+      }
+
+      function getReadingRecommendations(scores) {
+        const ranked = getRankedDimensions(scores);
+        const sources = ranked.filter((item) => item.strength >= 18).slice(0, 3);
+        const readingSources = sources.length > 0 ? sources : ranked.slice(0, 2);
+        const ids = [];
+        const issueIds = [];
+
+        if (sources.length === 0) {
+          ["liberalism", "social-democracy", "conservatism", "communitarianism"].forEach((id) => ids.push(id));
+          ["housing", "education", "healthcare", "platforms"].forEach((id) => issueIds.push(id));
+        } else {
+          readingSources.forEach((dimension) => {
+            const side = dimension.score >= 0 ? "positive" : "negative";
+            const matched = ideologyRecommendations[dimension.id]?.[side] || [];
+            matched.forEach((id) => {
+              if (!ids.includes(id)) ids.push(id);
+            });
+            const matchedIssues = issueRecommendations[dimension.id]?.[side] || [];
+            matchedIssues.forEach((id) => {
+              if (!issueIds.includes(id)) issueIds.push(id);
+            });
+          });
+        }
+
+        return {
+          sources: readingSources,
+          ideologies: ids.slice(0, 4).map(getIdeologyById).filter(Boolean),
+          issues: issueIds.slice(0, 4).map(getIssueById).filter(Boolean),
+          isCenter: sources.length === 0,
+        };
+      }
+
+      function renderResultReading(scores) {
+        const {
+          sources,
+          ideologies: matchedIdeologies,
+          issues: matchedIssues,
+          isCenter,
+        } = getReadingRecommendations(scores);
+
+        if (!matchedIdeologies.length && !matchedIssues.length) {
+          resultReading.innerHTML = "";
+          return;
+        }
+
+        const sourceText = sources
+          .map((dimension) => `${dimension.name}${dimension.score === 0 ? "接近中轴" : `偏向「${dimension.pole}」`}`)
+          .join("、");
+
+        resultReading.innerHTML = `
+          <h3>继续阅读</h3>
+          <p>${isCenter
+            ? "你的主要价值坐标较接近中轴，下面这些词条适合作为不同方向的参照。"
+            : sourceText
+            ? `这些词条根据${sourceText}生成，`
+            : ""}只是帮助你理解相关政治词汇的阅读线索，不是身份判定，也不是立场排名。</p>
+          <p class="section-space">想理解词汇边界，先看政治词条；想回到现实争议，先看相关议题；想分辨容易混淆的概念，再看概念对照。</p>
+          <span class="adjacent-label">相关政治词条</span>
+          <div class="reading-links">
+            ${matchedIdeologies
+              .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
+              .join("")}
+          </div>
+          <span class="adjacent-label">相关议题</span>
+          <div class="reading-links">
+            ${matchedIssues
+              .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
+              .join("")}
+          </div>
+          <span class="adjacent-label">推荐路径</span>
+          <div class="reading-links">
+            <a href="#guide" data-route-link="guide">按测评路线继续阅读</a>
+            <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">看概念对照</a>
+          </div>
+        `;
+      }
+
+      function renderResultQuickRead(scores) {
+        const cards = getResultSummaryCards(scores);
+
+        resultQuickRead.innerHTML = `
+          <h3>结果速读</h3>
+          <div class="quick-read-list">
+            ${cards
+              .map(
+                (card) => `
+                  <div class="quick-read-item">
+                    <span>${card.label}</span>
+                    <div>
+                      <strong>${card.title}</strong>
+                      <p>${card.text}</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderDimensionNotes(scores) {
+        const notes = getDimensionReadingNotes(scores);
+
+        dimensionNotes.innerHTML = `
+          <h3>五维解释</h3>
+          <div class="dimension-note-list">
+            ${notes
+              .map(
+                (note) => `
+                  <div class="dimension-note">
+                    <span>${note.label}</span>
+                    <div>
+                      <strong>${note.title}</strong>
+                      <p>${note.text}</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderResultNextSteps(scores) {
+        const steps = getResultNextSteps(scores);
+
+        resultNextSteps.innerHTML = `
+          <h3>阅读顺序</h3>
+          <div class="next-step-list">
+            ${steps
+              .map(
+                (step) => `
+                  <div class="next-step">
+                    <span>${step.label}</span>
+                    <div>
+                      <strong>${step.title}</strong>
+                      <p>${step.text}</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `;
+      }
+
+      function renderResultReport(scores) {
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked.slice(0, 2);
+        const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const strongestList = strongest
+          .map(
+            (dimension) => `
+              <li>
+                <strong>${dimension.name}：${dimension.score === 0 ? "接近中轴" : `偏向「${dimension.pole}」`}</strong>
+                <span>${getStrengthText(dimension.strength)}，强度 ${dimension.strength}/100。${
+                  dimension.strength < 18
+                    ? "这组议题上暂时没有明显的单向牵引。"
+                    : `你可能更愿意为「${getPoleText(dimension)}」承担现实成本。`
+                }</span>
+              </li>
+            `
+          )
+          .join("");
+
+        resultReport.innerHTML = `
+          <div class="report-row">
+            <h3>怎么看排序</h3>
+            <ul class="report-list">${strongestList}</ul>
+          </div>
+          <div class="report-row">
+            <h3>怎么看中轴</h3>
+            <p>${centered.name}最接近中轴（强度 ${centered.strength}/100）。这通常意味着你在这组问题上更依赖具体情境、制度细节或现实后果来判断。</p>
+          </div>
+          <div class="report-row">
+            <h3>怎么看张力</h3>
+            <p>${getTensionInsight(ranked)}</p>
+          </div>
+        `;
+      }
+
+      function renderScores(scores) {
+        scoreGrid.innerHTML = dimensions
+          .map((dimension) => {
+            const score = scores[dimension.id];
+            const left = ((score + 100) / 200) * 100;
+            const strength = Math.abs(score);
+            const pole = score > 0 ? dimension.positive : score < 0 ? dimension.negative : "中轴";
+            const note =
+              strength < 18
+                ? `接近中轴：这组议题更适合结合具体情境阅读。`
+                : `${getStrengthText(strength)}偏向「${pole}」：读相关议题时留意这端价值的现实成本。`;
+
+            return `
+              <div class="score-item">
+                <header>
+                  <span>${dimension.negative}</span>
+                  <span>${dimension.name}</span>
+                  <span>${dimension.positive}</span>
+                </header>
+                <div class="score-line">
+                  <span class="score-dot" style="left:${left}%"></span>
+                </div>
+                <p class="score-note">${note}</p>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderResultState() {
+        const hasResult = Boolean(latestScores);
+        emptyResult.classList.toggle("hidden", hasResult);
+        resultContent.classList.toggle("hidden", !hasResult);
+
+        if (!hasResult) {
+          resultQuickRead.innerHTML = "";
+          resultReading.innerHTML = "";
+          resultReport.innerHTML = "";
+          dimensionNotes.innerHTML = "";
+          resultNextSteps.innerHTML = "";
+          return;
+        }
+
+        if (hasResult) {
+          requestAnimationFrame(() => {
+            drawRadar(latestScores);
+            drawCompass(latestScores);
+          });
+        }
+      }
+
+      function setupCanvas(canvas) {
+        const rect = canvas.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+        const width = Math.max(260, Math.floor(rect.width || canvas.clientWidth || 320));
+        const cssHeight = rect.height || canvas.clientHeight || Math.min(380, Math.max(300, width * 0.9));
+        const height = Math.max(280, Math.floor(cssHeight));
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        const context = canvas.getContext("2d");
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        context.clearRect(0, 0, width, height);
+        return { context, width, height };
+      }
+
+      function drawRadar(scores) {
+        const { context, width, height } = setupCanvas(radarCanvas);
+        const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+        const normalizeAngle = (angle) => {
+          const fullCircle = Math.PI * 2;
+          return ((angle % fullCircle) + fullCircle) % fullCircle;
+        };
+        const getCrossProduct = (origin, pointA, pointB) =>
+          (pointA.x - origin.x) * (pointB.y - origin.y) - (pointA.y - origin.y) * (pointB.x - origin.x);
+        const hasIntersection = (pointA, pointB, pointC, pointD) => {
+          const epsilon = 0.000001;
+          const abC = getCrossProduct(pointA, pointB, pointC);
+          const abD = getCrossProduct(pointA, pointB, pointD);
+          const cdA = getCrossProduct(pointC, pointD, pointA);
+          const cdB = getCrossProduct(pointC, pointD, pointB);
+
+          return abC * abD < -epsilon && cdA * cdB < -epsilon;
+        };
+        const hasPathIntersection = (pathPoints) => {
+          if (pathPoints.length < 4) return false;
+
+          for (let firstIndex = 0; firstIndex < pathPoints.length; firstIndex += 1) {
+            const firstNext = (firstIndex + 1) % pathPoints.length;
+
+            for (let secondIndex = firstIndex + 1; secondIndex < pathPoints.length; secondIndex += 1) {
+              const secondNext = (secondIndex + 1) % pathPoints.length;
+              const adjacent =
+                firstIndex === secondIndex || firstNext === secondIndex || secondNext === firstIndex;
+
+              if (
+                !adjacent &&
+                hasIntersection(
+                  pathPoints[firstIndex],
+                  pathPoints[firstNext],
+                  pathPoints[secondIndex],
+                  pathPoints[secondNext]
+                )
+              ) {
+                return true;
+              }
+            }
+          }
+
+          return false;
+        };
+        const getConvexHull = (pathPoints) => {
+          const uniquePoints = pathPoints
+            .filter(
+              (point, index) =>
+                pathPoints.findIndex(
+                  (other) => Math.abs(point.x - other.x) < 0.1 && Math.abs(point.y - other.y) < 0.1
+                ) === index
+            )
+            .sort((pointA, pointB) => pointA.x - pointB.x || pointA.y - pointB.y);
+
+          if (uniquePoints.length <= 2) return uniquePoints;
+
+          const lowerHull = [];
+          const upperHull = [];
+
+          uniquePoints.forEach((point) => {
+            while (
+              lowerHull.length >= 2 &&
+              getCrossProduct(lowerHull[lowerHull.length - 2], lowerHull[lowerHull.length - 1], point) <= 0
+            ) {
+              lowerHull.pop();
+            }
+
+            lowerHull.push(point);
+          });
+
+          [...uniquePoints].reverse().forEach((point) => {
+            while (
+              upperHull.length >= 2 &&
+              getCrossProduct(upperHull[upperHull.length - 2], upperHull[upperHull.length - 1], point) <= 0
+            ) {
+              upperHull.pop();
+            }
+
+            upperHull.push(point);
+          });
+
+          return lowerHull.slice(0, -1).concat(upperHull.slice(0, -1));
+        };
+        const centerX = width / 2;
+        const centerY = height / 2 + 2;
+        const count = dimensions.length;
+        const labelGap = width < 420 ? 34 : 42;
+        const labelFont = width < 420 ? 12 : 13;
+        context.font = `700 ${labelFont}px Microsoft YaHei, sans-serif`;
+        const maxLabelWidth = Math.max(
+          ...dimensions.flatMap((dimension) => [
+            context.measureText(dimension.positive).width,
+            context.measureText(dimension.negative).width,
+          ])
+        );
+        const sidePadding = Math.max(48, maxLabelWidth / 2 + 12);
+        const verticalPadding = labelFont + 18;
+        const radius = Math.max(
+          70,
+          Math.min(
+            (width - sidePadding * 2) / 2 - labelGap,
+            (height - verticalPadding * 2) / 2 - labelGap
+          )
+        );
+
+        context.lineWidth = 1;
+        context.strokeStyle = "rgba(23,26,31,0.14)";
+        context.fillStyle = "rgba(23,26,31,0.018)";
+
+        for (let ring = 1; ring <= 4; ring += 1) {
+          context.beginPath();
+          context.arc(centerX, centerY, (radius * ring) / 4, 0, Math.PI * 2);
+          context.fill();
+          context.stroke();
+        }
+
+        dimensions.forEach((dimension, index) => {
+          const angle = -Math.PI / 2 + (index * Math.PI * 2) / count;
+          const dx = Math.cos(angle);
+          const dy = Math.sin(angle);
+
+          context.beginPath();
+          context.moveTo(centerX - dx * radius, centerY - dy * radius);
+          context.lineTo(centerX + dx * radius, centerY + dy * radius);
+          context.strokeStyle = "rgba(23,26,31,0.18)";
+          context.stroke();
+
+          const labelDistance = radius + labelGap;
+          const drawAxisLabel = (text, x, y) => {
+            const textWidth = context.measureText(text).width;
+            context.fillStyle = "rgba(57,65,77,0.94)";
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillText(
+              text,
+              clamp(x, textWidth / 2 + 8, width - textWidth / 2 - 8),
+              clamp(y, labelFont + 8, height - labelFont - 8)
+            );
+          };
+
+          drawAxisLabel(dimension.positive, centerX + dx * labelDistance, centerY + dy * labelDistance);
+          drawAxisLabel(dimension.negative, centerX - dx * labelDistance, centerY - dy * labelDistance);
+        });
+
+        const points = dimensions
+          .flatMap((dimension, index) => {
+            const angle = -Math.PI / 2 + (index * Math.PI * 2) / count;
+            const score = clamp(Number(scores[dimension.id]) || 0, -100, 100) / 100;
+            const sides = [
+              { angle, strength: Math.max(score, 0) },
+              { angle: angle + Math.PI, strength: Math.max(-score, 0) },
+            ];
+
+            return sides.map((side) => ({
+              angle: normalizeAngle(side.angle),
+              strength: side.strength,
+              x: centerX + Math.cos(side.angle) * radius * side.strength,
+              y: centerY + Math.sin(side.angle) * radius * side.strength,
+            }));
+          })
+          .sort((a, b) => a.angle - b.angle);
+        const activePoints = points.filter((point) => point.strength > 0.001);
+        const shapePoints =
+          activePoints.length >= 3 && hasPathIntersection(activePoints) ? getConvexHull(activePoints) : activePoints;
+        const dotPoints = activePoints.length ? activePoints : [{ x: centerX, y: centerY }];
+
+        if (shapePoints.length >= 2) {
+          context.beginPath();
+          shapePoints.forEach((point, index) => {
+            if (index === 0) context.moveTo(point.x, point.y);
+            else context.lineTo(point.x, point.y);
+          });
+
+          context.strokeStyle = "rgba(23,26,31,0.82)";
+          context.lineWidth = 2;
+
+          if (shapePoints.length >= 3) {
+            context.closePath();
+            context.fillStyle = "rgba(23,26,31,0.08)";
+            context.fill();
+          }
+
+          context.stroke();
+        }
+
+        dotPoints.forEach((point) => {
+          context.beginPath();
+          context.arc(point.x, point.y, 4.5, 0, Math.PI * 2);
+          context.fillStyle = "#b36b00";
+          context.fill();
+          context.lineWidth = 1.8;
+          context.strokeStyle = "#ffffff";
+          context.stroke();
+        });
+      }
+
+      function drawCompass(scores) {
+        const { context, width, height } = setupCanvas(compassCanvas);
+        const labelFont = width < 420 ? 12 : 13;
+        context.font = `800 ${labelFont}px Microsoft YaHei, sans-serif`;
+        const sideLabelWidth = Math.max(
+          context.measureText("国家调节").width,
+          context.measureText("市场自主").width
+        );
+        const leftGutter = sideLabelWidth + 26;
+        const rightGutter = sideLabelWidth + 26;
+        const topGutter = labelFont + 32;
+        const bottomGutter = labelFont + 32;
+        const availableGrid = Math.min(width - leftGutter - rightGutter, height - topGutter - bottomGutter);
+        const gridSize = Math.max(96, availableGrid);
+        const radius = gridSize / 2;
+        const centerX = leftGutter + radius;
+        const centerY = topGutter + radius;
+        const x = centerX + (scores.economy / 100) * radius;
+        const y = centerY - (scores.authority / 100) * radius;
+
+        context.strokeStyle = "rgba(23,26,31,0.14)";
+        context.lineWidth = 1;
+        for (let step = -2; step <= 2; step += 1) {
+          const offset = (radius * step) / 2;
+          context.beginPath();
+          context.moveTo(centerX - radius, centerY + offset);
+          context.lineTo(centerX + radius, centerY + offset);
+          context.stroke();
+          context.beginPath();
+          context.moveTo(centerX + offset, centerY - radius);
+          context.lineTo(centerX + offset, centerY + radius);
+          context.stroke();
+        }
+
+        context.strokeStyle = "rgba(23,26,31,0.64)";
+        context.lineWidth = 1.8;
+        context.beginPath();
+        context.moveTo(centerX - radius, centerY);
+        context.lineTo(centerX + radius, centerY);
+        context.moveTo(centerX, centerY - radius);
+        context.lineTo(centerX, centerY + radius);
+        context.stroke();
+
+        context.fillStyle = "rgba(57,65,77,0.92)";
+        context.font = `800 ${labelFont}px Microsoft YaHei, sans-serif`;
+        context.textAlign = "center";
+        context.textBaseline = "bottom";
+        context.fillText("公共秩序", centerX, centerY - radius - 14);
+        context.textBaseline = "top";
+        context.fillText("个体自由", centerX, centerY + radius + 14);
+        context.textAlign = "right";
+        context.textBaseline = "middle";
+        context.fillText("国家调节", centerX - radius - 16, centerY);
+        context.textAlign = "left";
+        context.fillText("市场自主", centerX + radius + 16, centerY);
+
+        context.beginPath();
+        context.arc(x, y, 8, 0, Math.PI * 2);
+        context.fillStyle = "#b36b00";
+        context.fill();
+        context.lineWidth = 3;
+        context.strokeStyle = "#ffffff";
+        context.stroke();
+
+        context.beginPath();
+        context.arc(x, y, 12, 0, Math.PI * 2);
+        context.lineWidth = 1;
+        context.strokeStyle = "rgba(23,26,31,0.45)";
+        context.stroke();
+      }
+
+      function showResults() {
+        const firstMissing = answers.findIndex((answer) => answer === null);
+        document.querySelectorAll(".question").forEach((element) => element.classList.remove("missing"));
+        questionIndex.querySelectorAll("[data-question-jump]").forEach((button) => button.classList.remove("missing"));
+
+        if (firstMissing !== -1) {
+          const missingElement = document.querySelector(`[data-question="${firstMissing}"]`);
+          missingElement.classList.add("missing");
+          questionIndex.querySelector(`[data-question-jump="${firstMissing}"]`)?.classList.add("missing");
+          missingElement.scrollIntoView({ behavior: "smooth", block: "center" });
+          submitHint.textContent = "还有题目没有回答，先补完再生成结果。";
+          submitHint.classList.add("error");
+          return;
+        }
+
+        latestScores = calculateScores();
+        const description = describeScores(latestScores);
+        resultTitle.textContent = description.title;
+        resultCopy.textContent = description.text;
+        renderResultQuickRead(latestScores);
+        renderResultReport(latestScores);
+        renderScores(latestScores);
+        renderDimensionNotes(latestScores);
+        renderResultReading(latestScores);
+        renderResultNextSteps(latestScores);
+        window.location.hash = "result";
+        renderResultState();
+      }
+
+      function restart() {
+        answers.fill(null);
+        quizForm.reset();
+        latestScores = null;
+        resultQuickRead.innerHTML = "";
+        resultReading.innerHTML = "";
+        resultReport.innerHTML = "";
+        dimensionNotes.innerHTML = "";
+        resultNextSteps.innerHTML = "";
+        emptyResult.classList.remove("hidden");
+        resultContent.classList.add("hidden");
+        document.querySelectorAll(".question").forEach((element) => element.classList.remove("missing"));
+        questionIndex.querySelectorAll("[data-question-jump]").forEach((button) => button.classList.remove("missing"));
+        updateProgress();
+        window.location.hash = "quiz";
+      }
+
+      quizForm.addEventListener("change", (event) => {
+        if (!event.target.matches("input[type='radio']")) return;
+        const index = Number(event.target.name.replace("q", ""));
+        answers[index] = Number(event.target.value);
+        const question = document.querySelector(`[data-question="${index}"]`);
+        question.classList.remove("missing");
+        questionIndex.querySelector(`[data-question-jump="${index}"]`)?.classList.remove("missing");
+        updateProgress();
+      });
+
+      submitButton.addEventListener("click", showResults);
+      document.querySelector("#restartButton").addEventListener("click", restart);
+      contentSearch.addEventListener("input", filterContentIndex);
+      contentFilters.addEventListener("click", (event) => {
+        const filterButton = event.target.closest("[data-index-filter]");
+        if (!filterButton) return;
+
+        activeIndexType = filterButton.dataset.indexFilter;
+        filterContentIndex();
+      });
+      document.addEventListener("click", (event) => {
+        if (!(event.target instanceof Element)) return;
+        const indexItem = event.target.closest("[data-index-item]");
+        if (indexItem) {
+          event.preventDefault();
+          goToContentItem(indexItem.dataset.indexItem);
+          return;
+        }
+
+        const routeLink = event.target.closest("[data-route-link]");
+        if (routeLink) {
+          event.preventDefault();
+          goToRoute(routeLink.dataset.routeLink, routeLink.dataset.scrollTarget || "");
+          return;
+        }
+
+        const questionButton = event.target.closest("[data-question-jump]");
+        if (questionButton) {
+          event.preventDefault();
+          goToQuestion(Number(questionButton.dataset.questionJump));
+          return;
+        }
+
+        const issueLink = event.target.closest("[data-issue-link]");
+        if (issueLink) {
+          event.preventDefault();
+          goToIssue(issueLink.dataset.issueLink);
+          return;
+        }
+
+        const dimensionLink = event.target.closest("[data-dimension-link]");
+        if (dimensionLink) {
+          event.preventDefault();
+          goToDimension(dimensionLink.dataset.dimensionLink);
+          return;
+        }
+
+        const comparisonLink = event.target.closest("[data-comparison-link]");
+        if (comparisonLink) {
+          event.preventDefault();
+          goToComparison(comparisonLink.dataset.comparisonLink);
+          return;
+        }
+
+        const link = event.target.closest("[data-ideology-link]");
+        if (!link) return;
+
+        event.preventDefault();
+        goToIdeology(link.dataset.ideologyLink);
+      });
+      window.addEventListener("hashchange", () => routeTo());
+      window.addEventListener("resize", () => {
+        if (!latestScores || getRoute() !== "result") return;
+        drawRadar(latestScores);
+        drawCompass(latestScores);
+      });
+
+      renderQuiz();
+      renderQuestionIndex();
+      renderContentIndex();
+      renderModules();
+      renderGuides();
+      renderDimensions();
+      renderIssues();
+      renderIdeologies();
+      renderComparisons();
+      renderMethod();
+      updateProgress();
+      routeTo();
+    </script>
   </body>
 </html>
