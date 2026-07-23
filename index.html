@@ -355,6 +355,17 @@
         margin-top: 20px;
       }
 
+      .action-status {
+        min-height: 20px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .action-status.error {
+        color: var(--danger);
+      }
+
       .button {
         display: inline-flex;
         gap: 10px;
@@ -608,6 +619,35 @@
         color: var(--muted);
       }
 
+      .search-input-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 8px;
+      }
+
+      .search-clear {
+        min-height: 44px;
+        padding: 0 13px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 760;
+        cursor: pointer;
+        border: 1px solid var(--line);
+        background: transparent;
+      }
+
+      .search-clear:hover,
+      .search-clear:focus-visible {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .search-clear:disabled {
+        color: #89919b;
+        cursor: default;
+        border-color: var(--line);
+      }
+
       .filter-row {
         display: flex;
         flex-wrap: wrap;
@@ -627,7 +667,8 @@
       }
 
       .filter-button:hover,
-      .filter-button.active {
+      .filter-button.active,
+      .filter-button:focus-visible {
         color: var(--primary);
         border-color: var(--primary);
       }
@@ -681,6 +722,12 @@
         max-width: none;
         font-size: 14px;
         line-height: 1.7;
+      }
+
+      .index-row mark {
+        padding: 0 2px;
+        color: inherit;
+        background: rgba(36, 87, 214, 0.12);
       }
 
       .index-type,
@@ -1018,6 +1065,40 @@
       .progress-copy {
         color: var(--muted);
         font-weight: 760;
+      }
+
+      .progress-tools {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .progress-next {
+        min-height: 40px;
+        padding: 0 12px;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 760;
+        white-space: nowrap;
+        cursor: pointer;
+        border: 1px solid var(--line-strong);
+        background: transparent;
+      }
+
+      .progress-next:hover,
+      .progress-next:focus-visible {
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .progress-next:disabled {
+        color: var(--muted);
+        cursor: default;
+        border-color: var(--line);
+      }
+
+      .question-index-toggle {
+        display: none;
       }
 
       .question-index {
@@ -1575,8 +1656,27 @@
         }
 
         .nav-link {
+          display: inline-flex;
+          min-height: 40px;
+          align-items: center;
           padding: 7px 8px;
           font-size: 13px;
+        }
+
+        .filter-button,
+        .text-link,
+        .quick-nav a,
+        .reading-links a,
+        .link-row a {
+          min-height: 40px;
+        }
+
+        .text-link,
+        .quick-nav a,
+        .reading-links a,
+        .link-row a {
+          display: inline-flex;
+          align-items: center;
         }
 
         h1 {
@@ -1635,9 +1735,62 @@
           grid-template-columns: 1fr;
         }
 
+        .question-index-wrap {
+          border-bottom: 1px solid var(--line);
+        }
+
+        .question-index-toggle {
+          display: flex;
+          width: 100%;
+          min-height: 44px;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0;
+          color: var(--ink);
+          font: inherit;
+          font-size: 13px;
+          font-weight: 760;
+          cursor: pointer;
+          border: 0;
+          background: transparent;
+        }
+
+        .question-index-toggle span:last-child {
+          color: var(--muted);
+          font-size: 12px;
+        }
+
+        .question-index {
+          display: none;
+          padding: 4px 0 14px;
+          border-bottom: 0;
+        }
+
+        .question-index.open {
+          display: flex;
+        }
+
         .question-index button {
-          width: 32px;
-          height: 30px;
+          width: 40px;
+          height: 40px;
+        }
+
+        .sticky-progress {
+          gap: 10px;
+        }
+
+        .progress-tools {
+          gap: 8px;
+        }
+
+        .progress-copy,
+        .progress-next {
+          font-size: 12px;
+        }
+
+        .progress-next {
+          min-height: 40px;
+          padding: 0 9px;
         }
 
         .lens-row {
@@ -1787,10 +1940,25 @@
           >
             <div class="progress-bar" id="progressBar"></div>
           </div>
-          <div class="progress-copy" id="progressCopy" aria-live="polite">0 / 40 已回答</div>
+          <div class="progress-tools">
+            <div class="progress-copy" id="progressCopy" aria-live="polite">0 / 40 已回答</div>
+            <button class="progress-next" id="nextUnansweredButton" type="button">下一未答（40）</button>
+          </div>
         </div>
 
-        <nav class="question-index" id="questionIndex" aria-label="题目快速索引"></nav>
+        <div class="question-index-wrap">
+          <button
+            class="question-index-toggle"
+            id="questionIndexToggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="questionIndex"
+          >
+            <span>题目索引 · <span id="questionIndexSummary">0 / 40</span></span>
+            <span id="questionIndexToggleText">展开</span>
+          </button>
+          <nav class="question-index" id="questionIndex" aria-label="题目快速索引"></nav>
+        </div>
 
         <form class="quiz" id="quizForm"></form>
 
@@ -1886,16 +2054,20 @@
         </nav>
         <section class="content-index" id="knowledge-search" tabindex="-1" aria-labelledby="contentIndexTitle">
           <h3 id="contentIndexTitle">搜索议题与概念</h3>
-          <p>输入关键词或选择类型，快速跳到价值坐标、公共议题、政治词条和概念对照中的具体条目。</p>
+          <p>输入关键词或选择类型，快速跳到具体条目；可以输入多个关键词，并按回车打开首条结果。</p>
           <div class="index-controls">
-            <input
-              class="search-field"
-              id="contentSearch"
-              type="search"
-              autocomplete="off"
-              placeholder="搜索：住房、自由、秩序、保守主义..."
-              aria-label="搜索议题与概念"
-            />
+            <div class="search-input-row">
+              <input
+                class="search-field"
+                id="contentSearch"
+                type="search"
+                autocomplete="off"
+                placeholder="搜索：住房、自由、秩序、保守主义..."
+                aria-label="搜索议题与概念"
+                aria-keyshortcuts="Enter"
+              />
+              <button class="search-clear" id="contentSearchClear" type="button" disabled>清空</button>
+            </div>
             <div class="filter-row" id="contentFilters" aria-label="内容类型筛选"></div>
           </div>
           <p class="index-meta" id="contentIndexMeta" aria-live="polite"></p>
@@ -1948,10 +2120,13 @@
               </div>
               <p class="result-copy" id="resultCopy"></p>
               <div class="result-quick-read" id="resultQuickRead"></div>
-              <div class="actions">
-                <button class="button" id="restartButton" type="button">重新测试</button>
+              <div class="actions result-actions">
+                <button class="button" id="copyResultButton" type="button">复制结果摘要</button>
+                <button class="button secondary" id="savePdfButton" type="button">保存完整 PDF</button>
                 <a class="button secondary" href="#guide">查看测评路线</a>
+                <button class="button secondary" id="restartButton" type="button">重新测试</button>
               </div>
+              <p class="action-status" id="resultActionStatus" role="status" aria-live="polite"></p>
             </div>
             <div class="score-grid" id="scoreGrid"></div>
           </div>
@@ -2240,9 +2415,19 @@
 
       const answers = Array(questions.length).fill(null);
       let latestScores = null;
-      let activeIndexType = "all";
+      const localResultPreviewStorageKey = "politicalConceptMap.localResultPreview.v1";
+      const localResultPreviewSeed = Object.freeze({
+        economy: 0,
+        authority: -62,
+        justice: -12,
+        culture: -44,
+        identity: -19,
+      });
+      let activeIndexType = "";
       let contentIndex = [];
       let pendingScrollTarget = "";
+      let resultActionStatusTimer = null;
+      let currentQuestionIndex = -1;
 
       const pages = [...document.querySelectorAll("[data-page]")];
       const navLinks = [...document.querySelectorAll(".nav-link[data-route]")];
@@ -2250,12 +2435,17 @@
       const quizProgress = document.querySelector("#quizProgress");
       const progressBar = document.querySelector("#progressBar");
       const progressCopy = document.querySelector("#progressCopy");
+      const nextUnansweredButton = document.querySelector("#nextUnansweredButton");
       const submitButton = document.querySelector("#submitButton");
       const submitHint = document.querySelector("#submitHint");
       const questionIndex = document.querySelector("#questionIndex");
+      const questionIndexToggle = document.querySelector("#questionIndexToggle");
+      const questionIndexSummary = document.querySelector("#questionIndexSummary");
+      const questionIndexToggleText = document.querySelector("#questionIndexToggleText");
       const moduleGrid = document.querySelector("#moduleGrid");
       const guideGrid = document.querySelector("#guideGrid");
       const contentSearch = document.querySelector("#contentSearch");
+      const contentSearchClear = document.querySelector("#contentSearchClear");
       const contentFilters = document.querySelector("#contentFilters");
       const contentIndexMeta = document.querySelector("#contentIndexMeta");
       const contentIndexList = document.querySelector("#contentIndexList");
@@ -2263,6 +2453,9 @@
       const emptyResult = document.querySelector("#emptyResult");
       const resultTitle = document.querySelector("#resultTitle");
       const resultCopy = document.querySelector("#resultCopy");
+      const copyResultButton = document.querySelector("#copyResultButton");
+      const savePdfButton = document.querySelector("#savePdfButton");
+      const resultActionStatus = document.querySelector("#resultActionStatus");
       const resultQuickRead = document.querySelector("#resultQuickRead");
       const resultReport = document.querySelector("#resultReport");
       const dimensionNotes = document.querySelector("#dimensionNotes");
@@ -2829,6 +3022,7 @@
       }
 
       function goToQuestion(index) {
+        currentQuestionIndex = index;
         if (getRoute() !== "quiz") {
           window.location.hash = "quiz";
           window.setTimeout(() => scrollToQuestion(index), 80);
@@ -2836,6 +3030,16 @@
         }
 
         scrollToQuestion(index);
+      }
+
+      function goToNextUnanswered() {
+        const unanswered = answers
+          .map((answer, index) => (answer === null ? index : -1))
+          .filter((index) => index !== -1);
+        if (!unanswered.length) return;
+
+        const nextIndex = unanswered.find((index) => index > currentQuestionIndex) ?? unanswered[0];
+        goToQuestion(nextIndex);
       }
 
       function renderQuiz() {
@@ -2888,10 +3092,52 @@
           .join("");
       }
 
+      function setQuestionIndexOpen(isOpen) {
+        questionIndex.classList.toggle("open", isOpen);
+        questionIndexToggle.setAttribute("aria-expanded", String(isOpen));
+        questionIndexToggleText.textContent = isOpen ? "收起" : "展开";
+      }
+
       function normalizeIndexText(value) {
         return String(value || "")
           .toLowerCase()
           .replace(/\s+/g, "");
+      }
+
+      function escapeIndexHtml(value) {
+        return String(value || "").replace(
+          /[&<>"']/g,
+          (character) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[character]
+        );
+      }
+
+      function escapeIndexPattern(value) {
+        return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
+
+      function highlightIndexText(value, rawQuery) {
+        const terms = rawQuery
+          .split(/\s+/)
+          .map((term) => term.trim())
+          .filter(Boolean)
+          .sort((left, right) => right.length - left.length);
+        if (!terms.length) return escapeIndexHtml(value);
+
+        const pattern = terms.map(escapeIndexPattern).join("|");
+        const splitPattern = new RegExp(`(${pattern})`, "gi");
+        const exactPattern = new RegExp(`^(?:${pattern})$`, "i");
+
+        return String(value || "")
+          .split(splitPattern)
+          .map((part) => (exactPattern.test(part) ? `<mark>${escapeIndexHtml(part)}</mark>` : escapeIndexHtml(part)))
+          .join("");
       }
 
       function buildContentIndex() {
@@ -2962,18 +3208,24 @@
       }
 
       function filterContentIndex() {
-        const query = normalizeIndexText(contentSearch.value.trim());
-        const hasSearchIntent = Boolean(query) || activeIndexType !== "all";
+        const rawQuery = contentSearch.value.trim();
+        const queryTerms = rawQuery
+          .split(/\s+/)
+          .map(normalizeIndexText)
+          .filter(Boolean);
+        const hasSearchIntent = queryTerms.length > 0 || Boolean(activeIndexType);
+        contentSearchClear.disabled = !rawQuery;
         const typeCounts = Object.fromEntries(
           indexTypes
             .filter((type) => type.id !== "all")
             .map((type) => [type.id, contentIndex.filter((item) => item.type === type.id).length])
         );
         const filtered = contentIndex.filter((item) => {
-          const matchType = activeIndexType === "all" || item.type === activeIndexType;
-          const matchQuery =
-            !query ||
-            normalizeIndexText([item.typeLabel, item.title, item.summary, ...item.keywords].join(" ")).includes(query);
+          const matchType = !activeIndexType || activeIndexType === "all" || item.type === activeIndexType;
+          const searchableText = normalizeIndexText(
+            [item.typeLabel, item.title, item.summary, ...item.keywords].join(" ")
+          );
+          const matchQuery = queryTerms.every((term) => searchableText.includes(term));
 
           return matchType && matchQuery;
         });
@@ -3007,10 +3259,10 @@
                 .map(
                   (item) => `
                     <button class="index-row" type="button" data-index-item="${item.id}">
-                      <span class="index-type">${item.typeLabel}</span>
+                      <span class="index-type">${escapeIndexHtml(item.typeLabel)}</span>
                       <span class="index-copy">
-                        <span class="index-title">${item.title}</span>
-                        <span class="index-summary">${item.summary}</span>
+                        <span class="index-title">${highlightIndexText(item.title, rawQuery)}</span>
+                        <span class="index-summary">${highlightIndexText(item.summary, rawQuery)}</span>
                       </span>
                       <span class="index-arrow">打开</span>
                     </button>
@@ -3299,6 +3551,14 @@
         const percent = Math.round((answered / questions.length) * 100);
         progressBar.style.width = `${percent}%`;
         progressCopy.textContent = `${answered} / ${questions.length} 已回答`;
+        questionIndexSummary.textContent = `${answered} / ${questions.length}`;
+        const remaining = questions.length - answered;
+        nextUnansweredButton.disabled = remaining === 0;
+        nextUnansweredButton.textContent = remaining === 0 ? "已全部作答" : `下一未答（${remaining}）`;
+        nextUnansweredButton.setAttribute(
+          "aria-label",
+          remaining === 0 ? "所有题目均已回答" : `跳到下一道未回答题目，还剩 ${remaining} 题`
+        );
         quizProgress.setAttribute("aria-valuenow", String(answered));
         quizProgress.setAttribute("aria-valuetext", `${answered} / ${questions.length} 已回答`);
         submitButton.disabled = answered !== questions.length;
@@ -3359,6 +3619,20 @@
         if (strength >= 38) return "清晰";
         if (strength >= 18) return "温和";
         return "接近中轴";
+      }
+
+      function getCenteredSummaryInsight(dimension) {
+        if (dimension.strength < 18) {
+          return {
+            title: `${dimension.name}接近中轴`,
+            text: `强度 ${dimension.strength}/100。这条轴上的答案更依赖情境、制度细节和现实后果，不适合直接归类。`,
+          };
+        }
+
+        return {
+          title: `${dimension.name}仍${getStrengthText(dimension.strength)}偏向「${getPoleText(dimension)}」`,
+          text: `强度 ${dimension.strength}/100。这是五条坐标中相对较弱的一项，但并不接近中轴；解读时应放回整体高强度结果中。`,
+        };
       }
 
       function getTensionInsight(ranked) {
@@ -3427,6 +3701,7 @@
         const ranked = getRankedDimensions(scores);
         const strongest = ranked[0];
         const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const centeredInsight = getCenteredSummaryInsight(centered);
         const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
 
         return [
@@ -3443,8 +3718,8 @@
           },
           {
             label: "最平衡",
-            title: `${centered.name}接近中轴`,
-            text: `强度 ${centered.strength}/100。这条轴上的答案更依赖情境、制度细节和现实后果，不适合直接归类。`,
+            title: centeredInsight.title,
+            text: centeredInsight.text,
           },
           {
             label: "主要张力",
@@ -3682,6 +3957,12 @@
         const ranked = getRankedDimensions(scores);
         const strongest = ranked.slice(0, 2);
         const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const centeredReport =
+          centered.strength < 18
+            ? `${centered.name}最接近中轴（强度 ${centered.strength}/100）。这通常意味着你在这组问题上更依赖具体情境、制度细节或现实后果来判断。`
+            : `${centered.name}是五条坐标中相对较弱的一项，但仍${getStrengthText(centered.strength)}偏向「${getPoleText(
+                centered
+              )}」（强度 ${centered.strength}/100），因此这次结果没有真正接近中轴的维度。`;
         const strongestList = strongest
           .map(
             (dimension) => `
@@ -3703,8 +3984,8 @@
             <ul class="report-list">${strongestList}</ul>
           </div>
           <div class="report-row">
-            <h3>怎么看中轴</h3>
-            <p>${centered.name}最接近中轴（强度 ${centered.strength}/100）。这通常意味着你在这组问题上更依赖具体情境、制度细节或现实后果来判断。</p>
+            <h3>${centered.strength < 18 ? "怎么看中轴" : "有没有中轴"}</h3>
+            <p>${centeredReport}</p>
           </div>
           <div class="report-row">
             <h3>怎么看张力</h3>
@@ -3764,22 +4045,1422 @@
         }
       }
 
-      function setupCanvas(canvas) {
+      function isLocalResultPreviewEnvironment() {
+        return (
+          window.location.protocol === "file:" ||
+          ["localhost", "127.0.0.1"].includes(window.location.hostname)
+        );
+      }
+
+      function normalizeResultScores(candidate) {
+        if (!candidate || typeof candidate !== "object") return null;
+
+        const normalized = {};
+        for (const dimension of dimensions) {
+          const value = candidate[dimension.id];
+          if (!Number.isInteger(value) || value < -100 || value > 100) return null;
+          normalized[dimension.id] = value;
+        }
+
+        return normalized;
+      }
+
+      function writeLocalResultPreview(state) {
+        if (!isLocalResultPreviewEnvironment()) return false;
+
+        try {
+          window.localStorage.setItem(localResultPreviewStorageKey, JSON.stringify(state));
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function saveLocalResultPreview(scores) {
+        const normalized = normalizeResultScores(scores);
+        if (!normalized) return false;
+
+        return writeLocalResultPreview({
+          version: 1,
+          state: "result",
+          scores: normalized,
+        });
+      }
+
+      function disableLocalResultPreview() {
+        return writeLocalResultPreview({
+          version: 1,
+          state: "disabled",
+        });
+      }
+
+      function readLocalResultPreview() {
+        if (!isLocalResultPreviewEnvironment()) return null;
+
+        try {
+          const rawState = window.localStorage.getItem(localResultPreviewStorageKey);
+          if (rawState) {
+            const parsedState = JSON.parse(rawState);
+            if (parsedState?.version === 1 && parsedState.state === "disabled") return null;
+
+            if (parsedState?.version === 1 && parsedState.state === "result") {
+              const restoredScores = normalizeResultScores(parsedState.scores);
+              if (restoredScores) return restoredScores;
+            }
+          }
+        } catch {
+          return { ...localResultPreviewSeed };
+        }
+
+        const seededScores = { ...localResultPreviewSeed };
+        saveLocalResultPreview(seededScores);
+        return seededScores;
+      }
+
+      function applyResultScores(scores) {
+        const normalized = normalizeResultScores(scores);
+        if (!normalized) return false;
+
+        latestScores = normalized;
+        const description = describeScores(latestScores);
+        resultTitle.textContent = description.title;
+        resultCopy.textContent = description.text;
+        renderResultQuickRead(latestScores);
+        renderResultReport(latestScores);
+        renderScores(latestScores);
+        renderDimensionNotes(latestScores);
+        renderResultReading(latestScores);
+        renderResultNextSteps(latestScores);
+        return true;
+      }
+
+      function restoreLocalResultPreview() {
+        const restoredScores = readLocalResultPreview();
+        if (!restoredScores || !applyResultScores(restoredScores)) return false;
+
+        if (getRoute() === "result") {
+          setResultActionStatus("已恢复本地预览结果；重新测试可清除。");
+        }
+
+        return true;
+      }
+
+      function setResultActionStatus(message, isError = false) {
+        window.clearTimeout(resultActionStatusTimer);
+        resultActionStatus.textContent = message;
+        resultActionStatus.classList.toggle("error", isError);
+
+        if (message) {
+          resultActionStatusTimer = window.setTimeout(() => {
+            resultActionStatus.textContent = "";
+            resultActionStatus.classList.remove("error");
+          }, 4000);
+        }
+      }
+
+      function buildResultSummaryText() {
+        if (!latestScores) return "";
+
+        const scoreLines = dimensions.map((dimension) => {
+          const score = latestScores[dimension.id];
+          const pole = score === 0 ? "接近中轴" : `偏向「${score > 0 ? dimension.positive : dimension.negative}」`;
+          return `${dimension.name}：${pole}（强度 ${Math.abs(score)}/100）`;
+        });
+
+        return [
+          "政治概念地图｜测评结果",
+          resultTitle.textContent,
+          resultCopy.textContent,
+          "",
+          "五维坐标",
+          ...scoreLines,
+          "",
+          "这是一张帮助理解价值取舍的阅读地图，不是政治身份判定。",
+          "继续阅读：https://political-concept-map.maaoding.icu/",
+        ].join("\n");
+      }
+
+      function getWrappedCanvasLines(context, text, maxWidth) {
+        const lines = [];
+        const forbiddenLineStart = "，。；：、！？）》】」』…";
+        let currentLine = "";
+
+        Array.from(String(text || "")).forEach((character) => {
+          const candidate = currentLine + character;
+          if (currentLine && context.measureText(candidate).width > maxWidth) {
+            if (forbiddenLineStart.includes(character)) {
+              currentLine = candidate;
+            } else {
+              lines.push(currentLine);
+              currentLine = character;
+            }
+          } else {
+            currentLine = candidate;
+          }
+        });
+
+        if (currentLine) lines.push(currentLine);
+        return lines;
+      }
+
+      function drawWrappedCanvasText(context, text, x, y, maxWidth, lineHeight, maxLines) {
+        const lines = getWrappedCanvasLines(context, text, maxWidth);
+        const visibleLines = lines.slice(0, maxLines);
+
+        if (lines.length > maxLines && visibleLines.length) {
+          let lastLine = visibleLines[visibleLines.length - 1];
+          while (lastLine && context.measureText(`${lastLine}…`).width > maxWidth) {
+            lastLine = lastLine.slice(0, -1);
+          }
+          visibleLines[visibleLines.length - 1] = `${lastLine}…`;
+        }
+
+        visibleLines.forEach((line, index) => {
+          context.fillText(line, x, y + index * lineHeight);
+        });
+
+        return y + visibleLines.length * lineHeight;
+      }
+
+      function getPdfIntroText(scores) {
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
+
+        if (strongest.strength < 18) {
+          return "五条坐标均接近中轴，结果更依赖具体议题、制度细节和现实后果。";
+        }
+
+        const leadingText = leading
+          .map((item) => `${item.name}「${item.pole}」${item.strength}`)
+          .join("，");
+
+        return leading.length >= 2
+          ? `主要方向为${leadingText}；其余坐标共同说明这组价值排序的平衡与张力。`
+          : `主要方向为${leadingText}；其他坐标更接近中轴，具体判断可能随情境变化。`;
+      }
+
+      function getPdfSummaryCards(scores) {
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const centeredInsight = getCenteredSummaryInsight(centered);
+        const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
+        const strongestMeaning =
+          strongest.score >= 0 ? strongest.positiveMeaning : strongest.negativeMeaning;
+
+        return [
+          {
+            label: "最鲜明",
+            title:
+              strongest.strength < 18
+                ? "整体接近中轴"
+                : `${strongest.name}偏向「${strongest.pole}」`,
+            text:
+              strongest.strength < 18
+                ? "这次结果没有特别突出的单一坐标，判断更依赖具体情境、制度细节和现实后果。"
+                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。${strongestMeaning}`,
+          },
+          {
+            label: "最平衡",
+            title: centeredInsight.title,
+            text: centeredInsight.text,
+          },
+          {
+            label: "主要张力",
+            title:
+              leading.length >= 2
+                ? `${leading[0].name} × ${leading[1].name}`
+                : "暂时没有尖锐双轴拉扯",
+            text: getTensionInsight(ranked),
+          },
+        ];
+      }
+
+      function getPdfInterpretationCards(scores) {
+        const ranked = getRankedDimensions(scores);
+        const strongest = ranked[0];
+        const second = ranked[1];
+        const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
+        const rankingText =
+          strongest.strength < 18
+            ? "五条坐标都较接近中轴，没有形成明显的单一价值优先级。"
+            : `${strongest.name}偏向「${strongest.pole}」最明显（${strongest.strength}/100），其次是${second.name}${
+                second.strength < 18
+                  ? `接近中轴（${second.strength}/100）`
+                  : `偏向「${second.pole}」（${second.strength}/100）`
+              }。`;
+        const centerText =
+          centered.strength < 18
+            ? `${centered.name}最接近中轴（${centered.strength}/100），说明这组判断更依赖情境与制度细节。`
+            : `${centered.name}虽是相对较弱的一项，仍${getStrengthText(centered.strength)}偏向「${centered.pole}」（${centered.strength}/100），因此没有真正接近中轴的维度。`;
+
+        return [
+          {
+            label: "排序",
+            title: "价值优先级",
+            text: rankingText,
+          },
+          {
+            label: "中轴",
+            title: centered.strength < 18 ? "保留情境判断" : "整体方向鲜明",
+            text: centerText,
+          },
+          {
+            label: "张力",
+            title: "轴间如何相互牵引",
+            text: getTensionInsight(ranked),
+          },
+        ];
+      }
+
+      function getPdfDimensionDetails(scores) {
+        return dimensions.map((dimension) => {
+          const score = scores[dimension.id];
+          const strength = Math.abs(score);
+          const pole = score === 0 ? "接近中轴" : score > 0 ? dimension.positive : dimension.negative;
+          const meaning =
+            strength < 18
+              ? `${dimension.negative}端：${dimension.negativeMeaning}${dimension.positive}端：${dimension.positiveMeaning}`
+              : score > 0
+              ? dimension.positiveMeaning
+              : dimension.negativeMeaning;
+
+          return {
+            id: dimension.id,
+            name: dimension.name,
+            pole,
+            strength,
+            endpoints: `${dimension.negative} ↔ ${dimension.positive}`,
+            meaning,
+            caveat: dimension.caveat,
+            topics: dimension.topics,
+          };
+        });
+      }
+
+      function getPdfReportData(scores) {
+        const recommendation = getReadingRecommendations(scores);
+        const description = describeScores(scores);
+
+        return {
+          scores: { ...scores },
+          title: description.title,
+          intro: getPdfIntroText(scores),
+          summaryCards: getPdfSummaryCards(scores),
+          interpretationCards: getPdfInterpretationCards(scores),
+          boundaryNotes: [
+            {
+              label: "方向",
+              text: "坐标记录的是这次回答中的价值取舍，不把你归入固定政治阵营。",
+            },
+            {
+              label: "强度",
+              text: "数值越高只表示倾向更稳定，不代表该方向更正确、更理性或更值得认同。",
+            },
+            {
+              label: "组合",
+              text: "单条轴不能独立定义整体判断；相同分数也可能因其他维度不同而形成不同政策选择。",
+            },
+          ],
+          dimensions: getPdfDimensionDetails(scores),
+          issues: recommendation.issues.slice(0, 2).map((issue) => ({
+            title: issue.title,
+            axes: issue.axes,
+            summary: issue.summary,
+            questions: issue.questions.slice(0, 2),
+          })),
+          ideologies: recommendation.ideologies.slice(0, 2).map((ideology) => ({
+            name: ideology.name,
+            family: ideology.family,
+            axes: ideology.axes,
+            summary: ideology.summary,
+            core: ideology.core,
+            caution: ideology.caution,
+          })),
+        };
+      }
+
+      function drawCanvasImageContained(context, image, x, y, width, height) {
+        const sourceWidth = image.naturalWidth || image.videoWidth || image.width;
+        const sourceHeight = image.naturalHeight || image.videoHeight || image.height;
+
+        if (!sourceWidth || !sourceHeight) {
+          throw new Error("invalid canvas image source");
+        }
+
+        const scale = Math.min(width / sourceWidth, height / sourceHeight);
+        const drawWidth = sourceWidth * scale;
+        const drawHeight = sourceHeight * scale;
+        const drawX = x + (width - drawWidth) / 2;
+        const drawY = y + (height - drawHeight) / 2;
+
+        context.imageSmoothingEnabled = true;
+        context.imageSmoothingQuality = "high";
+        context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+      }
+
+      function drawPdfBrandIcon(context, x, y, size) {
+        const background = "#fbfbf8";
+        const foreground = "#171a1f";
+        const scale = size / 512;
+        const strokePath = (tracePath, lineWidth, strokeStyle) => {
+          context.beginPath();
+          tracePath();
+          context.lineWidth = lineWidth;
+          context.strokeStyle = strokeStyle;
+          context.stroke();
+        };
+        const drawNode = (centerX, centerY, radius, lineWidth, strokeStyle) => {
+          context.beginPath();
+          context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+          context.fillStyle = background;
+          context.fill();
+          context.lineWidth = lineWidth;
+          context.strokeStyle = strokeStyle;
+          context.stroke();
+        };
+        const traceStem = () => {
+          context.moveTo(160, 424);
+          context.lineTo(160, 88);
+        };
+        const traceBowl = () => {
+          context.moveTo(160, 88);
+          context.lineTo(286, 88);
+          context.bezierCurveTo(363, 88, 416, 141, 416, 216);
+          context.bezierCurveTo(416, 291, 363, 344, 286, 344);
+          context.lineTo(160, 344);
+        };
+        const traceAxisX = () => {
+          context.moveTo(160, 216);
+          context.lineTo(380, 216);
+        };
+        const traceAxisY = () => {
+          context.moveTo(160, 126);
+          context.lineTo(160, 306);
+        };
+        const traceSpectrum = () => {
+          context.moveTo(210, 272);
+          context.lineTo(268, 210);
+          context.lineTo(326, 246);
+        };
+        const traceTopTick = () => {
+          context.moveTo(160, 64);
+          context.lineTo(160, 40);
+        };
+        const traceBottomTick = () => {
+          context.moveTo(160, 472);
+          context.lineTo(160, 448);
+        };
+        const traceRightTick = () => {
+          context.moveTo(394, 216);
+          context.lineTo(434, 216);
+        };
+
+        context.save();
+        context.translate(x, y);
+        context.scale(scale, scale);
+        context.lineCap = "round";
+        context.lineJoin = "round";
+
+        strokePath(traceStem, 48, background);
+        strokePath(traceBowl, 48, background);
+        strokePath(traceAxisX, 26, background);
+        strokePath(traceAxisY, 26, background);
+        strokePath(traceSpectrum, 24, background);
+        drawNode(160, 216, 25, 10, background);
+        drawNode(210, 272, 20, 10, background);
+        drawNode(268, 210, 20, 10, background);
+        drawNode(326, 246, 20, 10, background);
+        strokePath(traceTopTick, 24, background);
+        strokePath(traceBottomTick, 24, background);
+        strokePath(traceRightTick, 24, background);
+
+        strokePath(traceStem, 34, foreground);
+        strokePath(traceBowl, 34, foreground);
+        strokePath(traceAxisX, 14, foreground);
+        strokePath(traceAxisY, 14, foreground);
+        strokePath(traceSpectrum, 12, foreground);
+        drawNode(160, 216, 18, 12, foreground);
+        drawNode(210, 272, 13, 10, foreground);
+        drawNode(268, 210, 13, 10, foreground);
+        drawNode(326, 246, 13, 10, foreground);
+        strokePath(traceTopTick, 12, foreground);
+        strokePath(traceBottomTick, 12, foreground);
+        strokePath(traceRightTick, 12, foreground);
+        context.restore();
+      }
+
+      function drawPdfScorePanel(context, scores, x, y, width, fontFamily) {
+        const panelPadding = 14;
+        const rowHeight = 38;
+        const rowStartY = y + 42;
+        const panelHeight = 42 + dimensions.length * rowHeight + 12;
+        const trackX = x + panelPadding;
+        const trackWidth = width - panelPadding * 2;
+
+        context.fillStyle = "#f4f5f1";
+        context.fillRect(x, y, width, panelHeight);
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 1.5;
+        context.strokeRect(x, y, width, panelHeight);
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 18px ${fontFamily}`;
+        context.textAlign = "left";
+        context.fillText("五维坐标｜强度/100", x + panelPadding, y + 12);
+
+        dimensions.forEach((dimension, index) => {
+          const rowY = rowStartY + index * rowHeight;
+          const score = scores[dimension.id];
+          const strength = Math.abs(score);
+          const pole = score === 0 ? "中轴" : score > 0 ? dimension.positive : dimension.negative;
+          const markerX = trackX + ((score + 100) / 200) * trackWidth;
+
+          context.fillStyle = "#171a1f";
+          context.font = `700 14px ${fontFamily}`;
+          context.textAlign = "left";
+          context.fillText(dimension.name, trackX, rowY);
+          context.textAlign = "right";
+          context.fillText(`${pole} · ${strength}`, x + width - panelPadding, rowY);
+
+          context.fillStyle = "#626b74";
+          context.font = `600 11px ${fontFamily}`;
+          context.textAlign = "left";
+          context.fillText(dimension.negative, trackX, rowY + 15);
+          context.textAlign = "right";
+          context.fillText(dimension.positive, x + width - panelPadding, rowY + 15);
+
+          context.strokeStyle = "#d9ddd6";
+          context.lineWidth = 4;
+          context.lineCap = "round";
+          context.beginPath();
+          context.moveTo(trackX, rowY + 30);
+          context.lineTo(trackX + trackWidth, rowY + 30);
+          context.stroke();
+
+          context.fillStyle = "#171a1f";
+          context.beginPath();
+          context.arc(markerX, rowY + 30, 5, 0, Math.PI * 2);
+          context.fill();
+        });
+
+        context.textAlign = "left";
+        return panelHeight;
+      }
+
+      function createPdfPageCanvas() {
+        const width = 1240;
+        const height = 1754;
+        const margin = 80;
+        const contentWidth = width - margin * 2;
+        const fontFamily = '"Microsoft YaHei", "PingFang SC", sans-serif';
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = width;
+        canvas.height = height;
+        context.textBaseline = "top";
+        context.fillStyle = "#fbfbf8";
+        context.fillRect(0, 0, width, height);
+
+        return { canvas, context, width, height, margin, contentWidth, fontFamily };
+      }
+
+      function drawPdfPageFooter(
+        context,
+        { width, height, margin, contentWidth, fontFamily, pageNumber, showBrand }
+      ) {
+        const dividerY = height - 108;
+        const footerY = dividerY + 18;
+        const disclaimer =
+          "本报告用于政治概念科普和自我观察，不是政治身份判定，也不构成价值排名。测评答案不上传、不保存。";
+
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(margin, dividerY);
+        context.lineTo(width - margin, dividerY);
+        context.stroke();
+
+        let disclaimerX = margin;
+        let disclaimerWidth = contentWidth - 150;
+
+        if (showBrand) {
+          drawPdfBrandIcon(context, margin, footerY, 40);
+          context.fillStyle = "#171a1f";
+          context.font = `800 17px ${fontFamily}`;
+          context.fillText("政治概念地图", margin + 52, footerY + 1);
+          context.fillStyle = "#626b74";
+          context.font = `600 13px ${fontFamily}`;
+          context.fillText("political-concept-map.maaoding.icu", margin + 52, footerY + 24);
+          disclaimerX = margin + 360;
+          disclaimerWidth = contentWidth - 500;
+        }
+
+        context.fillStyle = "#39414d";
+        context.font = `400 14px ${fontFamily}`;
+        const disclaimerLines = getWrappedCanvasLines(context, disclaimer, disclaimerWidth);
+        drawWrappedCanvasText(
+          context,
+          disclaimer,
+          disclaimerX,
+          footerY + 1,
+          disclaimerWidth,
+          21,
+          disclaimerLines.length
+        );
+
+        context.fillStyle = "#626b74";
+        context.font = `700 14px ${fontFamily}`;
+        context.textAlign = "right";
+        context.fillText(`${pageNumber} / 2`, width - margin, footerY + 12);
+        context.textAlign = "left";
+
+        return dividerY;
+      }
+
+      function drawResultPdfOverviewPage({ radarChart, compassChart, report }) {
+        const { canvas, context, width, height, margin, contentWidth, fontFamily } =
+          createPdfPageCanvas();
+
+        const headerLabelY = 64;
+        context.fillStyle = "#2f5f9f";
+        context.font = `800 16px ${fontFamily}`;
+        context.fillText("价值测评结果 · 01", margin, headerLabelY);
+
+        const headerBandY = headerLabelY + 34;
+        const scorePanelWidth = 390;
+        const headerGap = 36;
+        const scorePanelX = width - margin - scorePanelWidth;
+        const narrativeWidth = scorePanelX - headerGap - margin;
+        const scorePanelHeight = drawPdfScorePanel(
+          context,
+          report.scores,
+          scorePanelX,
+          headerBandY,
+          scorePanelWidth,
+          fontFamily
+        );
+        let narrativeY = headerBandY;
+        context.fillStyle = "#171a1f";
+        context.font = `800 52px ${fontFamily}`;
+        const titleLines = getWrappedCanvasLines(context, report.title, narrativeWidth);
+        narrativeY =
+          drawWrappedCanvasText(
+            context,
+            report.title,
+            margin,
+            narrativeY,
+            narrativeWidth,
+            62,
+            titleLines.length
+          ) + 10;
+
+        context.fillStyle = "#39414d";
+        context.font = `400 21px ${fontFamily}`;
+        const introLines = getWrappedCanvasLines(context, report.intro, narrativeWidth);
+        narrativeY =
+          drawWrappedCanvasText(
+            context,
+            report.intro,
+            margin,
+            narrativeY,
+            narrativeWidth,
+            32,
+            introLines.length
+          ) + 18;
+
+        let y = Math.max(narrativeY, headerBandY + scorePanelHeight) + 22;
+
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(margin, y);
+        context.lineTo(width - margin, y);
+        context.stroke();
+        y += 22;
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 27px ${fontFamily}`;
+        context.fillText("结果速读", margin, y);
+        y += 42;
+
+        const cardGap = 16;
+        const cardWidth = (contentWidth - cardGap * 2) / 3;
+        const cardPadding = 18;
+        const cardLayouts = report.summaryCards.map((card) => {
+          context.font = `800 20px ${fontFamily}`;
+          const titleLines = getWrappedCanvasLines(context, card.title, cardWidth - cardPadding * 2);
+          context.font = `400 17px ${fontFamily}`;
+          const textLines = getWrappedCanvasLines(context, card.text, cardWidth - cardPadding * 2);
+          const height = 42 + titleLines.length * 27 + 4 + textLines.length * 25 + 18;
+
+          return { card, titleLines, textLines, height };
+        });
+        const cardHeight = Math.max(156, ...cardLayouts.map((layout) => layout.height));
+        const cardY = y;
+
+        cardLayouts.forEach((layout, index) => {
+          const { card, titleLines, textLines } = layout;
+          const cardX = margin + index * (cardWidth + cardGap);
+
+          context.fillStyle = "#f4f5f1";
+          context.fillRect(cardX, cardY, cardWidth, cardHeight);
+          context.strokeStyle = "#d9ddd6";
+          context.lineWidth = 1.5;
+          context.strokeRect(cardX, cardY, cardWidth, cardHeight);
+
+          context.fillStyle = "#2f5f9f";
+          context.font = `800 16px ${fontFamily}`;
+          context.fillText(card.label, cardX + cardPadding, cardY + 16);
+
+          context.fillStyle = "#171a1f";
+          context.font = `800 20px ${fontFamily}`;
+          const titleEnd = drawWrappedCanvasText(
+            context,
+            card.title,
+            cardX + cardPadding,
+            cardY + 42,
+            cardWidth - cardPadding * 2,
+            27,
+            titleLines.length
+          );
+
+          context.fillStyle = "#4f5863";
+          context.font = `400 17px ${fontFamily}`;
+          drawWrappedCanvasText(
+            context,
+            card.text,
+            cardX + cardPadding,
+            titleEnd + 4,
+            cardWidth - cardPadding * 2,
+            25,
+            textLines.length
+          );
+        });
+
+        y = cardY + cardHeight + 26;
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(margin, y);
+        context.lineTo(width - margin, y);
+        context.stroke();
+        y += 24;
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 27px ${fontFamily}`;
+        context.textAlign = "left";
+        context.fillText("图形概览", margin, y);
+        y += 40;
+
+        const chartGap = 28;
+        const chartWidth = (contentWidth - chartGap) / 2;
+        const chartY = y;
+        const chartHeight = 420;
+
+        [
+          {
+            title: "五维价值图",
+            caption: "从中心向十个端点展开，比较五条坐标两侧的相对强度。",
+            image: radarChart,
+            x: margin,
+          },
+          {
+            title: "经济 × 治理坐标",
+            caption: "只定位经济组织与治理偏好这两条轴，不代表整份结果。",
+            image: compassChart,
+            x: margin + chartWidth + chartGap,
+          },
+        ].forEach((chart) => {
+          context.fillStyle = "#f4f5f1";
+          context.fillRect(chart.x, chartY, chartWidth, chartHeight);
+          context.strokeStyle = "#d9ddd6";
+          context.lineWidth = 1.5;
+          context.strokeRect(chart.x, chartY, chartWidth, chartHeight);
+
+          context.fillStyle = "#39414d";
+          context.font = `800 20px ${fontFamily}`;
+          context.fillText(chart.title, chart.x + 16, chartY + 12);
+          context.fillStyle = "#626b74";
+          context.font = `400 13px ${fontFamily}`;
+          context.fillText(chart.caption, chart.x + 16, chartY + 41);
+          drawCanvasImageContained(
+            context,
+            chart.image,
+            chart.x + 8,
+            chartY + 66,
+            chartWidth - 16,
+            chartHeight - 74
+          );
+        });
+
+        y = chartY + chartHeight + 20;
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(margin, y);
+        context.lineTo(width - margin, y);
+        context.stroke();
+        y += 18;
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 27px ${fontFamily}`;
+        context.fillText("如何理解结果", margin, y);
+        y += 38;
+
+        const interpretationGap = 16;
+        const interpretationWidth = (contentWidth - interpretationGap * 2) / 3;
+        const interpretationPadding = 16;
+        const interpretationLayouts = report.interpretationCards.map((card) => {
+          context.font = `800 18px ${fontFamily}`;
+          const titleLines = getWrappedCanvasLines(
+            context,
+            card.title,
+            interpretationWidth - interpretationPadding * 2
+          );
+          context.font = `400 15px ${fontFamily}`;
+          const textLines = getWrappedCanvasLines(
+            context,
+            card.text,
+            interpretationWidth - interpretationPadding * 2
+          );
+
+          return {
+            card,
+            titleLines,
+            textLines,
+            height: 40 + titleLines.length * 24 + 4 + textLines.length * 22 + 16,
+          };
+        });
+        const interpretationHeight = Math.max(
+          142,
+          ...interpretationLayouts.map((layout) => layout.height)
+        );
+
+        interpretationLayouts.forEach((layout, index) => {
+          const cardX = margin + index * (interpretationWidth + interpretationGap);
+          context.fillStyle = "#f4f5f1";
+          context.fillRect(cardX, y, interpretationWidth, interpretationHeight);
+          context.strokeStyle = "#d9ddd6";
+          context.lineWidth = 1.5;
+          context.strokeRect(cardX, y, interpretationWidth, interpretationHeight);
+
+          context.fillStyle = "#2f5f9f";
+          context.font = `800 15px ${fontFamily}`;
+          context.fillText(layout.card.label, cardX + interpretationPadding, y + 14);
+
+          context.fillStyle = "#171a1f";
+          context.font = `800 18px ${fontFamily}`;
+          const titleEnd = drawWrappedCanvasText(
+            context,
+            layout.card.title,
+            cardX + interpretationPadding,
+            y + 40,
+            interpretationWidth - interpretationPadding * 2,
+            24,
+            layout.titleLines.length
+          );
+
+          context.fillStyle = "#4f5863";
+          context.font = `400 15px ${fontFamily}`;
+          drawWrappedCanvasText(
+            context,
+            layout.card.text,
+            cardX + interpretationPadding,
+            titleEnd + 4,
+            interpretationWidth - interpretationPadding * 2,
+            22,
+            layout.textLines.length
+          );
+        });
+
+        y += interpretationHeight + 18;
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 23px ${fontFamily}`;
+        context.fillText("解读边界", margin, y);
+        y += 36;
+
+        const boundaryGap = 22;
+        const boundaryPadding = 16;
+        const boundaryWidth = (contentWidth - boundaryGap * 2) / 3;
+        context.font = `400 15px ${fontFamily}`;
+        const boundaryLayouts = report.boundaryNotes.map((note) => {
+          const textLines = getWrappedCanvasLines(
+            context,
+            note.text,
+            boundaryWidth - boundaryPadding * 2
+          );
+          return {
+            note,
+            textLines,
+            height: 43 + textLines.length * 22 + 15,
+          };
+        });
+        const boundaryHeight = Math.max(
+          112,
+          ...boundaryLayouts.map((layout) => layout.height)
+        );
+        boundaryLayouts.forEach((layout, index) => {
+          const cardX = margin + index * (boundaryWidth + boundaryGap);
+          context.fillStyle = "#f4f5f1";
+          context.fillRect(cardX, y, boundaryWidth, boundaryHeight);
+          context.strokeStyle = "#d9ddd6";
+          context.lineWidth = 1.5;
+          context.strokeRect(cardX, y, boundaryWidth, boundaryHeight);
+          context.fillStyle = "#2f5f9f";
+          context.font = `800 15px ${fontFamily}`;
+          context.fillText(layout.note.label, cardX + boundaryPadding, y + 14);
+          context.fillStyle = "#39414d";
+          context.font = `400 15px ${fontFamily}`;
+          drawWrappedCanvasText(
+            context,
+            layout.note.text,
+            cardX + boundaryPadding,
+            y + 42,
+            boundaryWidth - boundaryPadding * 2,
+            22,
+            layout.textLines.length
+          );
+        });
+        y += boundaryHeight + 18;
+
+        const footerDividerY = drawPdfPageFooter(context, {
+          width,
+          height,
+          margin,
+          contentWidth,
+          fontFamily,
+          pageNumber: 1,
+          showBrand: true,
+        });
+        if (y > footerDividerY - 18) {
+          throw new Error("PDF overview content exceeds the page layout.");
+        }
+
+        return canvas;
+      }
+
+      function getPdfDimensionRowLayout(context, detail, width, fontFamily) {
+        const leftWidth = 226;
+        const gap = 26;
+        const rightWidth = width - leftWidth - gap - 34;
+        const bodyFont = `400 14px ${fontFamily}`;
+        const bodyLineHeight = 21;
+        const blocks = [
+          `含义｜${detail.meaning}`,
+          `边界｜${detail.caveat}`,
+          `议题｜${detail.topics.join("、")}`,
+        ].map((text) => {
+          context.font = bodyFont;
+          const lines = getWrappedCanvasLines(context, text, rightWidth);
+          return { text, lines };
+        });
+        const bodyHeight =
+          blocks.reduce((total, block) => total + block.lines.length * bodyLineHeight, 0) +
+          (blocks.length - 1) * 5;
+
+        return {
+          detail,
+          leftWidth,
+          gap,
+          rightWidth,
+          bodyFont,
+          bodyLineHeight,
+          blocks,
+          height: Math.max(112, bodyHeight + 28),
+        };
+      }
+
+      function drawPdfDimensionRow(context, layout, x, y, width, fontFamily, alternate) {
+        const padding = 16;
+        const dividerX = x + layout.leftWidth;
+
+        context.fillStyle = alternate ? "#f4f5f1" : "#fbfbf8";
+        context.fillRect(x, y, width, layout.height);
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 1.5;
+        context.strokeRect(x, y, width, layout.height);
+        context.beginPath();
+        context.moveTo(dividerX, y);
+        context.lineTo(dividerX, y + layout.height);
+        context.stroke();
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 20px ${fontFamily}`;
+        context.fillText(layout.detail.name, x + padding, y + 15);
+        context.fillStyle = "#2f5f9f";
+        context.font = `800 15px ${fontFamily}`;
+        context.fillText(
+          `${layout.detail.pole} · ${layout.detail.strength}/100`,
+          x + padding,
+          y + 46
+        );
+        context.fillStyle = "#626b74";
+        context.font = `600 13px ${fontFamily}`;
+        context.fillText(layout.detail.endpoints, x + padding, y + 73);
+
+        let bodyY = y + 14;
+        layout.blocks.forEach((block) => {
+          context.fillStyle = "#39414d";
+          context.font = layout.bodyFont;
+          bodyY = drawWrappedCanvasText(
+            context,
+            block.text,
+            dividerX + layout.gap,
+            bodyY,
+            layout.rightWidth,
+            layout.bodyLineHeight,
+            block.lines.length
+          );
+          bodyY += 5;
+        });
+      }
+
+      function getPdfIssueCardLayout(context, issue, width, fontFamily) {
+        const innerWidth = width - 32;
+        context.font = `400 15px ${fontFamily}`;
+        const summaryLines = getWrappedCanvasLines(context, issue.summary, innerWidth);
+        const questionLines = issue.questions.map((question, index) =>
+          getWrappedCanvasLines(context, `${index + 1}. ${question}`, innerWidth)
+        );
+        const questionsHeight =
+          questionLines.reduce((total, lines) => total + lines.length * 21, 0) +
+          Math.max(questionLines.length - 1, 0) * 4;
+
+        return {
+          issue,
+          summaryLines,
+          questionLines,
+          height: 93 + summaryLines.length * 22 + questionsHeight + 18,
+        };
+      }
+
+      function drawPdfIssueCard(context, layout, x, y, width, fontFamily) {
+        const padding = 16;
+        const innerWidth = width - padding * 2;
+        context.fillStyle = "#f4f5f1";
+        context.fillRect(x, y, width, layout.height);
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 1.5;
+        context.strokeRect(x, y, width, layout.height);
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 20px ${fontFamily}`;
+        context.fillText(layout.issue.title, x + padding, y + 15);
+        context.fillStyle = "#2f5f9f";
+        context.font = `700 13px ${fontFamily}`;
+        context.fillText(layout.issue.axes.join(" · "), x + padding, y + 44);
+
+        context.fillStyle = "#39414d";
+        context.font = `400 15px ${fontFamily}`;
+        let contentY = drawWrappedCanvasText(
+          context,
+          layout.issue.summary,
+          x + padding,
+          y + 68,
+          innerWidth,
+          22,
+          layout.summaryLines.length
+        );
+        contentY += 7;
+        context.fillStyle = "#171a1f";
+        context.font = `800 14px ${fontFamily}`;
+        context.fillText("关键问题", x + padding, contentY);
+        contentY += 23;
+        context.fillStyle = "#4f5863";
+        context.font = `400 15px ${fontFamily}`;
+        layout.issue.questions.forEach((question, index) => {
+          const lines = layout.questionLines[index];
+          contentY = drawWrappedCanvasText(
+            context,
+            `${index + 1}. ${question}`,
+            x + padding,
+            contentY,
+            innerWidth,
+            21,
+            lines.length
+          );
+          contentY += 4;
+        });
+      }
+
+      function getPdfIdeologyCardLayout(context, ideology, width, fontFamily) {
+        const innerWidth = width - 32;
+        context.font = `400 15px ${fontFamily}`;
+        const blocks = [
+          ideology.summary,
+          `核心关切｜${ideology.core}`,
+          `边界提醒｜${ideology.caution}`,
+        ].map((text) => ({
+          text,
+          lines: getWrappedCanvasLines(context, text, innerWidth),
+        }));
+        const bodyHeight =
+          blocks.reduce((total, block) => total + block.lines.length * 21, 0) +
+          (blocks.length - 1) * 6;
+
+        return {
+          ideology,
+          blocks,
+          height: 82 + bodyHeight + 18,
+        };
+      }
+
+      function drawPdfIdeologyCard(context, layout, x, y, width, fontFamily) {
+        const padding = 16;
+        const innerWidth = width - padding * 2;
+        context.fillStyle = "#f4f5f1";
+        context.fillRect(x, y, width, layout.height);
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 1.5;
+        context.strokeRect(x, y, width, layout.height);
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 20px ${fontFamily}`;
+        context.fillText(layout.ideology.name, x + padding, y + 15);
+        context.fillStyle = "#626b74";
+        context.font = `700 13px ${fontFamily}`;
+        context.textAlign = "right";
+        context.fillText(layout.ideology.family, x + width - padding, y + 18);
+        context.textAlign = "left";
+        context.fillStyle = "#2f5f9f";
+        context.fillText(layout.ideology.axes.join(" · "), x + padding, y + 44);
+
+        let contentY = y + 68;
+        context.fillStyle = "#39414d";
+        context.font = `400 15px ${fontFamily}`;
+        layout.blocks.forEach((block) => {
+          contentY = drawWrappedCanvasText(
+            context,
+            block.text,
+            x + padding,
+            contentY,
+            innerWidth,
+            21,
+            block.lines.length
+          );
+          contentY += 6;
+        });
+      }
+
+      function drawResultPdfDetailPage({ report }) {
+        const { canvas, context, width, height, margin, contentWidth, fontFamily } =
+          createPdfPageCanvas();
+
+        context.fillStyle = "#2f5f9f";
+        context.font = `800 16px ${fontFamily}`;
+        context.fillText("详细解读 · 02", margin, 64);
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 42px ${fontFamily}`;
+        context.fillText(report.title, margin, 98);
+
+        context.fillStyle = "#39414d";
+        context.font = `400 18px ${fontFamily}`;
+        const detailIntro =
+          "以下内容把五条坐标分别展开，并结合当前排序说明相关公共议题与政治词汇。各坐标彼此独立，方向和强度只表示这次回答中的价值优先级。";
+        const introLines = getWrappedCanvasLines(context, detailIntro, contentWidth);
+        let y =
+          drawWrappedCanvasText(
+            context,
+            detailIntro,
+            margin,
+            154,
+            contentWidth,
+            27,
+            introLines.length
+          ) + 20;
+
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(margin, y);
+        context.lineTo(width - margin, y);
+        context.stroke();
+        y += 22;
+
+        context.fillStyle = "#171a1f";
+        context.font = `800 27px ${fontFamily}`;
+        context.fillText("五维解释｜强度/100", margin, y);
+        y += 42;
+
+        const dimensionLayouts = report.dimensions.map((detail) =>
+          getPdfDimensionRowLayout(context, detail, contentWidth, fontFamily)
+        );
+        dimensionLayouts.forEach((layout, index) => {
+          drawPdfDimensionRow(context, layout, margin, y, contentWidth, fontFamily, index % 2 === 0);
+          y += layout.height + 8;
+        });
+
+        y += 10;
+        context.strokeStyle = "#d9ddd6";
+        context.lineWidth = 2;
+        context.beginPath();
+        context.moveTo(margin, y);
+        context.lineTo(width - margin, y);
+        context.stroke();
+        y += 20;
+
+        const columnGap = 28;
+        const columnWidth = (contentWidth - columnGap) / 2;
+        context.fillStyle = "#171a1f";
+        context.font = `800 27px ${fontFamily}`;
+        context.fillText("相关议题", margin, y);
+        context.fillText("相关政治词条", margin + columnWidth + columnGap, y);
+        y += 42;
+
+        const issueLayouts = report.issues.map((issue) =>
+          getPdfIssueCardLayout(context, issue, columnWidth, fontFamily)
+        );
+        const ideologyLayouts = report.ideologies.map((ideology) =>
+          getPdfIdeologyCardLayout(context, ideology, columnWidth, fontFamily)
+        );
+        let issueY = y;
+        issueLayouts.forEach((layout) => {
+          drawPdfIssueCard(context, layout, margin, issueY, columnWidth, fontFamily);
+          issueY += layout.height + 12;
+        });
+        let ideologyY = y;
+        ideologyLayouts.forEach((layout) => {
+          drawPdfIdeologyCard(
+            context,
+            layout,
+            margin + columnWidth + columnGap,
+            ideologyY,
+            columnWidth,
+            fontFamily
+          );
+          ideologyY += layout.height + 12;
+        });
+
+        const contentEndY = Math.max(issueY, ideologyY);
+        const footerDividerY = drawPdfPageFooter(context, {
+          width,
+          height,
+          margin,
+          contentWidth,
+          fontFamily,
+          pageNumber: 2,
+          showBrand: true,
+        });
+        if (contentEndY > footerDividerY - 18) {
+          throw new Error("PDF detail content exceeds the page layout.");
+        }
+
+        return canvas;
+      }
+
+      function mergePdfChunks(chunks, totalLength) {
+        const bytes = new Uint8Array(totalLength);
+        let offset = 0;
+
+        chunks.forEach((chunk) => {
+          bytes.set(chunk, offset);
+          offset += chunk.length;
+        });
+
+        return bytes;
+      }
+
+      function createImagePdfBlob(pages) {
+        if (!pages.length) {
+          throw new Error("PDF pages are required.");
+        }
+
+        const encoder = new TextEncoder();
+        const chunks = [];
+        const objectCount = 2 + pages.length * 3;
+        const offsets = Array(objectCount + 1).fill(0);
+        let totalLength = 0;
+        const push = (value) => {
+          const chunk = typeof value === "string" ? encoder.encode(value) : value;
+          chunks.push(chunk);
+          totalLength += chunk.length;
+        };
+        const startObject = (id) => {
+          offsets[id] = totalLength;
+          push(`${id} 0 obj\n`);
+        };
+
+        push("%PDF-1.4\n");
+        push(new Uint8Array([0x25, 0xe2, 0xe3, 0xcf, 0xd3, 0x0a]));
+
+        startObject(1);
+        push("<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+        startObject(2);
+        const pageObjectIds = pages.map((_, index) => 3 + index * 3);
+        push(
+          `<< /Type /Pages /Kids [${pageObjectIds
+            .map((id) => `${id} 0 R`)
+            .join(" ")}] /Count ${pages.length} >>\nendobj\n`
+        );
+
+        pages.forEach((page, index) => {
+          const pageObjectId = 3 + index * 3;
+          const imageObjectId = pageObjectId + 1;
+          const contentObjectId = pageObjectId + 2;
+
+          startObject(pageObjectId);
+          push(
+            `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 ${imageObjectId} 0 R >> >> /Contents ${contentObjectId} 0 R >>\nendobj\n`
+          );
+          startObject(imageObjectId);
+          push(
+            `<< /Type /XObject /Subtype /Image /Width ${page.imageWidth} /Height ${page.imageHeight} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Interpolate true /Length ${page.jpegBytes.length} >>\nstream\n`
+          );
+          push(page.jpegBytes);
+          push("\nendstream\nendobj\n");
+
+          const pageContent = encoder.encode("q\n595.28 0 0 841.89 0 0 cm\n/Im0 Do\nQ");
+          startObject(contentObjectId);
+          push(`<< /Length ${pageContent.length} >>\nstream\n`);
+          push(pageContent);
+          push("\nendstream\nendobj\n");
+        });
+
+        const xrefOffset = totalLength;
+        push(`xref\n0 ${objectCount + 1}\n0000000000 65535 f \n`);
+        for (let id = 1; id <= objectCount; id += 1) {
+          push(`${String(offsets[id]).padStart(10, "0")} 00000 n \n`);
+        }
+        push(
+          `trailer\n<< /Size ${objectCount + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`
+        );
+
+        return new Blob([mergePdfChunks(chunks, totalLength)], { type: "application/pdf" });
+      }
+
+      async function canvasToJpegBytes(canvas) {
+        const jpegBlob = await new Promise((resolve, reject) => {
+          canvas.toBlob(
+            (blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error("image export failed"));
+            },
+            "image/jpeg",
+            0.92
+          );
+        });
+
+        return new Uint8Array(await jpegBlob.arrayBuffer());
+      }
+
+      async function saveResultPdf() {
+        if (!latestScores) return;
+
+        savePdfButton.disabled = true;
+        savePdfButton.setAttribute("aria-busy", "true");
+        setResultActionStatus("正在生成双页 PDF…");
+
+        try {
+          const report = getPdfReportData(latestScores);
+          const radarChart = document.createElement("canvas");
+          const compassChart = document.createElement("canvas");
+          const pdfChartOptions = { width: 520, height: 380, pixelRatio: 2, mode: "export" };
+          drawRadar(latestScores, radarChart, pdfChartOptions);
+          drawCompass(latestScores, compassChart, pdfChartOptions);
+          const pageCanvases = [
+            drawResultPdfOverviewPage({
+              radarChart,
+              compassChart,
+              report,
+            }),
+            drawResultPdfDetailPage({ report }),
+          ];
+          const pages = await Promise.all(
+            pageCanvases.map(async (pageCanvas) => ({
+              jpegBytes: await canvasToJpegBytes(pageCanvas),
+              imageWidth: pageCanvas.width,
+              imageHeight: pageCanvas.height,
+            }))
+          );
+          const pdfBlob = createImagePdfBlob(pages);
+          const downloadUrl = URL.createObjectURL(pdfBlob);
+          const downloadLink = document.createElement("a");
+          const safeTitle = report.title.trim().replace(/[\\/:*?"<>|]/g, "-") || "测评结果";
+          downloadLink.href = downloadUrl;
+          downloadLink.download = `政治概念地图-${safeTitle}-完整报告.pdf`;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          downloadLink.remove();
+          window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+          setResultActionStatus("双页 PDF 已保存。");
+        } catch {
+          setResultActionStatus("PDF 保存失败，请稍后重试或复制结果摘要。", true);
+        } finally {
+          savePdfButton.disabled = false;
+          savePdfButton.removeAttribute("aria-busy");
+        }
+      }
+
+      function fallbackCopyText(text) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, textarea.value.length);
+        const copied = document.execCommand("copy");
+        textarea.remove();
+
+        if (!copied) throw new Error("copy failed");
+      }
+
+      async function copyResultSummary() {
+        const text = buildResultSummaryText();
+        if (!text) return;
+
+        try {
+          if (navigator.clipboard?.writeText) {
+            try {
+              await navigator.clipboard.writeText(text);
+            } catch {
+              fallbackCopyText(text);
+            }
+          } else {
+            fallbackCopyText(text);
+          }
+          setResultActionStatus("结果摘要已复制，可以粘贴到笔记或聊天中。");
+        } catch {
+          setResultActionStatus("复制失败，请改用 PDF 保存或手动选择结果文字。", true);
+        }
+      }
+
+      function hasUnsubmittedQuizProgress() {
+        return !latestScores && answers.some((answer) => answer !== null);
+      }
+
+      function setupCanvas(canvas, options = {}) {
         const rect = canvas.getBoundingClientRect();
-        const ratio = window.devicePixelRatio || 1;
-        const width = Math.max(260, Math.floor(rect.width || canvas.clientWidth || 320));
-        const cssHeight = rect.height || canvas.clientHeight || Math.min(380, Math.max(300, width * 0.9));
+        const requestedWidth = Number(options.width);
+        const requestedHeight = Number(options.height);
+        const requestedRatio = Number(options.pixelRatio);
+        const ratio = Number.isFinite(requestedRatio) && requestedRatio > 0 ? requestedRatio : window.devicePixelRatio || 1;
+        const widthSource =
+          Number.isFinite(requestedWidth) && requestedWidth > 0
+            ? requestedWidth
+            : rect.width || canvas.clientWidth || 320;
+        const width = Math.max(260, Math.floor(widthSource));
+        const cssHeight =
+          Number.isFinite(requestedHeight) && requestedHeight > 0
+            ? requestedHeight
+            : rect.height || canvas.clientHeight || Math.min(380, Math.max(300, width * 0.9));
         const height = Math.max(280, Math.floor(cssHeight));
-        canvas.width = width * ratio;
-        canvas.height = height * ratio;
+        canvas.width = Math.round(width * ratio);
+        canvas.height = Math.round(height * ratio);
         const context = canvas.getContext("2d");
         context.setTransform(ratio, 0, 0, ratio, 0, 0);
         context.clearRect(0, 0, width, height);
         return { context, width, height };
       }
 
-      function drawRadar(scores) {
-        const { context, width, height } = setupCanvas(radarCanvas);
+      function drawRadar(scores, targetCanvas = radarCanvas, options = {}) {
+        const { context, width, height } = setupCanvas(targetCanvas, options);
+        const exportMode = options.mode === "export";
         const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
         const normalizeAngle = (angle) => {
           const fullCircle = Math.PI * 2;
@@ -3865,8 +5546,8 @@
         const centerX = width / 2;
         const centerY = height / 2 + 2;
         const count = dimensions.length;
-        const labelGap = width < 420 ? 34 : 42;
-        const labelFont = width < 420 ? 12 : 13;
+        const labelGap = exportMode ? 40 : width < 420 ? 34 : 42;
+        const labelFont = exportMode ? 18 : width < 420 ? 12 : 13;
         context.font = `700 ${labelFont}px Microsoft YaHei, sans-serif`;
         const maxLabelWidth = Math.max(
           ...dimensions.flatMap((dimension) => [
@@ -3874,8 +5555,8 @@
             context.measureText(dimension.negative).width,
           ])
         );
-        const sidePadding = Math.max(48, maxLabelWidth / 2 + 12);
-        const verticalPadding = labelFont + 18;
+        const sidePadding = Math.max(exportMode ? 58 : 48, maxLabelWidth / 2 + (exportMode ? 16 : 12));
+        const verticalPadding = labelFont + (exportMode ? 20 : 18);
         const radius = Math.max(
           70,
           Math.min(
@@ -3884,7 +5565,7 @@
           )
         );
 
-        context.lineWidth = 1;
+        context.lineWidth = exportMode ? 1.35 : 1;
         context.strokeStyle = "rgba(23,26,31,0.14)";
         context.fillStyle = "rgba(23,26,31,0.018)";
 
@@ -3953,7 +5634,7 @@
           });
 
           context.strokeStyle = "rgba(23,26,31,0.82)";
-          context.lineWidth = 2;
+          context.lineWidth = exportMode ? 2.6 : 2;
 
           if (shapePoints.length >= 3) {
             context.closePath();
@@ -3966,18 +5647,19 @@
 
         dotPoints.forEach((point) => {
           context.beginPath();
-          context.arc(point.x, point.y, 4.5, 0, Math.PI * 2);
+          context.arc(point.x, point.y, exportMode ? 5.4 : 4.5, 0, Math.PI * 2);
           context.fillStyle = "#b36b00";
           context.fill();
-          context.lineWidth = 1.8;
+          context.lineWidth = exportMode ? 2.2 : 1.8;
           context.strokeStyle = "#ffffff";
           context.stroke();
         });
       }
 
-      function drawCompass(scores) {
-        const { context, width, height } = setupCanvas(compassCanvas);
-        const labelFont = width < 420 ? 12 : 13;
+      function drawCompass(scores, targetCanvas = compassCanvas, options = {}) {
+        const { context, width, height } = setupCanvas(targetCanvas, options);
+        const exportMode = options.mode === "export";
+        const labelFont = exportMode ? 18 : width < 420 ? 12 : 13;
         context.font = `800 ${labelFont}px Microsoft YaHei, sans-serif`;
         const sideLabelWidth = Math.max(
           context.measureText("国家调节").width,
@@ -3990,13 +5672,13 @@
         const availableGrid = Math.min(width - leftGutter - rightGutter, height - topGutter - bottomGutter);
         const gridSize = Math.max(96, availableGrid);
         const radius = gridSize / 2;
-        const centerX = leftGutter + radius;
-        const centerY = topGutter + radius;
+        const centerX = exportMode ? width / 2 : leftGutter + radius;
+        const centerY = exportMode ? height / 2 : topGutter + radius;
         const x = centerX + (scores.economy / 100) * radius;
         const y = centerY - (scores.authority / 100) * radius;
 
         context.strokeStyle = "rgba(23,26,31,0.14)";
-        context.lineWidth = 1;
+        context.lineWidth = exportMode ? 1.35 : 1;
         for (let step = -2; step <= 2; step += 1) {
           const offset = (radius * step) / 2;
           context.beginPath();
@@ -4010,7 +5692,7 @@
         }
 
         context.strokeStyle = "rgba(23,26,31,0.64)";
-        context.lineWidth = 1.8;
+        context.lineWidth = exportMode ? 2.2 : 1.8;
         context.beginPath();
         context.moveTo(centerX - radius, centerY);
         context.lineTo(centerX + radius, centerY);
@@ -4022,26 +5704,26 @@
         context.font = `800 ${labelFont}px Microsoft YaHei, sans-serif`;
         context.textAlign = "center";
         context.textBaseline = "bottom";
-        context.fillText("公共秩序", centerX, centerY - radius - 14);
+        context.fillText("公共秩序", centerX, centerY - radius - (exportMode ? 18 : 14));
         context.textBaseline = "top";
-        context.fillText("个体自由", centerX, centerY + radius + 14);
+        context.fillText("个体自由", centerX, centerY + radius + (exportMode ? 18 : 14));
         context.textAlign = "right";
         context.textBaseline = "middle";
-        context.fillText("国家调节", centerX - radius - 16, centerY);
+        context.fillText("国家调节", centerX - radius - (exportMode ? 18 : 16), centerY);
         context.textAlign = "left";
-        context.fillText("市场自主", centerX + radius + 16, centerY);
+        context.fillText("市场自主", centerX + radius + (exportMode ? 18 : 16), centerY);
 
         context.beginPath();
-        context.arc(x, y, 8, 0, Math.PI * 2);
+        context.arc(x, y, exportMode ? 10 : 8, 0, Math.PI * 2);
         context.fillStyle = "#b36b00";
         context.fill();
-        context.lineWidth = 3;
+        context.lineWidth = exportMode ? 3.5 : 3;
         context.strokeStyle = "#ffffff";
         context.stroke();
 
         context.beginPath();
-        context.arc(x, y, 12, 0, Math.PI * 2);
-        context.lineWidth = 1;
+        context.arc(x, y, exportMode ? 15 : 12, 0, Math.PI * 2);
+        context.lineWidth = exportMode ? 1.35 : 1;
         context.strokeStyle = "rgba(23,26,31,0.45)";
         context.stroke();
       }
@@ -4061,16 +5743,9 @@
           return;
         }
 
-        latestScores = calculateScores();
-        const description = describeScores(latestScores);
-        resultTitle.textContent = description.title;
-        resultCopy.textContent = description.text;
-        renderResultQuickRead(latestScores);
-        renderResultReport(latestScores);
-        renderScores(latestScores);
-        renderDimensionNotes(latestScores);
-        renderResultReading(latestScores);
-        renderResultNextSteps(latestScores);
+        setResultActionStatus("");
+        if (!applyResultScores(calculateScores())) return;
+        saveLocalResultPreview(latestScores);
         window.location.hash = "result";
         renderResultState();
       }
@@ -4081,6 +5756,9 @@
         answers.fill(null);
         quizForm.reset();
         latestScores = null;
+        disableLocalResultPreview();
+        currentQuestionIndex = -1;
+        setResultActionStatus("");
         resultQuickRead.innerHTML = "";
         resultReading.innerHTML = "";
         resultReport.innerHTML = "";
@@ -4097,7 +5775,13 @@
       quizForm.addEventListener("change", (event) => {
         if (!event.target.matches("input[type='radio']")) return;
         const index = Number(event.target.name.replace("q", ""));
+        currentQuestionIndex = index;
         answers[index] = Number(event.target.value);
+        if (latestScores) {
+          latestScores = null;
+          disableLocalResultPreview();
+          renderResultState();
+        }
         const question = document.querySelector(`[data-question="${index}"]`);
         question.classList.remove("missing");
         questionIndex.querySelector(`[data-question-jump="${index}"]`)?.classList.remove("missing");
@@ -4105,8 +5789,27 @@
       });
 
       submitButton.addEventListener("click", showResults);
+      nextUnansweredButton.addEventListener("click", goToNextUnanswered);
+      copyResultButton.addEventListener("click", copyResultSummary);
+      savePdfButton.addEventListener("click", saveResultPdf);
       document.querySelector("#restartButton").addEventListener("click", restart);
+      questionIndexToggle.addEventListener("click", () => {
+        setQuestionIndexOpen(!questionIndex.classList.contains("open"));
+      });
       contentSearch.addEventListener("input", filterContentIndex);
+      contentSearch.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter") return;
+        const firstResult = contentIndexList.querySelector("[data-index-item]");
+        if (!firstResult) return;
+
+        event.preventDefault();
+        goToContentItem(firstResult.dataset.indexItem);
+      });
+      contentSearchClear.addEventListener("click", () => {
+        contentSearch.value = "";
+        filterContentIndex();
+        contentSearch.focus();
+      });
       contentFilters.addEventListener("click", (event) => {
         const filterButton = event.target.closest("[data-index-filter]");
         if (!filterButton) return;
@@ -4133,6 +5836,9 @@
         const questionButton = event.target.closest("[data-question-jump]");
         if (questionButton) {
           event.preventDefault();
+          if (window.matchMedia("(max-width: 560px)").matches) {
+            setQuestionIndexOpen(false);
+          }
           goToQuestion(Number(questionButton.dataset.questionJump));
           return;
         }
@@ -4165,6 +5871,11 @@
         goToIdeology(link.dataset.ideologyLink);
       });
       window.addEventListener("hashchange", () => routeTo(getRoute(), true));
+      window.addEventListener("beforeunload", (event) => {
+        if (!hasUnsubmittedQuizProgress()) return;
+        event.preventDefault();
+        event.returnValue = "";
+      });
       window.addEventListener("resize", () => {
         if (!latestScores || getRoute() !== "result") return;
         drawRadar(latestScores);
@@ -4181,6 +5892,7 @@
       renderIdeologies();
       renderComparisons();
       renderMethod();
+      restoreLocalResultPreview();
       updateProgress();
       routeTo();
     </script>
