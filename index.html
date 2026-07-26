@@ -1520,6 +1520,89 @@
         text-align: left;
       }
 
+      .pdf-preview-dialog {
+        width: min(1120px, calc(100vw - 32px));
+        max-width: none;
+        max-height: calc(100vh - 32px);
+        padding: 0;
+        color: var(--text);
+        border: 1px solid var(--line-strong);
+        background: var(--surface);
+      }
+
+      .pdf-preview-dialog::backdrop {
+        background: rgba(23, 26, 31, 0.42);
+      }
+
+      .pdf-preview-shell {
+        display: grid;
+        grid-template-rows: auto auto minmax(0, 1fr) auto;
+        max-height: calc(100vh - 34px);
+      }
+
+      .pdf-preview-header {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 20px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .pdf-preview-header h2 {
+        margin: 8px 0 0;
+        font-size: 28px;
+      }
+
+      .pdf-preview-intro {
+        margin: 0;
+        padding: 14px 22px;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .pdf-preview-pages {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        overflow: auto;
+        padding: 22px;
+        background: #eef0eb;
+      }
+
+      .pdf-preview-page-wrap {
+        margin: 0;
+      }
+
+      .pdf-preview-page {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        border: 1px solid var(--line);
+        background: #fbfbf8;
+      }
+
+      .pdf-preview-page-wrap figcaption {
+        margin-top: 7px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .pdf-preview-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        padding: 16px 22px;
+        border-top: 1px solid var(--line);
+      }
+
+      .pdf-preview-actions .action-status {
+        flex: 1;
+        margin: 0;
+      }
+
       .hidden {
         display: none !important;
       }
@@ -1639,6 +1722,33 @@
 
         canvas {
           min-height: 340px;
+        }
+
+        .pdf-preview-dialog {
+          width: calc(100vw - 16px);
+          max-height: calc(100dvh - 16px);
+        }
+
+        .pdf-preview-shell {
+          max-height: calc(100dvh - 18px);
+        }
+
+        .pdf-preview-header,
+        .pdf-preview-actions {
+          padding: 14px;
+        }
+
+        .pdf-preview-intro {
+          padding: 12px 14px;
+        }
+
+        .pdf-preview-pages {
+          grid-template-columns: 1fr;
+          padding: 14px;
+        }
+
+        .pdf-preview-page {
+          min-height: 0;
         }
       }
 
@@ -2121,8 +2231,7 @@
               <p class="result-copy" id="resultCopy"></p>
               <div class="result-quick-read" id="resultQuickRead"></div>
               <div class="actions result-actions">
-                <button class="button" id="copyResultButton" type="button">复制结果摘要</button>
-                <button class="button secondary" id="savePdfButton" type="button">保存完整 PDF</button>
+                <button class="button" id="previewPdfButton" type="button">预览并保存 PDF</button>
                 <a class="button secondary" href="#guide">查看测评路线</a>
                 <button class="button secondary" id="restartButton" type="button">重新测试</button>
               </div>
@@ -2152,6 +2261,24 @@
           </div>
         </div>
       </section>
+
+      <dialog class="pdf-preview-dialog" id="pdfPreviewDialog" aria-labelledby="pdfPreviewTitle">
+        <div class="pdf-preview-shell">
+          <header class="pdf-preview-header">
+            <div>
+              <span class="badge">双页 A4 报告</span>
+              <h2 id="pdfPreviewTitle">PDF 预览</h2>
+            </div>
+            <button class="button secondary" id="closePdfPreviewButton" type="button">关闭</button>
+          </header>
+          <p class="pdf-preview-intro">预览内容与最终下载一致；第一页为结果总览，第二页为详细解读。</p>
+          <div class="pdf-preview-pages" id="pdfPreviewPages" aria-live="polite"></div>
+          <footer class="pdf-preview-actions">
+            <p class="action-status" id="pdfPreviewStatus" role="status" aria-live="polite"></p>
+            <button class="button" id="confirmSavePdfButton" type="button" disabled>保存完整 PDF</button>
+          </footer>
+        </div>
+      </dialog>
 
       <p class="footer">
         说明：本站用于政治概念科普和自我观察，不构成学术测量、政治建议或价值评判。测评答案不保存、不上传、不追踪。
@@ -2415,6 +2542,7 @@
 
       const answers = Array(questions.length).fill(null);
       let latestScores = null;
+      let pdfPreviewState = null;
       const localResultPreviewStorageKey = "politicalConceptMap.localResultPreview.v1";
       const localResultPreviewSeed = Object.freeze({
         economy: 0,
@@ -2453,8 +2581,12 @@
       const emptyResult = document.querySelector("#emptyResult");
       const resultTitle = document.querySelector("#resultTitle");
       const resultCopy = document.querySelector("#resultCopy");
-      const copyResultButton = document.querySelector("#copyResultButton");
-      const savePdfButton = document.querySelector("#savePdfButton");
+      const previewPdfButton = document.querySelector("#previewPdfButton");
+      const pdfPreviewDialog = document.querySelector("#pdfPreviewDialog");
+      const pdfPreviewPages = document.querySelector("#pdfPreviewPages");
+      const pdfPreviewStatus = document.querySelector("#pdfPreviewStatus");
+      const confirmSavePdfButton = document.querySelector("#confirmSavePdfButton");
+      const closePdfPreviewButton = document.querySelector("#closePdfPreviewButton");
       const resultActionStatus = document.querySelector("#resultActionStatus");
       const resultQuickRead = document.querySelector("#resultQuickRead");
       const resultReport = document.querySelector("#resultReport");
@@ -4121,6 +4253,7 @@
         const normalized = normalizeResultScores(scores);
         if (!normalized) return false;
 
+        closePdfPreview();
         latestScores = normalized;
         const description = describeScores(latestScores);
         resultTitle.textContent = description.title;
@@ -4156,28 +4289,6 @@
             resultActionStatus.classList.remove("error");
           }, 4000);
         }
-      }
-
-      function buildResultSummaryText() {
-        if (!latestScores) return "";
-
-        const scoreLines = dimensions.map((dimension) => {
-          const score = latestScores[dimension.id];
-          const pole = score === 0 ? "接近中轴" : `偏向「${score > 0 ? dimension.positive : dimension.negative}」`;
-          return `${dimension.name}：${pole}（强度 ${Math.abs(score)}/100）`;
-        });
-
-        return [
-          "政治概念地图｜测评结果",
-          resultTitle.textContent,
-          resultCopy.textContent,
-          "",
-          "五维坐标",
-          ...scoreLines,
-          "",
-          "这是一张帮助理解价值取舍的阅读地图，不是政治身份判定。",
-          "继续阅读：https://political-concept-map.maaoding.icu/",
-        ].join("\n");
       }
 
       function getWrappedCanvasLines(context, text, maxWidth) {
@@ -5347,30 +5458,115 @@
         return new Uint8Array(await jpegBlob.arrayBuffer());
       }
 
+      function setPdfPreviewStatus(message, isError = false) {
+        pdfPreviewStatus.textContent = message;
+        pdfPreviewStatus.classList.toggle("error", isError);
+      }
+
+      function getPdfPreviewScoreKey(scores) {
+        return dimensions.map((dimension) => scores[dimension.id]).join(",");
+      }
+
+      function createResultPdfPages(scores) {
+        const report = getPdfReportData(scores);
+        const radarChart = document.createElement("canvas");
+        const compassChart = document.createElement("canvas");
+        const pdfChartOptions = { width: 520, height: 380, pixelRatio: 2, mode: "export" };
+        drawRadar(scores, radarChart, pdfChartOptions);
+        drawCompass(scores, compassChart, pdfChartOptions);
+        const pageCanvases = [
+          drawResultPdfOverviewPage({
+            radarChart,
+            compassChart,
+            report,
+          }),
+          drawResultPdfDetailPage({ report }),
+        ];
+
+        return {
+          scoreKey: getPdfPreviewScoreKey(scores),
+          report,
+          pageCanvases,
+        };
+      }
+
+      function renderPdfPreviewPages(pageCanvases) {
+        pdfPreviewPages.replaceChildren();
+        pageCanvases.forEach((pageCanvas, index) => {
+          const figure = document.createElement("figure");
+          const caption = document.createElement("figcaption");
+          figure.className = "pdf-preview-page-wrap";
+          pageCanvas.className = "pdf-preview-page";
+          pageCanvas.setAttribute("role", "img");
+          pageCanvas.setAttribute("aria-label", `PDF 第 ${index + 1} 页预览`);
+          caption.textContent = `第 ${index + 1} 页 / ${pageCanvases.length}`;
+          figure.append(pageCanvas, caption);
+          pdfPreviewPages.appendChild(figure);
+        });
+      }
+
+      function resetPdfPreview() {
+        pdfPreviewState = null;
+        pdfPreviewPages.replaceChildren();
+        confirmSavePdfButton.disabled = true;
+        confirmSavePdfButton.removeAttribute("aria-busy");
+        setPdfPreviewStatus("");
+      }
+
+      function closePdfPreview() {
+        if (pdfPreviewDialog.open) {
+          pdfPreviewDialog.close();
+        }
+        resetPdfPreview();
+      }
+
+      async function previewResultPdf() {
+        if (!latestScores) return;
+
+        previewPdfButton.disabled = true;
+        previewPdfButton.setAttribute("aria-busy", "true");
+        resetPdfPreview();
+        setResultActionStatus("正在生成 PDF 预览…");
+        setPdfPreviewStatus("正在生成双页预览…");
+
+        try {
+          if (typeof pdfPreviewDialog.showModal !== "function") {
+            pdfPreviewState = createResultPdfPages(latestScores);
+            await saveResultPdf();
+            return;
+          }
+
+          pdfPreviewDialog.showModal();
+          await new Promise((resolve) => window.requestAnimationFrame(resolve));
+          pdfPreviewState = createResultPdfPages(latestScores);
+          renderPdfPreviewPages(pdfPreviewState.pageCanvases);
+          confirmSavePdfButton.disabled = false;
+          setPdfPreviewStatus("预览已生成，可保存为双页 A4 PDF。");
+          setResultActionStatus("PDF 预览已生成。");
+        } catch {
+          confirmSavePdfButton.disabled = true;
+          setPdfPreviewStatus("PDF 预览生成失败，请关闭后重试。", true);
+          setResultActionStatus("PDF 预览生成失败，请稍后重试。", true);
+        } finally {
+          previewPdfButton.disabled = false;
+          previewPdfButton.removeAttribute("aria-busy");
+        }
+      }
+
       async function saveResultPdf() {
         if (!latestScores) return;
 
-        savePdfButton.disabled = true;
-        savePdfButton.setAttribute("aria-busy", "true");
+        confirmSavePdfButton.disabled = true;
+        confirmSavePdfButton.setAttribute("aria-busy", "true");
+        setPdfPreviewStatus("正在生成双页 PDF…");
         setResultActionStatus("正在生成双页 PDF…");
 
         try {
-          const report = getPdfReportData(latestScores);
-          const radarChart = document.createElement("canvas");
-          const compassChart = document.createElement("canvas");
-          const pdfChartOptions = { width: 520, height: 380, pixelRatio: 2, mode: "export" };
-          drawRadar(latestScores, radarChart, pdfChartOptions);
-          drawCompass(latestScores, compassChart, pdfChartOptions);
-          const pageCanvases = [
-            drawResultPdfOverviewPage({
-              radarChart,
-              compassChart,
-              report,
-            }),
-            drawResultPdfDetailPage({ report }),
-          ];
+          const scoreKey = getPdfPreviewScoreKey(latestScores);
+          const previewState =
+            pdfPreviewState?.scoreKey === scoreKey ? pdfPreviewState : createResultPdfPages(latestScores);
           const pages = await Promise.all(
-            pageCanvases.map(async (pageCanvas) => ({
+            previewState.pageCanvases.map(async (pageCanvas) => ({
               jpegBytes: await canvasToJpegBytes(pageCanvas),
               imageWidth: pageCanvas.width,
               imageHeight: pageCanvas.height,
@@ -5379,54 +5575,21 @@
           const pdfBlob = createImagePdfBlob(pages);
           const downloadUrl = URL.createObjectURL(pdfBlob);
           const downloadLink = document.createElement("a");
-          const safeTitle = report.title.trim().replace(/[\\/:*?"<>|]/g, "-") || "测评结果";
+          const safeTitle = previewState.report.title.trim().replace(/[\\/:*?"<>|]/g, "-") || "测评结果";
           downloadLink.href = downloadUrl;
           downloadLink.download = `政治概念地图-${safeTitle}-完整报告.pdf`;
           document.body.appendChild(downloadLink);
           downloadLink.click();
           downloadLink.remove();
           window.setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
+          setPdfPreviewStatus("双页 PDF 已保存。");
           setResultActionStatus("双页 PDF 已保存。");
         } catch {
-          setResultActionStatus("PDF 保存失败，请稍后重试或复制结果摘要。", true);
+          setPdfPreviewStatus("PDF 保存失败，请稍后重试。", true);
+          setResultActionStatus("PDF 保存失败，请稍后重试。", true);
         } finally {
-          savePdfButton.disabled = false;
-          savePdfButton.removeAttribute("aria-busy");
-        }
-      }
-
-      function fallbackCopyText(text) {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.setAttribute("readonly", "");
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.select();
-        textarea.setSelectionRange(0, textarea.value.length);
-        const copied = document.execCommand("copy");
-        textarea.remove();
-
-        if (!copied) throw new Error("copy failed");
-      }
-
-      async function copyResultSummary() {
-        const text = buildResultSummaryText();
-        if (!text) return;
-
-        try {
-          if (navigator.clipboard?.writeText) {
-            try {
-              await navigator.clipboard.writeText(text);
-            } catch {
-              fallbackCopyText(text);
-            }
-          } else {
-            fallbackCopyText(text);
-          }
-          setResultActionStatus("结果摘要已复制，可以粘贴到笔记或聊天中。");
-        } catch {
-          setResultActionStatus("复制失败，请改用 PDF 保存或手动选择结果文字。", true);
+          confirmSavePdfButton.disabled = false;
+          confirmSavePdfButton.removeAttribute("aria-busy");
         }
       }
 
@@ -5753,6 +5916,7 @@
       function restart() {
         if (!window.confirm("重新测试会清空当前答案和结果，确定继续吗？")) return;
 
+        closePdfPreview();
         answers.fill(null);
         quizForm.reset();
         latestScores = null;
@@ -5778,6 +5942,7 @@
         currentQuestionIndex = index;
         answers[index] = Number(event.target.value);
         if (latestScores) {
+          closePdfPreview();
           latestScores = null;
           disableLocalResultPreview();
           renderResultState();
@@ -5790,8 +5955,10 @@
 
       submitButton.addEventListener("click", showResults);
       nextUnansweredButton.addEventListener("click", goToNextUnanswered);
-      copyResultButton.addEventListener("click", copyResultSummary);
-      savePdfButton.addEventListener("click", saveResultPdf);
+      previewPdfButton.addEventListener("click", previewResultPdf);
+      confirmSavePdfButton.addEventListener("click", saveResultPdf);
+      closePdfPreviewButton.addEventListener("click", closePdfPreview);
+      pdfPreviewDialog.addEventListener("close", resetPdfPreview);
       document.querySelector("#restartButton").addEventListener("click", restart);
       questionIndexToggle.addEventListener("click", () => {
         setQuestionIndexOpen(!questionIndex.classList.contains("open"));
