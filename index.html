@@ -366,6 +366,27 @@
         color: var(--danger);
       }
 
+      .quiz-autosave-note,
+      .quiz-restore-note {
+        margin: 10px 0 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .quiz-autosave-note {
+        color: var(--muted);
+      }
+
+      .quiz-restore-note {
+        display: none;
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      .quiz-restore-note.visible {
+        display: block;
+      }
+
       .button {
         display: inline-flex;
         gap: 10px;
@@ -1413,6 +1434,28 @@
         padding-top: 10px;
       }
 
+      .result-retest {
+        padding: 20px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .result-retest:empty {
+        display: none;
+      }
+
+      .result-retest h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      .result-retest > p {
+        max-width: 760px;
+        margin: 0 0 12px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
       .score-grid {
         display: grid;
         align-content: start;
@@ -2056,6 +2099,9 @@
           </div>
         </div>
 
+        <p class="quiz-autosave-note">作答进度会自动保存在本机浏览器，中途离开后可继续；清除浏览器数据会删除进度。</p>
+        <p class="quiz-restore-note" id="quizRestoreNote" role="status"></p>
+
         <div class="question-index-wrap">
           <button
             class="question-index-toggle"
@@ -2254,6 +2300,7 @@
           </div>
 
           <div class="result-details">
+            <div class="result-retest" id="resultRetest"></div>
             <div class="result-report" id="resultReport"></div>
             <div class="dimension-notes" id="dimensionNotes"></div>
             <div class="result-reading" id="resultReading"></div>
@@ -2542,8 +2589,11 @@
 
       const answers = Array(questions.length).fill(null);
       let latestScores = null;
+      let quizProgressPersisted = false;
       let pdfPreviewState = null;
       const localResultPreviewStorageKey = "politicalConceptMap.localResultPreview.v1";
+      const quizProgressStorageKey = "politicalConceptMap.quizProgress.v1";
+      const savedResultStorageKey = "politicalConceptMap.savedResult.v1";
       const localResultPreviewSeed = Object.freeze({
         economy: 0,
         authority: -62,
@@ -2602,6 +2652,8 @@
       const referenceLinks = document.querySelector("#referenceLinks");
       const resultReading = document.querySelector("#resultReading");
       const resultNextSteps = document.querySelector("#resultNextSteps");
+      const quizRestoreNote = document.querySelector("#quizRestoreNote");
+      const resultRetest = document.querySelector("#resultRetest");
       const radarCanvas = document.querySelector("#radarCanvas");
       const compassCanvas = document.querySelector("#compassCanvas");
 
@@ -4161,6 +4213,7 @@
         resultContent.classList.toggle("hidden", !hasResult);
 
         if (!hasResult) {
+          resultRetest.innerHTML = "";
           resultQuickRead.innerHTML = "";
           resultReading.innerHTML = "";
           resultReport.innerHTML = "";
@@ -4175,6 +4228,200 @@
             drawCompass(latestScores);
           });
         }
+      }
+
+      function normalizeQuizAnswers(candidate) {
+        if (!Array.isArray(candidate) || candidate.length !== questions.length) return null;
+
+        const normalized = [];
+        for (const value of candidate) {
+          if (value === null) {
+            normalized.push(null);
+            continue;
+          }
+          if (!Number.isInteger(value) || value < -2 || value > 2) return null;
+          normalized.push(value);
+        }
+
+        return normalized;
+      }
+
+      function saveQuizProgress() {
+        if (answers.every((answer) => answer === null)) {
+          clearQuizProgress();
+          quizProgressPersisted = false;
+          return;
+        }
+
+        try {
+          window.localStorage.setItem(
+            quizProgressStorageKey,
+            JSON.stringify({ version: 1, answers })
+          );
+          quizProgressPersisted = true;
+        } catch {
+          quizProgressPersisted = false;
+        }
+      }
+
+      function clearQuizProgress() {
+        try {
+          window.localStorage.removeItem(quizProgressStorageKey);
+        } catch {
+        }
+      }
+
+      function restoreQuizProgress() {
+        let restored = null;
+
+        try {
+          const rawProgress = window.localStorage.getItem(quizProgressStorageKey);
+          if (rawProgress) {
+            const parsedProgress = JSON.parse(rawProgress);
+            if (parsedProgress?.version === 1) {
+              restored = normalizeQuizAnswers(parsedProgress.answers);
+            }
+          }
+        } catch {
+          restored = null;
+        }
+
+        if (!restored) return 0;
+
+        const answeredCount = restored.filter((answer) => answer !== null).length;
+        if (answeredCount === 0) {
+          clearQuizProgress();
+          return 0;
+        }
+
+        restored.forEach((answer, index) => {
+          if (answer === null) return;
+          answers[index] = answer;
+          const input = quizForm.querySelector(`input[name="q${index}"][value="${answer}"]`);
+          if (input) input.checked = true;
+        });
+        quizProgressPersisted = true;
+        updateProgress();
+        quizRestoreNote.textContent = `已恢复上次在本机的作答进度（${answeredCount} / ${questions.length}），可以直接继续。`;
+        quizRestoreNote.classList.add("visible");
+        return answeredCount;
+      }
+
+      function readSavedResult() {
+        try {
+          const rawResult = window.localStorage.getItem(savedResultStorageKey);
+          if (!rawResult) return null;
+
+          const parsedResult = JSON.parse(rawResult);
+          if (parsedResult?.version !== 1) return null;
+
+          const scores = normalizeResultScores(parsedResult.scores);
+          if (!scores) return null;
+
+          return {
+            scores,
+            savedAt: typeof parsedResult.savedAt === "string" ? parsedResult.savedAt : "",
+          };
+        } catch {
+          return null;
+        }
+      }
+
+      function saveSavedResult(scores) {
+        const normalized = normalizeResultScores(scores);
+        if (!normalized) return false;
+
+        try {
+          window.localStorage.setItem(
+            savedResultStorageKey,
+            JSON.stringify({
+              version: 1,
+              scores: normalized,
+              savedAt: new Date().toISOString(),
+            })
+          );
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      function clearSavedResult() {
+        try {
+          window.localStorage.removeItem(savedResultStorageKey);
+        } catch {
+        }
+      }
+
+      function restoreSavedResult() {
+        if (latestScores) return false;
+
+        const record = readSavedResult();
+        if (!record || !applyResultScores(record.scores)) return false;
+
+        if (getRoute() === "result") {
+          setResultActionStatus("已恢复你上次在本机的测评结果；重新测试可清除。");
+        }
+
+        return true;
+      }
+
+      function formatSavedAt(isoString) {
+        const savedDate = new Date(isoString);
+        if (Number.isNaN(savedDate.getTime())) return "";
+        return `${savedDate.getFullYear()} 年 ${savedDate.getMonth() + 1} 月 ${savedDate.getDate()} 日`;
+      }
+
+      function renderResultComparison(currentScores, previousRecord) {
+        if (!previousRecord?.scores) {
+          resultRetest.innerHTML = "";
+          return;
+        }
+
+        const previousScores = previousRecord.scores;
+        const rows = dimensions.map((dimension) => {
+          const before = previousScores[dimension.id];
+          const now = currentScores[dimension.id];
+          const delta = now - before;
+          return {
+            name: dimension.name,
+            before,
+            now,
+            deltaText: delta === 0 ? "±0" : `${delta > 0 ? "+" : ""}${delta}`,
+            direction:
+              delta === 0
+                ? "位置不变"
+                : `向「${delta > 0 ? dimension.positive : dimension.negative}」一端移动 ${Math.abs(delta)}`,
+          };
+        });
+        const maxMove = Math.max(...rows.map((row) => Math.abs(row.now - row.before)));
+        const dateText = formatSavedAt(previousRecord.savedAt);
+        const summary =
+          maxMove === 0
+            ? "五维分数与上次完全一致。"
+            : maxMove < 10
+              ? "整体变化不大，没有哪一维移动超过 10。"
+              : `最大移动幅度为 ${maxMove}，值得对照下面几行看看是哪些判断变了。`;
+
+        resultRetest.innerHTML = `
+          <h3>与上次对比</h3>
+          <p>上次结果保存于${dateText || "此前"}。对比只用来观察自己的判断变化，不构成任何评价。${summary}</p>
+          <div class="quick-read-list">
+            ${rows
+              .map(
+                (row) => `
+                  <div class="quick-read-item">
+                    <span>${row.name}</span>
+                    <div>
+                      <strong>${row.before} → ${row.now}（${row.deltaText}）</strong>
+                      <p>${row.direction}。</p>
+                    </div>
+                  </div>
+                `
+              )
+              .join("")}
+          </div>
+        `;
       }
 
       function isLocalResultPreviewEnvironment() {
@@ -5594,7 +5841,7 @@
       }
 
       function hasUnsubmittedQuizProgress() {
-        return !latestScores && answers.some((answer) => answer !== null);
+        return !latestScores && !quizProgressPersisted && answers.some((answer) => answer !== null);
       }
 
       function setupCanvas(canvas, options = {}) {
@@ -5907,8 +6154,13 @@
         }
 
         setResultActionStatus("");
+        const previousRecord = readSavedResult();
         if (!applyResultScores(calculateScores())) return;
         saveLocalResultPreview(latestScores);
+        saveSavedResult(latestScores);
+        clearQuizProgress();
+        quizProgressPersisted = false;
+        renderResultComparison(latestScores, previousRecord);
         window.location.hash = "result";
         renderResultState();
       }
@@ -5921,6 +6173,10 @@
         quizForm.reset();
         latestScores = null;
         disableLocalResultPreview();
+        clearQuizProgress();
+        quizProgressPersisted = false;
+        clearSavedResult();
+        resultRetest.innerHTML = "";
         currentQuestionIndex = -1;
         setResultActionStatus("");
         resultQuickRead.innerHTML = "";
@@ -5941,6 +6197,8 @@
         const index = Number(event.target.name.replace("q", ""));
         currentQuestionIndex = index;
         answers[index] = Number(event.target.value);
+        saveQuizProgress();
+        quizRestoreNote.classList.remove("visible");
         if (latestScores) {
           closePdfPreview();
           latestScores = null;
@@ -6059,7 +6317,9 @@
       renderIdeologies();
       renderComparisons();
       renderMethod();
+      restoreQuizProgress();
       restoreLocalResultPreview();
+      restoreSavedResult();
       updateProgress();
       routeTo();
     </script>
