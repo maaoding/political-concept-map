@@ -526,6 +526,23 @@
         line-height: 1.7;
       }
 
+
+      .reading-details { margin-top: 16px; border-top: 1px solid var(--line); }
+      .reading-details > summary { padding: 12px 0; cursor: pointer; font-weight: 600; color: var(--text); }
+      .reading-details > summary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+      .reading-body { max-width: 900px; padding: 0 0 14px; }
+      .reading-body h4 { margin: 20px 0 8px; font-size: 15px; }
+      .entry-title { color: inherit; text-decoration: none; }
+      .entry-title:hover { text-decoration: underline; }
+      .content-sources { margin-top: 22px; padding-top: 4px; border-top: 1px solid var(--line); }
+      .content-sources ul { padding-left: 20px; }
+      .content-sources li { margin-bottom: 12px; overflow-wrap: anywhere; }
+      .content-sources li span { display: block; margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .source-note { color: var(--muted); font-size: 13px; line-height: 1.7; }
+      .recommendation-list { display: grid; gap: 10px; padding: 0; list-style: none; }
+      .recommendation-list li { border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+      .recommendation-list p { margin-top: 4px; font-size: 13px; }
+      #reading-paths { scroll-margin-top: 92px; }
       .module-list {
         display: grid;
         gap: 0;
@@ -1671,6 +1688,12 @@
           scroll-margin-top: 0;
         }
 
+        .info-block,
+        .guide-card,
+        #reading-paths {
+          scroll-margin-top: 16px;
+        }
+
         .topbar-inner {
           width: min(100% - 28px, 720px);
           gap: 12px;
@@ -2027,11 +2050,11 @@
             <p class="experience-note" aria-label="测评说明">
               <span>约 5–8 分钟</span>
               <span>浏览器本地计算</span>
-              <span>不保存答案</span>
+              <span>进度与结果保存在本机</span>
             </p>
             <div class="actions">
               <a class="button" href="#quiz">开始价值测评</a>
-              <a class="text-link" href="#guide">查看测评路线</a>
+              <a class="text-link" href="#issues">直接看议题</a>
             </div>
           </div>
 
@@ -2046,30 +2069,19 @@
             </div>
             <div class="metric">
               <strong>3</strong>
-              <span>条阅读路线：测评前、测评后、按议题或概念查内容。</span>
+              <span>条阅读路线，完整指南集中在“如何阅读”。</span>
             </div>
           </aside>
         </div>
 
         <section class="subsite-map section-space" aria-labelledby="subsiteMapTitle">
           <p class="eyebrow">阅读路线</p>
-          <h2 id="subsiteMapTitle">三条测评路线</h2>
+          <h2 id="subsiteMapTitle">从这里开始阅读</h2>
           <p>
             不需要从头读完。先测、测后读、直接查内容，三种路径都能回到同一张政治概念地图。
           </p>
           <div class="module-list" id="moduleGrid"></div>
         </section>
-      </section>
-
-      <section class="page" id="page-guide" data-page="guide" aria-labelledby="guideTitle">
-        <div class="section-header">
-          <p class="eyebrow">阅读路线</p>
-          <h2 id="guideTitle" class="page-title">测评路线</h2>
-          <p class="lead">
-            路线压缩为三种：测评前看什么、测评后读什么、直接按议题或概念查什么。
-          </p>
-        </div>
-        <div class="guide-list section-space" id="guideGrid"></div>
       </section>
 
       <section class="page" id="page-quiz" data-page="quiz" aria-labelledby="quizTitle">
@@ -2133,31 +2145,32 @@
           </p>
         </div>
         <nav class="section-index concept-toc" aria-label="议题与概念目录">
-          <a href="#issues" data-route-link="issues" data-scroll-target="issue-map">
+          <a href="#issues/issue-map" data-route-link="issues" data-scroll-target="issue-map">
             <span>01</span>
             <strong>议题地图</strong>
             <em>9 个公共议题</em>
           </a>
-          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-dimensions">
+          <a href="#concepts/concept-dimensions" data-route-link="concepts" data-scroll-target="concept-dimensions">
             <span>02</span>
             <strong>价值坐标</strong>
             <em>5 组取舍轴</em>
           </a>
-          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-ideologies">
+          <a href="#concepts/concept-ideologies" data-route-link="concepts" data-scroll-target="concept-ideologies">
             <span>03</span>
             <strong>政治词条</strong>
             <em>12 个常见概念</em>
           </a>
-          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">
+          <a href="#concepts/concept-comparisons" data-route-link="concepts" data-scroll-target="concept-comparisons">
             <span>04</span>
             <strong>概念对照</strong>
             <em>相邻概念边界</em>
           </a>
         </nav>
+        <p class="section-space"><a href="#issues/knowledge-search">搜索全部议题与概念 →</a></p>
         <section class="concept-section section-space" id="concept-dimensions" tabindex="-1" aria-labelledby="conceptDimensionsTitle">
           <p class="eyebrow">五维坐标</p>
           <h3 id="conceptDimensionsTitle">价值坐标</h3>
-          <p>每条轴都不是好坏判断，而是不同价值优先级的张力。结果越靠近某一端，通常代表你更愿意为该端价值承担现实成本。</p>
+          <p>每条轴用于整理一组价值取舍。位置只描述本次回答的汇总方向，不衡量好坏、身份或长期稳定性；接近中轴也可能是不同回答相互抵消。</p>
           <div class="dimension-list section-space" id="dimensionGrid"></div>
         </section>
         <section class="concept-section section-space" id="concept-ideologies" tabindex="-1" aria-labelledby="conceptIdeologiesTitle">
@@ -2187,22 +2200,22 @@
           </p>
         </div>
         <nav class="section-index concept-toc" aria-label="议题与概念目录">
-          <a href="#issues" data-route-link="issues" data-scroll-target="issue-map">
+          <a href="#issues/issue-map" data-route-link="issues" data-scroll-target="issue-map">
             <span>01</span>
             <strong>议题地图</strong>
             <em>9 个公共议题</em>
           </a>
-          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-dimensions">
+          <a href="#concepts/concept-dimensions" data-route-link="concepts" data-scroll-target="concept-dimensions">
             <span>02</span>
             <strong>价值坐标</strong>
             <em>5 组取舍轴</em>
           </a>
-          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-ideologies">
+          <a href="#concepts/concept-ideologies" data-route-link="concepts" data-scroll-target="concept-ideologies">
             <span>03</span>
             <strong>政治词条</strong>
             <em>12 个常见概念</em>
           </a>
-          <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">
+          <a href="#concepts/concept-comparisons" data-route-link="concepts" data-scroll-target="concept-comparisons">
             <span>04</span>
             <strong>概念对照</strong>
             <em>相邻概念边界</em>
@@ -2242,10 +2255,14 @@
           <p class="eyebrow">阅读说明</p>
           <h2 id="methodTitle" class="page-title">如何阅读本站</h2>
           <p class="lead">
-            这个站点把价值测评当作阅读入口，而不是身份判定器。结果越靠近某一端，只表示你在这组问题中更愿意优先考虑该端价值。
+            从本次回答进入公共议题，再借助概念与来源理解取舍。这里集中说明测评用途、计分局限、阅读路线和本地数据保存方式。
           </p>
         </div>
         <div class="method-list section-space" id="methodGrid"></div>
+        <section class="section-space" id="reading-paths" tabindex="-1" aria-labelledby="readingPathsTitle">
+          <h3 id="readingPathsTitle">选择一条阅读路线</h3>
+          <div class="guide-list" id="guideGrid"></div>
+        </section>
         <div class="ideology-guide">
           <h3>结构参考</h3>
           <p>这些链接帮助理解多轴测试、类型学测验和百科词条如何组织信息。本站只借鉴结构，不复制题目或结论。</p>
@@ -2256,11 +2273,11 @@
       <section class="page" id="page-result" data-page="result" aria-labelledby="resultTitle">
         <div class="empty-state" id="emptyResult">
           <h2>还没有生成结果</h2>
-          <p>完成 40 道题后，这里会显示你的五维价值图、二维坐标、文字画像和继续阅读线索。</p>
+          <p>完成 40 道题后，这里会显示你的五维价值图、二维坐标、文字摘要和继续阅读线索。</p>
           <div class="inline-actions">
             <a class="button" href="#quiz">去测评</a>
             <a class="button secondary" href="#issues">看议题地图</a>
-            <a class="button secondary" href="#guide">看测评路线</a>
+            <a class="button secondary" href="#method/reading-paths">看阅读指南</a>
           </div>
         </div>
 
@@ -2270,15 +2287,15 @@
               <div class="result-heading">
                 <img class="result-mark" src="assets/p-spectrum-icon.svg?v=1" alt="" aria-hidden="true" />
                 <div>
-                  <span class="badge">你的价值画像</span>
-                  <h2 class="page-title accent-text result-title" id="resultTitle">中轴观察者</h2>
+                  <span class="badge">本次回答摘要</span>
+                  <h2 class="page-title accent-text result-title" id="resultTitle">本次结果接近中轴</h2>
                 </div>
               </div>
               <p class="result-copy" id="resultCopy"></p>
               <div class="result-quick-read" id="resultQuickRead"></div>
               <div class="actions result-actions">
                 <button class="button" id="previewPdfButton" type="button">预览并保存 PDF</button>
-                <a class="button secondary" href="#guide">查看测评路线</a>
+                <a class="button secondary" href="#result/resultNextSteps">按阅读顺序继续</a>
                 <button class="button secondary" id="restartButton" type="button">重新测试</button>
               </div>
               <p class="action-status" id="resultActionStatus" role="status" aria-live="polite"></p>
@@ -2286,25 +2303,25 @@
             <div class="score-grid" id="scoreGrid"></div>
           </div>
 
+          <div class="dimension-notes section-space" id="dimensionNotes"></div>
+
           <div class="chart-grid">
             <article class="chart-block">
               <h2>五维价值图</h2>
-              <p>中心代表中立，越靠近轴端代表该方向越鲜明。</p>
+              <p>中心表示汇总分接近零；可能来自中立回答，也可能来自两端抵消。越靠近轴端，本次回答的汇总方向越明显。</p>
               <canvas id="radarCanvas" aria-label="五维政治价值图">浏览器不支持画布，请参考上方五维分数。</canvas>
             </article>
             <article class="chart-block">
               <h2>经济 × 治理坐标</h2>
               <p>横轴为国家调节到市场自主，纵轴为个体自由到公共秩序。</p>
-              <canvas id="compassCanvas" aria-label="经济与治理二维坐标图">浏览器不支持画布，请参考上方经济组织与治理边界分数。</canvas>
+              <canvas id="compassCanvas" aria-label="经济与治理二维坐标图">浏览器不支持画布，请参考上方经济组织与治理偏好分数。</canvas>
             </article>
           </div>
 
           <div class="result-details">
             <div class="result-retest" id="resultRetest"></div>
-            <div class="result-report" id="resultReport"></div>
-            <div class="dimension-notes" id="dimensionNotes"></div>
-            <div class="result-reading" id="resultReading"></div>
             <div class="result-next-steps" id="resultNextSteps"></div>
+            <div class="result-reading" id="resultReading"></div>
           </div>
         </div>
       </section>
@@ -2328,7 +2345,7 @@
       </dialog>
 
       <p class="footer">
-        说明：本站用于政治概念科普和自我观察，不构成学术测量、政治建议或价值评判。测评答案不保存、不上传、不追踪。
+        说明：本站用于政治概念科普和自我观察，不构成学术测量、政治建议或价值评判。作答进度和上次结果保存在本机浏览器，答案不上传，不接入追踪。提交后清除作答进度；重新测试或清除站点数据可清除保存的结果。
       </p>
     </main>
 
@@ -2412,6 +2429,10 @@
           policies: ["宪政与法治", "表达和结社自由", "市场经济中的基础监管", "少数权利保护"],
           variants: "内部差异很大：古典自由主义更重市场和有限政府，社会自由主义更愿意用公共政策保障实质机会。",
           caution: "自由主义不等同于放任一切，它通常仍接受维护权利边界和公共秩序的制度安排。",
+          scope: "本站用作重视平等自由、权利和权力约束的思想家族。市场、福利和普遍责任上的分歧很大，不能由这里的关联标签推出统一政策。",
+          sources: [
+            "liberalism"
+          ],
         },
         {
           id: "conservatism",
@@ -2423,6 +2444,10 @@
           policies: ["渐进式制度改革", "家庭和社区责任", "文化遗产保护", "强调社会稳定"],
           variants: "有些保守主义强调宗教或道德传统，有些更强调国家制度、地方共同体或审慎治理。",
           caution: "保守主义不必然反对所有变化，常见主张是变化应谨慎、可逆并尊重社会承受力。",
+          scope: "本站侧重审慎改革与社会连续性的政治传统，不把所有支持现状的主张都归入保守主义，也不预设它支持权力不受限制。",
+          sources: [
+            "conservatism"
+          ],
         },
         {
           id: "social-democracy",
@@ -2434,6 +2459,11 @@
           policies: ["全民医疗或基础医疗保障", "累进税制", "劳动者保护", "公共教育和社会保险"],
           variants: "不同传统在福利规模、工会角色和产业政策上差异较大。",
           caution: "它不等同于取消市场，而是试图通过公共政策缓和市场经济中的不平等与不安全感。",
+          scope: "本站采用当代常见用法：在民主政治和市场经济中，通过福利、劳动保障与再分配改善生活。它与民主社会主义的历史边界有交叉。",
+          sources: [
+            "socialism",
+            "liberalism"
+          ],
         },
         {
           id: "democratic-socialism",
@@ -2445,6 +2475,10 @@
           policies: ["关键行业公共所有或合作所有", "强化工会和职工参与", "高水平公共服务", "财富和资本收益再分配"],
           variants: "一些路线强调议会改革，一些强调基层合作社、工人自治或公共投资机构。",
           caution: "民主社会主义与威权式计划经济不同，其自我定义通常强调民主程序和公民参与。",
+          scope: "本站强调民主程序与经济民主，特别关注所有权及企业决策由谁控制；不把公共部门扩大自动视为经济民主。",
+          sources: [
+            "socialism"
+          ],
         },
         {
           id: "marxism",
@@ -2456,6 +2490,10 @@
           policies: ["生产资料社会化的不同方案", "劳动者组织", "批判资本集中", "强调结构性不平等分析"],
           variants: "包含经典马克思主义、西方马克思主义、分析马克思主义等多种理论传统，政策结论并不完全一致。",
           caution: "马克思主义既是政治传统，也是社会理论谱系；不能简单等同于某一种历史政体。",
+          scope: "本站将其作为分析资本、阶级与历史的理论及政治传统。理论分析、政治运动和具体政体需要分开考察，公共调节标签不等于所有分支的国家观。",
+          sources: [
+            "marx"
+          ],
         },
         {
           id: "libertarianism",
@@ -2466,7 +2504,11 @@
           core: "核心关切是减少强制，认为许多公共问题可以通过市场、自愿组织和个人责任解决。",
           policies: ["低税收和小政府", "放松经济管制", "强产权保护", "反对家长式干预"],
           variants: "有些更偏经济自由，有些同时强调个人生活方式自由；极端分支可能主张无政府资本主义。",
-          caution: "它重视自由选择，但常被批评低估结构性不平等和公共品供给难题。",
+          caution: "常见争论涉及公共品、结构性不平等与产权的正当性；这些批评对不同分支的适用程度不同。",
+          scope: "本站正文主要描述重视私有产权、市场交换与有限政府的用法。这个词也涵盖左翼传统，各分支对自然资源、再分配和是否保留国家有明显分歧。",
+          sources: [
+            "libertarianism"
+          ],
         },
         {
           id: "communitarianism",
@@ -2478,6 +2520,10 @@
           policies: ["地方自治和社区参与", "公共服务中的互助责任", "重视公民教育", "平衡权利与义务"],
           variants: "有偏进步的社群主义，也有偏保守的社群主义，差别在于共同体价值的内容和边界。",
           caution: "强调共同体不必然否认个人权利，关键在共同体规范能否被公开讨论和民主修正。",
+          scope: "这里的共同体可以是社区、地方或共享实践，不专指民族国家。成员之间的责任与对外排斥并非同一主张，不能直接等同于民族主义。",
+          sources: [
+            "communitarianism"
+          ],
         },
         {
           id: "nationalism",
@@ -2489,6 +2535,10 @@
           policies: ["产业和就业保护", "文化认同教育", "边境与移民管理", "维护主权自主"],
           variants: "公民民族主义更强调政治共同体和法律身份，族群民族主义更强调血缘、语言或文化来源。",
           caution: "民族主义可以表现为反殖民和自决诉求，也可能滑向排外；需要区分具体语境和边界设置。",
+          scope: "本站讨论民族认同、自决和成员责任。民族、国家、公民身份并不总是重合，具体主张须看成员边界如何界定及少数群体如何被对待。",
+          sources: [
+            "nationalism"
+          ],
         },
         {
           id: "ecologism",
@@ -2500,6 +2550,10 @@
           policies: ["减排和能源转型", "生态保护红线", "绿色公共交通", "循环经济和环境税"],
           variants: "有些生态主义强调市场化碳定价，有些强调反消费主义、地方自治和增长模式转型。",
           caution: "生态主义不只是环保技术方案，也常涉及发展模式、产业利益和公平分担问题。",
+          scope: "本站用作以生态边界及人和非人自然的关系为中心的政治关切。下列来源解释伦理基础，不把所有环保政策归为单一政治路线。",
+          sources: [
+            "ecology"
+          ],
         },
         {
           id: "progressivism",
@@ -2511,6 +2565,11 @@
           policies: ["反歧视规则", "性别平等和照护支持", "少数群体权利", "教育与职场机会平等"],
           variants: "内部包含侧重经济改革、身份平权和制度现代化的不同路径；女权主义与其议题高度交叉，但并非同义词，且自身也包含自由女权、社会主义女权、激进女权等传统。",
           caution: "进步主义内部并不总是一致，常围绕表达边界、身份政治和制度优先级发生争论。",
+          scope: "本站用作推动制度改革、平等参与及反歧视的宽泛用语，不代表统一学派。美国历史上的进步时代有特定背景，不能与今天的平权议题直接画等号。",
+          sources: [
+            "equality",
+            "progressiveHistory"
+          ],
         },
         {
           id: "anarchism",
@@ -2522,6 +2581,10 @@
           policies: ["基层自治", "合作社和互助网络", "反对过度警治", "去中心化公共决策"],
           variants: "包括无政府共产主义、无政府工团主义、个人主义无政府主义等，经济主张差异很大。",
           caution: "无政府主义不等于混乱崇拜，它通常设想的是非国家形式的规则、互助和自我管理。",
+          scope: "本站侧重批判强制等级并探索自治互助的传统。对国家权威的怀疑、对资本的批判及组织方式在各分支之间并不相同。",
+          sources: [
+            "anarchism"
+          ],
         },
         {
           id: "authoritarianism",
@@ -2533,6 +2596,10 @@
           policies: ["集中决策", "限制反对力量", "强化社会管理", "以安全或发展目标约束权利"],
           variants: "可以与不同经济政策、民族叙事或意识形态结合，因此并非单一经济立场。",
           caution: "威权治理常被批评缺少权力制衡、问责机制和个人权利保障。",
+          scope: "本站按权力集中、政治竞争和问责受限的制度特征理解此词。支持公共安全、统一规则或临时危机措施，本身不足以判断一个人或制度属于威权主义。",
+          sources: [
+            "regimes"
+          ],
         },
       ];
 
@@ -2603,7 +2670,6 @@
       });
       let activeIndexType = "";
       let contentIndex = [];
-      let pendingScrollTarget = "";
       let resultActionStatusTimer = null;
       let currentQuestionIndex = -1;
 
@@ -2639,7 +2705,6 @@
       const closePdfPreviewButton = document.querySelector("#closePdfPreviewButton");
       const resultActionStatus = document.querySelector("#resultActionStatus");
       const resultQuickRead = document.querySelector("#resultQuickRead");
-      const resultReport = document.querySelector("#resultReport");
       const dimensionNotes = document.querySelector("#dimensionNotes");
       const scoreGrid = document.querySelector("#scoreGrid");
       const dimensionGrid = document.querySelector("#dimensionGrid");
@@ -2656,6 +2721,114 @@
       const resultRetest = document.querySelector("#resultRetest");
       const radarCanvas = document.querySelector("#radarCanvas");
       const compassCanvas = document.querySelector("#compassCanvas");
+
+      const contentSources = {
+        "liberalism": {
+          "label": "斯坦福哲学百科：自由主义",
+          "url": "https://plato.stanford.edu/entries/liberalism/",
+          "note": "自由概念、古典与社会自由主义的差异。"
+        },
+        "conservatism": {
+          "label": "斯坦福哲学百科：保守主义",
+          "url": "https://plato.stanford.edu/entries/conservatism/",
+          "note": "审慎改革、传统与不同保守主义传统。"
+        },
+        "socialism": {
+          "label": "斯坦福哲学百科：社会主义",
+          "url": "https://plato.stanford.edu/entries/socialism/",
+          "note": "社会所有、经济民主，以及与资本主义福利改革的区别。"
+        },
+        "marx": {
+          "label": "斯坦福哲学百科：卡尔·马克思",
+          "url": "https://plato.stanford.edu/entries/marx/",
+          "note": "阶级、历史、资本主义批判的理论背景。"
+        },
+        "libertarianism": {
+          "label": "斯坦福哲学百科：自由意志主义",
+          "url": "https://plato.stanford.edu/entries/libertarianism/",
+          "note": "产权、自我所有，以及不同左右传统和国家观。"
+        },
+        "communitarianism": {
+          "label": "斯坦福哲学百科：社群主义",
+          "url": "https://plato.stanford.edu/entries/communitarianism/",
+          "note": "自我与社会关系、共同体及公共生活。"
+        },
+        "nationalism": {
+          "label": "斯坦福哲学百科：民族主义",
+          "url": "https://plato.stanford.edu/entries/nationalism/",
+          "note": "民族认同、自决及成员责任的争论。"
+        },
+        "ecology": {
+          "label": "斯坦福哲学百科：环境伦理",
+          "url": "https://plato.stanford.edu/entries/ethics-environmental/",
+          "note": "生态价值、环境政治及代际责任的伦理背景。"
+        },
+        "equality": {
+          "label": "斯坦福哲学百科：平等",
+          "url": "https://plato.stanford.edu/entries/equality/",
+          "note": "平等的不同含义及分配原则；用于理解本站的平权讨论。"
+        },
+        "progressiveHistory": {
+          "label": "美国国会图书馆：进步时代改革",
+          "url": "https://www.loc.gov/classroom-materials/progressive-era-reforms/",
+          "note": "美国历史语境示例，不能直接等同于当代所有进步主张。"
+        },
+        "anarchism": {
+          "label": "斯坦福哲学百科：无政府主义",
+          "url": "https://plato.stanford.edu/entries/anarchism/",
+          "note": "权威的正当性、自治与无政府主义内部差异。"
+        },
+        "regimes": {
+          "label": "OpenStax 政治学：当代政体分类",
+          "url": "https://openstax.org/books/introduction-political-science/pages/13-2-categorizing-contemporary-regimes",
+          "note": "威权政体、代表制及权力问责的区别。"
+        },
+        "housing": {
+          "label": "OECD：住房政策工具",
+          "url": "https://www.oecd.org/en/data/tools/housing-policy-action.html",
+          "note": "住房供给、包容性与可持续性的政策工具；具体效果需结合当地数据。"
+        },
+        "health": {
+          "label": "WHO：全民健康覆盖",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/universal-health-coverage-(uhc)",
+          "note": "服务可及性、质量与经济风险保护；不是某一种支付制度的唯一方案。"
+        },
+        "education": {
+          "label": "UNESCO：教育包容",
+          "url": "https://www.unesco.org/en/inclusion-education",
+          "note": "识别并减少教育参与障碍，说明公平与包容的政策目标。"
+        },
+        "labor": {
+          "label": "ILO：体面劳动与可持续发展",
+          "url": "https://www.ilo.org/topics-and-sectors/decent-work-and-2030-agenda-sustainable-development",
+          "note": "就业、劳动权利、社会保障与社会对话四个方面。"
+        },
+        "immigration": {
+          "label": "斯坦福哲学百科：移民",
+          "url": "https://plato.stanford.edu/entries/immigration/",
+          "note": "跨国准入与成员资格的伦理争论；不直接解释中国户籍制度。"
+        },
+        "climate": {
+          "label": "IPCC：第六次评估综合报告决策者摘要",
+          "url": "https://www.ipcc.ch/report/ar6/syr/summary-for-policymakers/",
+          "note": "2023 年评估的气候风险、减缓和适应依据；具体转型方案仍需本地评估。"
+        },
+        "platforms": {
+          "label": "UNESCO：数字平台治理指南",
+          "url": "https://www.unesco.org/en/articles/guidelines-governance-digital-platforms",
+          "note": "表达自由、信息获取、多方治理与平台责任。"
+        },
+        "industry": {
+          "label": "OECD：产业政策评估",
+          "url": "https://www.oecd.org/en/publications/evaluation-of-industrial-policy_5jz181jh0j5k-en.html",
+          "note": "政策评估的方法、适用情境及证据局限。"
+        },
+        "rights": {
+          "label": "《公民权利和政治权利国际公约》",
+          "url": "https://hrlibrary.umn.edu/instree/b3ccpr.htm",
+          "note": "明尼苏达大学人权资料库收录文本；重点参看第 4、9、17、19 条，实际适用须另核当地法律。"
+        }
+      };
 
       const ideologyRecommendations = {
         economy: {
@@ -2698,7 +2871,7 @@
       const siteModules = [
         {
           title: "先完成测评",
-          summary: "40 道陈述题会生成五维坐标、文字画像和下一步阅读线索。",
+          summary: "40 道陈述题会生成五维坐标、文字摘要和下一步阅读线索。",
           links: [
             { label: "开始测评", route: "quiz" },
             { label: "如何阅读", route: "method" },
@@ -2737,7 +2910,7 @@
           id: "after-test",
           title: "测评后：从结果进入内容",
           summary: "适合已经生成结果，但不想停在标题、图表或单个主义名称上的访客。",
-          steps: ["先看结果页的速读、张力和五维解释", "再点开推荐议题，观察价值取舍如何进入现实讨论", "最后读政治词条和概念对照，辨认词汇边界"],
+          steps: ["先看本次回答摘要、价值组合和五维解释", "再点开推荐议题，观察价值取舍如何进入现实讨论", "最后读政治词条和概念对照，辨认词汇边界"],
           links: [
             { label: "结果页", route: "result" },
             { label: "议题地图", route: "issues" },
@@ -2763,12 +2936,18 @@
           axes: ["国家调节", "公平保障", "市场自主"],
           summary: "住房问题同时涉及基本生活保障、土地财政、金融风险和城市机会分配。",
           lenses: [
-            { label: "公共保障", text: "会追问基本居住是否应被视为公共责任，以及保障房、公租房和租赁权利该覆盖到什么程度。" },
-            { label: "市场供给", text: "会追问土地、审批、金融和租赁规则是否压低了供给弹性，让价格不能通过竞争和建设缓解。" },
-            { label: "城市共同体", text: "会追问本地居民、新市民和外来人口在教育、落户、通勤和社区资源上如何排序。" },
+            {"label":"增加住房供给","text":"改善土地、审批和配套条件，增加建设机会；需承担基础设施投入与建设等待，并核查新增供给是否进入可负担市场。"},
+            {"label":"公共住房","text":"直接提供可负担房源并设定分配规则；公共财政承担建设维护成本，选址、排队和资格规则也需要问责。"},
+            {"label":"租金补贴","text":"帮助符合条件的租客支付租金；需要持续预算，在供给不足时还需检验补贴是否被房租上涨吸收。"},
           ],
           questions: ["谁应优先获得稀缺城市资源", "政府直接供给和市场供给如何分工", "房产收益与居住权利发生冲突时怎么处理"],
           relatedIdeologies: ["social-democracy", "libertarianism", "communitarianism"],
+          scenario: "假设一座就业增长较快的城市租金上涨，新就业者难以负担；预算只够先推动一部分住房措施。",
+          facts: "空置率、人口与租金变化、建设周期、交通容量，以及补贴是否被租金吸收，都需要本地数据，不能由支持市场或政府的偏好直接推定。",
+          values: "先帮助最困难者，还是扩大整体供给？租客、纳税人、业主与未来居民应分别承担多少成本？",
+          sources: [
+            "housing"
+          ],
         },
         {
           id: "healthcare",
@@ -2776,12 +2955,18 @@
           axes: ["公平保障", "国家调节", "个体自由"],
           summary: "医疗政策常在普遍可及、财政承受、个人选择和危机管控之间寻找平衡。",
           lenses: [
-            { label: "公平保障", text: "会强调疾病风险并非个人可控，基础医疗应尽量避免按支付能力分层。" },
-            { label: "效率竞争", text: "会担心过度统一采购、价格管制或行政分配降低创新、服务质量和响应速度。" },
-            { label: "公共秩序", text: "在疫情和重大风险中，会更关注数据、隔离、疫苗和资源调度的制度边界。" },
+            {"label":"扩大基础保障","text":"优先覆盖常见健康需求、降低就医负担；需安排稳定筹资，并说明哪些项目暂不覆盖。"},
+            {"label":"改善供给与支付","text":"补充基层人力、改进转诊和支付激励；需要培训、质量评估与监督，不能只用就诊量衡量效果。"},
+            {"label":"保留补充选择","text":"允许在基本保障之外增加自愿选择；需评估人员流动和资源分层，避免额外选择挤占基础服务。"},
           ],
           questions: ["全民保障如何避免财政失控", "个人选择能否与统一控费并存", "危机管控结束后权力是否能退场"],
           relatedIdeologies: ["social-democracy", "liberalism", "authoritarianism"],
+          scenario: "假设一个地区需要在慢病门诊、偏远地区基层服务和少数昂贵疗法之间分配新增医保预算。",
+          facts: "疾病负担、实际自付费用、等待时间、治疗效果和财政承受能力需要分别核实；扩大覆盖与改善质量也要分别衡量。",
+          values: "普遍可及、对重症者的救助、个人选择与有限预算应如何排序？基本保障的边界由谁讨论决定？",
+          sources: [
+            "health"
+          ],
         },
         {
           id: "education",
@@ -2789,12 +2974,18 @@
           axes: ["公平保障", "效率竞争", "传统延续"],
           summary: "教育既是个人发展通道，也是社会筛选机制和共同价值传递机制。",
           lenses: [
-            { label: "公平保障", text: "会关注家庭背景、地区差距和学校资源如何影响孩子的起点。" },
-            { label: "效率竞争", text: "会强调评价标准、激励和卓越通道，担心平均化削弱能力培养。" },
-            { label: "文化延续", text: "会追问学校应传递多少共同价值、纪律训练和历史文化记忆。" },
+            {"label":"向薄弱学校倾斜","text":"增加师资、设施和教学支持；其他学校获得的增量会减少，投入后仍需跟踪学生实际进步。"},
+            {"label":"支持困难家庭","text":"提供交通、照护和学习支持，降低参与障碍；需要识别真实需要，并减少申请负担和污名。"},
+            {"label":"开放拔尖课程","text":"为有相应兴趣与能力的学生提供深入学习；需同时检查选拔机会，避免课程只被已有优势者获取。"},
           ],
           questions: ["教育是公共权利还是竞争筛选", "资源倾斜会不会伤害卓越培养", "学校应如何处理多元表达与共同规范"],
           relatedIdeologies: ["progressivism", "conservatism", "social-democracy"],
+          scenario: "假设一个学区新增教育经费有限，需要在薄弱学校师资、面向困难家庭的支持和拔尖课程之间安排投入。",
+          facts: "家庭背景、教师配置、学习进步与升学结果要区分；不能只凭学校平均分推断教学质量或资源政策的因果效果。",
+          values: "补偿不利起点与奖励表现各占多大权重？追求卓越时，应怎样保障每个学生参与学习的基本条件？",
+          sources: [
+            "education"
+          ],
         },
         {
           id: "labor",
@@ -2802,12 +2993,18 @@
           axes: ["公平保障", "效率竞争", "国家调节"],
           summary: "劳动政策会在就业机会、企业弹性、劳动者议价能力和社会风险分担之间寻找平衡。",
           lenses: [
-            { label: "劳动保障", text: "会关注工资、工时、职业安全、集体协商和解雇程序能否避免劳动者承担过多风险。" },
-            { label: "就业弹性", text: "会担心过高的用工成本和僵化规则减少招聘、创业及工作形式创新，让部分人更难进入劳动市场。" },
-            { label: "风险共担", text: "会追问平台用工、失业、工伤、养老和照护成本应由企业、个人与公共财政如何分担。" },
+            {"label":"最低保障与规则透明","text":"约定报酬、工时安全和算法申诉底线；相关成本需要在平台、商家与消费者之间明确分担。"},
+            {"label":"可携带的社会保障","text":"让不同平台和地区的工作记录支持保障衔接；需确定缴费责任、收入核算与经办成本。"},
+            {"label":"协商与合作组织","text":"通过集体协商、职工参与或合作组织影响规则；需解决代表性、内部决策和经营风险，组织名称不保证实际平等。"},
           ],
           questions: ["平台劳动者、外包人员和正式雇员的权利边界如何划分", "最低工资、工时和解雇保护会怎样影响就业机会", "社会保险如何适应跨地区与灵活就业"],
-          relatedIdeologies: ["social-democracy", "marxism", "libertarianism"],
+          relatedIdeologies: ["social-democracy", "marxism", "libertarianism", "democratic-socialism", "anarchism"],
+          scenario: "假设一个外卖平台调整派单和报酬规则，骑手收入波动加大；商家、平台、劳动者和消费者要商议成本如何分担。",
+          facts: "净时薪、等待时间、事故率、保障覆盖和规则调整后的就业变化需要核实；不能只看标称单价，也不能预设保护必然增加或减少岗位。",
+          values: "经营弹性与收入安全怎样分担？劳动者应拥有多大的协商和决策权，便利服务的成本由谁承担？",
+          sources: [
+            "labor"
+          ],
         },
         {
           id: "migration",
@@ -2815,12 +3012,18 @@
           axes: ["世界主义", "共同体优先", "公平保障"],
           summary: "人口流动把人道责任、成员资格、公共资源和文化适应放到同一张桌上。",
           lenses: [
-            { label: "世界主义", text: "会强调人的基本处境不应被出生地彻底决定，流动能扩展机会和文化经验。" },
-            { label: "共同体优先", text: "会强调公共资源来自成员长期贡献，边界和准入规则有其政治正当性。" },
-            { label: "公平保障", text: "会追问外来劳动者、难民、城市新市民和本地弱势群体之间的资源排序。" },
+            {"label":"按居住扩大基本服务","text":"让实际居住家庭进入基础服务体系；需扩充学校、诊所和地方财政承受能力。"},
+            {"label":"分阶段调整资格","text":"为部分服务设置过渡安排；需说明等待成本由谁承担，并防止临时规则变成长期排除。"},
+            {"label":"跨地区分担成本","text":"让人口流入地与其他财政层级共同承担扩容；需要人口统计、转移支付和责任协调。"},
           ],
           questions: ["谁可以成为共同体成员", "公共福利应按居住、纳税还是身份分配", "文化冲突如何用制度而不是情绪处理"],
           relatedIdeologies: ["liberalism", "nationalism", "communitarianism"],
+          scenario: "假设一座城市接收了更多迁入家庭，学位和基层服务一时紧张，需要决定扩容经费与服务资格如何安排。",
+          facts: "实际常住人口、税费贡献、学位缺口与公共服务成本需要核实。跨国移民与国内户籍流动的法律背景不同，不能直接套用同一套资格规则。",
+          values: "基本服务应依居住、需要、贡献还是成员身份分配？现有居民与新居民的诉求怎样共同进入决策？",
+          sources: [
+            "immigration"
+          ],
         },
         {
           id: "climate",
@@ -2828,12 +3031,18 @@
           axes: ["世界主义", "公平保障", "效率竞争"],
           summary: "气候政策把跨国责任、产业成本、能源安全和代际公平紧紧绑在一起。",
           lenses: [
-            { label: "生态边界", text: "会强调增长和消费不能无限把成本转嫁给自然系统和未来世代。" },
-            { label: "产业现实", text: "会追问减排成本如何分配，能源价格、就业和制造业竞争力能否承受。" },
-            { label: "国际责任", text: "会关注富裕社会、发展中经济体和高排放产业之间的责任比例。" },
+            {"label":"逐步收紧排放约束","text":"用规则或价格激励减少排放；需评估价格传导，对受影响家庭及劳动者安排过渡支持。"},
+            {"label":"投资清洁基础设施","text":"推动电网、公共交通和替代能源建设；需要前期投入、选址协调及可靠性评估。"},
+            {"label":"支持受影响地区转型","text":"安排技能培训、收入过渡和产业调整；培训能否通向实际岗位仍需跟踪，保障不应只停在承诺。"},
           ],
           questions: ["谁为转型成本买单", "能源安全与减排速度如何排序", "国际规则是否会变成新的不平等"],
           relatedIdeologies: ["ecologism", "social-democracy", "nationalism"],
+          scenario: "假设一个依赖高排放产业的地区计划转型，当地劳动者担心失业，居民同时关注电价、空气质量和长期气候风险。",
+          facts: "全生命周期排放、电网能力、转型成本和就业去向需要核实；气候科学结论与某项地方政策是否划算是不同问题。",
+          values: "当代与后代、不同收入群体和不同地区应如何分担转型成本？减排速度与过渡保障怎样协调？",
+          sources: [
+            "climate"
+          ],
         },
         {
           id: "platforms",
@@ -2841,12 +3050,18 @@
           axes: ["个体自由", "公共秩序", "市场自主"],
           summary: "平台治理同时牵涉言论边界、隐私、垄断、劳动关系和公共安全。",
           lenses: [
-            { label: "个人权利", text: "会强调隐私、表达和申诉渠道，避免平台或政府用算法进行不可见控制。" },
-            { label: "公共秩序", text: "会关注诈骗、谣言、未成年人保护和社会动员风险。" },
-            { label: "市场竞争", text: "会追问反垄断、数据可携带和平台责任是否会抑制创新。" },
+            {"label":"完善审核与申诉","text":"公开规则、解释处置并提供人工复核；需要审核资源，也应核查误伤和申诉等待成本。"},
+            {"label":"限定核验与数据使用","text":"按风险决定必要的身份核验，并限制保存和访问范围；需说明额外收集的数据怎样降低风险以及泄露后如何追责。"},
+            {"label":"提高透明度与外部监督","text":"披露规则执行数据并允许适当审计；需协调隐私、商业信息、审计能力和监督者独立性。"},
           ],
           questions: ["谁来决定内容边界", "算法透明如何不泄露商业机密", "平台劳动者是承包者还是雇员"],
           relatedIdeologies: ["liberalism", "libertarianism", "authoritarianism"],
+          scenario: "假设一个平台出现诈骗信息和大量投诉，平台考虑加强内容审核与身份核验，普通用户担心误删和个人信息泄露。",
+          facts: "诈骗损失、识别误差、申诉纠正率、数据保留时间与泄露风险需要核实；删除数量本身不能证明治理有效。",
+          values: "风险降低、匿名表达、隐私与申诉权如何兼顾？平台、监管者和使用者各应有多大的决定权？",
+          sources: [
+            "platforms"
+          ],
         },
         {
           id: "industry",
@@ -2854,12 +3069,18 @@
           axes: ["国家调节", "市场自主", "共同体优先"],
           summary: "关键产业政策会在安全冗余、财政风险、企业创新和全球分工之间拉扯。",
           lenses: [
-            { label: "国家调节", text: "会认为芯片、能源、粮食等领域需要长期投入和公共协调，不能只等短期利润信号。" },
-            { label: "市场自主", text: "会担心补贴寻租、低效投资和政府选错技术路线。" },
-            { label: "共同体优先", text: "会强调就业、安全和供应链韧性，有时愿意接受高于全球最低价的成本。" },
+            {"label":"改善通用条件","text":"投资研发、技能与基础设施，让更多企业受益；回报周期可能较长，仍需评估是否回应了具体供应瓶颈。"},
+            {"label":"有条件的定向支持","text":"为关键环节提供限期支持并设目标、审计和退出条件；公共财政承担试错风险，也要防止受益者长期依赖。"},
+            {"label":"供应多元化与储备","text":"增加替代供应并设置必要储备；会产生库存和协调成本，也不能完全消除跨境中断风险。"},
           ],
           questions: ["哪些产业值得公共试错", "补贴如何退出", "安全冗余和效率损失该如何比较"],
           relatedIdeologies: ["nationalism", "social-democracy", "libertarianism"],
+          scenario: "假设某项关键零部件供应不稳定，政府需要决定是否支持本地生产，以及投入失败时由谁承担损失。",
+          facts: "供应集中度、替代周期、补贴带来的新增投入及机会成本需要评估；受支持企业增长不等于补贴产生了全部增长。",
+          values: "愿意为供应安全支付多少额外成本？为什么支持这一行业而不是其他公共需求，试错损失和收益怎样分配？",
+          sources: [
+            "industry"
+          ],
         },
         {
           id: "security",
@@ -2867,12 +3088,18 @@
           axes: ["公共秩序", "个体自由", "传统延续"],
           summary: "安全议题最容易把风险控制、程序正义、隐私和社会信任推向冲突。",
           lenses: [
-            { label: "公共秩序", text: "会强调如果基本安全失效，其他自由和权利都难以稳定存在。" },
-            { label: "个体自由", text: "会担心监控、身份核验和预防性权力扩张后难以收回。" },
-            { label: "社会规范", text: "会追问家庭、学校、社区和执法之间的责任边界，而不只依赖惩罚。" },
+            {"label":"有针对性的限期措施","text":"根据具体风险限定监控范围、用途和期限；需核查效果、误报与权利成本，避免范围自动扩张。"},
+            {"label":"投入预防与社区服务","text":"改善照明、响应机制与社区支持；效果需要持续评估，且不能承诺替代所有执法需求。"},
+            {"label":"设置独立监督与救济","text":"记录权力使用、限制数据访问并开放申诉；需要监督资源，紧急情境也须保留事后审查。"},
           ],
           questions: ["风险多高时可以扩大管控", "紧急权力如何设置期限和问责", "安全感与权利边界如何同时维护"],
           relatedIdeologies: ["conservatism", "liberalism", "authoritarianism"],
+          scenario: "假设一片街区出现连续治安事件，有人提议扩大监控和身份检查，也有人担心无关居民被持续追踪。",
+          facts: "事件发生率、措施有效性、误报、差别影响及数据保存范围需要核实；安全感变化不能替代实际风险评估。",
+          values: "风险达到什么程度才可限制权利？措施是否必要、范围适当、可申诉并设有到期复核？具体法律适用需要另行核对。",
+          sources: [
+            "rights"
+          ],
         },
       ];
 
@@ -2967,29 +3194,29 @@
 
       const methodNotes = [
         {
-          title: "测评是阅读入口",
-          text: "40 道题只用于生成一组价值倾向和阅读线索，不等于严肃量表，也不能推出完整政治身份。",
+          "title": "测评用于自我观察与阅读",
+          "text": "40 道题生成本次回答的五维摘要。本站没有提供量表信效度验证或人群常模，结果不用于政治身份判定、立场排名或长期特征诊断。"
         },
         {
-          title: "价值坐标不是好坏轴",
-          text: "每条轴的两端都代表一种价值优先级。结果越靠近某一端，只说明你更愿意为该端价值承担相应成本。",
+          "title": "分数怎样得到",
+          "text": "五条坐标各有 8 道题。五档回答按 -2 到 2 计值，与题目的方向权重相乘后求和，再除以该维度的最高绝对总分并换算到 -100 至 100。正负只表示坐标方向，绝对值描述本次汇总幅度，不是人群百分位。"
         },
         {
-          title: "词条不是阵营排名",
-          text: "政治词条用于理解政治语言的常见用法、内部差异和误读，不用于给访客贴标签。",
+          "title": "怎样理解中轴与组合",
+          "text": "中立回答或不同方向相互抵消，都可能产生接近中轴的分数；总分不能区分原因。两条高分坐标可能互相支持，也可能在某个情境下冲突，要回到具体问题判断。"
         },
         {
-          title: "议题地图看取舍",
-          text: "真实公共问题通常不是单维选择。一个住房、医疗或教育政策，会同时触发效率、公平、秩序和认同问题。",
+          "title": "怎样阅读概念与议题",
+          "text": "先读摘要，再展开假设案例、方案成本及来源。先核实政策效果、成本和适用条件，再讨论价值排序。词条的阅读关联不是全部分支的固定立场，来源也不等于对本站假设方案的背书。"
         },
         {
-          title: "本地计算与可编辑",
-          text: "当前页面没有后端，答案不上传。题库、词条和议题内容都在静态 HTML 中，后续可以继续扩展。",
+          "title": "进度与结果如何保存",
+          "text": "答案只在浏览器本地计算，不上传服务器，也不接入追踪。未提交的作答进度会保存在本机浏览器；提交后清除保存的作答进度，保留上次结果分数和时间。重新测试或清除站点数据可清除记录。浏览器限制存储时仍能作答，但可能无法恢复进度。"
         },
         {
-          title: "结构参考而非复制",
-          text: "页面结构参考了多轴政治测评、Pew 类型学测验的作答提示、以及百科式词条的概念组织方式；题目和中文说明均按本站的五维框架重新写作。",
-        },
+          "title": "来源与结构参考",
+          "text": "词条优先引用学术百科及政治学教材，议题引用相关研究与公共机构资料；具体出处和适用范围列在每个条目内。以下链接只用于说明作答提示和信息组织的参考，不构成本站测评已获科学验证的依据。"
+        }
       ];
 
       const referenceSources = [
@@ -3013,12 +3240,14 @@
       ];
 
       const routeAliases = {
+        guide: "method",
         dimensions: "concepts",
         ideologies: "concepts",
         comparisons: "concepts",
       };
 
       const routeAliasTargets = {
+        guide: "reading-paths",
         dimensions: "concept-dimensions",
         ideologies: "concept-ideologies",
         comparisons: "concept-comparisons",
@@ -3034,30 +3263,50 @@
         result: "测评结果",
       };
 
+
       function getRawRoute() {
-        return window.location.hash.replace("#", "") || "home";
+        return window.location.hash.replace("#", "").split("/")[0] || "home";
       }
 
       function normalizeRoute(route) {
         return routeAliases[route] || route;
       }
 
+      function parseRoute(hash = window.location.hash) {
+        let parts;
+        try {
+          parts = hash.replace(/^#/, "").split("/").map(decodeURIComponent);
+        } catch {
+          return { route: "home", target: "" };
+        }
+        const rawRoute = parts[0] || "home";
+        const route = normalizeRoute(rawRoute);
+        if (!pages.some((page) => page.dataset.page === route)) return { route: "home", target: "" };
+        const requestedTarget = parts[1] || routeAliasTargets[rawRoute] || "";
+        const sectionTargets = {
+          issues: ["issue-map", "knowledge-search"],
+          concepts: ["concept-dimensions", "concept-ideologies", "concept-comparisons"],
+          result: ["resultNextSteps"],
+          method: ["reading-paths", ...readingGuides.map((guide) => `guide-${guide.id}`)],
+        };
+        const isKnownTarget = (sectionTargets[route] || []).includes(requestedTarget) ||
+          contentIndex.some((item) => item.route === route && item.targetId === requestedTarget);
+        return { route, target: isKnownTarget ? requestedTarget : "" };
+      }
+
       function getRoute() {
-        const route = normalizeRoute(getRawRoute());
-        return pages.some((page) => page.dataset.page === route) ? route : "home";
+        return parseRoute().route;
       }
 
       function focusRouteHeading(route) {
         const page = pages.find((item) => item.dataset.page === route);
         const heading = page?.querySelector("h1, h2");
         if (!heading) return;
-
         heading.tabIndex = -1;
         heading.focus({ preventScroll: true });
       }
 
       function routeTo(route = getRoute(), shouldFocus = false) {
-        const rawRoute = getRawRoute();
         const activeNavRoute = ["issues", "concepts"].includes(route) ? "knowledge" : route;
         pages.forEach((page) => page.classList.toggle("active", page.dataset.page === route));
         navLinks.forEach((link) => {
@@ -3067,22 +3316,16 @@
           else link.removeAttribute("aria-current");
         });
         document.title = route === "home" ? routeTitles.home : `${routeTitles[route]}｜政治概念地图`;
-
-        if (route === "result") {
-          renderResultState();
-        }
-
-        const scrollTarget = routeAliasTargets[rawRoute] || pendingScrollTarget;
-        pendingScrollTarget = "";
-
-        if (scrollTarget) {
-          window.setTimeout(() => scrollToElementById(scrollTarget), 140);
-        } else {
-          window.setTimeout(() => {
+        if (route === "result") renderResultState();
+        const target = parseRoute().target;
+        requestAnimationFrame(() => {
+          if (getRoute() !== route || parseRoute().target !== target) return;
+          if (target) scrollToElementById(target);
+          else {
             scrollToPageStart(route);
             if (shouldFocus) focusRouteHeading(route);
-          }, 120);
-        }
+          }
+        });
       }
 
       function getIdeologyById(id) {
@@ -3117,11 +3360,17 @@
         return comparisons.filter((comparison) => comparison.links.some((id) => ids.includes(id)));
       }
 
-      function scrollToElementById(id) {
-        const target = document.querySelector(`#${id}`);
-        if (!target) return;
 
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      function scrollToElementById(id) {
+        const target = document.getElementById(id);
+        if (!target) return;
+        target.querySelectorAll("details[data-reading-details]").forEach((details) => { details.open = true; });
+        let ancestor = target.parentElement;
+        while (ancestor) {
+          if (ancestor.tagName === "DETAILS") ancestor.open = true;
+          ancestor = ancestor.parentElement;
+        }
+        target.scrollIntoView({ behavior: "instant", block: "start" });
         target.focus({ preventScroll: true });
       }
 
@@ -3132,50 +3381,32 @@
         const topbar = document.querySelector(".topbar");
         const topbarOffset = window.matchMedia("(min-width: 901px)").matches ? topbar.offsetHeight : 0;
         const targetTop = target.getBoundingClientRect().top + window.scrollY - topbarOffset;
-        window.scrollTo({ top: Math.max(0, targetTop), behavior: "auto" });
+        window.scrollTo({ top: Math.max(0, targetTop), behavior: "instant" });
+      }
+
+
+      function getTargetHash(route, targetId = "") {
+        const normalizedRoute = normalizeRoute(route);
+        const target = targetId || routeAliasTargets[route] || "";
+        return `#${normalizedRoute}${target ? `/${encodeURIComponent(target)}` : ""}`;
       }
 
       function goToTarget(route, targetId) {
-        const normalizedRoute = normalizeRoute(route);
-        if (getRoute() !== normalizedRoute) {
-          pendingScrollTarget = targetId;
-          window.location.hash = normalizedRoute;
-          return;
-        }
-
-        scrollToElementById(targetId);
+        const hash = getTargetHash(route, targetId);
+        if (window.location.hash === hash) routeTo(getRoute(), true);
+        else window.location.hash = hash;
       }
 
       function goToRoute(route, targetId = "") {
-        const normalizedRoute = normalizeRoute(route);
-        if (targetId) {
-          goToTarget(normalizedRoute, targetId);
-          return;
-        }
-
-        window.location.hash = normalizedRoute;
+        goToTarget(route, targetId);
       }
 
       function goToIdeology(id) {
         goToTarget("concepts", `ideology-${id}`);
       }
 
-      function scrollToIssue(id) {
-        const target = document.querySelector(`#issue-${id}`);
-        if (!target) return;
-
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-        target.focus({ preventScroll: true });
-      }
-
       function goToIssue(id) {
-        if (getRoute() !== "issues") {
-          window.location.hash = "issues";
-          window.setTimeout(() => scrollToIssue(id), 80);
-          return;
-        }
-
-        scrollToIssue(id);
+        goToTarget("issues", `issue-${id}`);
       }
 
       function goToDimension(id) {
@@ -3356,6 +3587,8 @@
             summary: issue.summary,
             keywords: [
               ...issue.axes,
+              issue.scenario, issue.facts, issue.values,
+              ...issue.sources.flatMap((id) => [contentSources[id].label, contentSources[id].note]),
               ...issue.questions,
               ...issue.lenses.flatMap((lens) => [lens.label, lens.text]),
               ...issue.relatedIdeologies.map((id) => getIdeologyById(id)?.name || id),
@@ -3371,6 +3604,8 @@
             summary: ideology.summary,
             keywords: [
               ideology.family,
+              ideology.scope,
+              ...ideology.sources.flatMap((id) => [contentSources[id].label, contentSources[id].note]),
               ideology.core,
               ideology.variants,
               ideology.caution,
@@ -3386,7 +3621,10 @@
             targetId: `comparison-${comparison.id}`,
             title: `${comparison.left} vs ${comparison.right}`,
             summary: comparison.difference,
-            keywords: [comparison.shared, comparison.watch, ...comparison.links.map((id) => getIdeologyById(id)?.name || id)],
+            keywords: [comparison.shared, comparison.watch, ...comparison.links.flatMap((id) => {
+              const ideology = getIdeologyById(id);
+              return [ideology?.name || id, ...(ideology?.sources || []).flatMap((sourceId) => [contentSources[sourceId].label, contentSources[sourceId].note])];
+            })],
           })),
         ];
       }
@@ -3461,10 +3699,18 @@
         filterContentIndex();
       }
 
+
       function renderRouteLink(link) {
         const target = link.target ? ` data-scroll-target="${link.target}"` : "";
-        const href = normalizeRoute(link.route);
-        return `<a href="#${href}" data-route-link="${link.route}"${target}>${link.label}</a>`;
+        return `<a href="${getTargetHash(link.route, link.target)}" data-route-link="${link.route}"${target}>${link.label}</a>`;
+      }
+
+      function renderSources(ids) {
+        return `<div class="content-sources"><h4>来源与延伸阅读</h4><ul>${[...new Set(ids)]
+          .map((id) => contentSources[id])
+          .filter(Boolean)
+          .map((source) => `<li><a href="${escapeIndexHtml(source.url)}" target="_blank" rel="noopener noreferrer">${source.label} ↗</a><span>${source.note}</span></li>`)
+          .join("")}</ul><p class="source-note">来源说明概念和分析框架；本站的假设案例与价值追问由本站编写，不代表来源机构对具体方案的背书。</p></div>`;
       }
 
       function renderModules() {
@@ -3536,7 +3782,7 @@
                         <span class="adjacent-label">相关议题</span>
                         <div class="reading-links">
                           ${relatedIssues
-                            .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
+                            .map((issue) => `<a href="#issues/issue-${issue.id}" data-issue-link="${issue.id}">${issue.title}</a>`)
                             .join("")}
                         </div>
                       </div>
@@ -3549,167 +3795,97 @@
           .join("");
       }
 
+
       function renderIssues() {
-        issueQuickNav.innerHTML = issues
-          .map(
-            (issue, index) => `
-              <a href="#issues" data-issue-link="${issue.id}">
-                <span>${String(index + 1).padStart(2, "0")}</span>
-                <strong>${issue.title}</strong>
-                <em>${issue.axes.join(" / ")}</em>
-              </a>
-            `
-          )
-          .join("");
-
-        issueGrid.innerHTML = issues
-          .map(
-            (issue) => {
-              const relatedDimensions = getDimensionsByAxes(issue.axes);
-              const relatedComparisons = getComparisonsByIdeologyIds(issue.relatedIdeologies).slice(0, 3);
-
-              return `
-                <article class="info-block" id="issue-${issue.id}" tabindex="-1">
-                  <span class="tag">议题地图</span>
-                  <h3>${issue.title}</h3>
-                  <p>${issue.summary}</p>
-                  <div class="pill-list">
-                    ${issue.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
-                  </div>
-                  <h4 class="list-label">不同视角</h4>
-                  <div class="lens-list">
-                    ${issue.lenses
-                      .map(
-                        (lens) => `
-                          <div class="lens-row">
-                            <strong>${lens.label}</strong>
-                            <span>${lens.text}</span>
-                          </div>
-                        `
-                      )
-                      .join("")}
-                  </div>
-                  <p class="section-space"><strong>关键追问：</strong>${issue.questions.join("；")}。</p>
-                  <p class="section-space"><strong>专题写法：</strong>可以先用一个现实场景切入，再把争议拆成「${issue.axes.join(" / ")}」几条线，最后回到制度边界、成本分配和可能的副作用。</p>
-                  <div class="adjacent-links" aria-label="${issue.title}下一步阅读">
-                    <span class="adjacent-label">相关价值坐标</span>
-                    <div class="reading-links">
-                      ${relatedDimensions
-                        .map((dimension) => `<a href="#concepts" data-dimension-link="${dimension.id}">${dimension.name}</a>`)
-                        .join("")}
-                    </div>
-                    <span class="adjacent-label">相关政治词条</span>
-                    <div class="reading-links">
-                      ${issue.relatedIdeologies
-                        .map(getIdeologyById)
-                        .filter(Boolean)
-                        .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
-                        .join("")}
-                    </div>
-                    ${relatedComparisons.length
-                      ? `
-                        <span class="adjacent-label">概念对照</span>
-                        <div class="reading-links">
-                          ${relatedComparisons
-                            .map(
-                              (comparison) =>
-                                `<a href="#concepts" data-comparison-link="${comparison.id}">${comparison.left} vs ${comparison.right}</a>`
-                            )
-                            .join("")}
-                        </div>
-                      `
-                      : ""}
-                  </div>
-                </article>
-              `;
-            }
-          )
-          .join("");
+        issueQuickNav.innerHTML = issues.map((issue, index) => `
+          <a href="${getTargetHash("issues", `issue-${issue.id}`)}" data-issue-link="${issue.id}">
+            <span>${String(index + 1).padStart(2, "0")}</span>
+            <strong>${issue.title}</strong><em>${issue.axes.join(" / ")}</em>
+          </a>`).join("");
+        issueGrid.innerHTML = issues.map((issue) => {
+          const relatedDimensions = getDimensionsByAxes(issue.axes);
+          const relatedComparisons = getComparisonsByIdeologyIds(issue.relatedIdeologies).slice(0, 3);
+          return `
+            <article class="info-block" id="issue-${issue.id}" tabindex="-1">
+              <span class="tag">议题地图</span>
+              <h3><a class="entry-title" href="${getTargetHash("issues", `issue-${issue.id}`)}">${issue.title}</a></h3>
+              <p>${issue.summary}</p>
+              <div class="pill-list" aria-label="阅读关联">${issue.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}</div>
+              <details class="reading-details" data-reading-details>
+                <summary>展开案例、取舍与来源</summary>
+                <div class="reading-body">
+                  <h4>一个假设场景</h4><p>${issue.scenario}</p>
+                  <h4>方案与成本</h4><p class="source-note">这些方案可以组合，以下列出需要比较的条件与成本，不预设哪一种必然有效。</p>
+                  <div class="lens-list">${issue.lenses.map((lens) => `<div class="lens-row"><strong>${lens.label}</strong><span>${lens.text}</span></div>`).join("")}</div>
+                  <h4>先核实事实</h4><p>${issue.facts}</p>
+                  <h4>再讨论价值取舍</h4><p>${issue.values}</p>
+                  <h4>关键追问</h4><ul class="text-list">${issue.questions.map((question) => `<li>${question}？</li>`).join("")}</ul>
+                  ${renderSources(issue.sources)}
+                </div>
+              </details>
+              <div class="adjacent-links" aria-label="${issue.title}下一步阅读">
+                <span class="adjacent-label">相关价值坐标</span><div class="reading-links">
+                  ${relatedDimensions.map((dimension) => `<a href="${getTargetHash("concepts", `dimension-${dimension.id}`)}" data-dimension-link="${dimension.id}">${dimension.name}</a>`).join("")}
+                </div>
+                <span class="adjacent-label">相关政治词条</span><div class="reading-links">
+                  ${issue.relatedIdeologies.map(getIdeologyById).filter(Boolean).map((ideology) => `<a href="${getTargetHash("concepts", `ideology-${ideology.id}`)}" data-ideology-link="${ideology.id}">${ideology.name}</a>`).join("")}
+                </div>
+                <span class="adjacent-label">概念对照</span><div class="reading-links">
+                  ${relatedComparisons.map((comparison) => `<a href="${getTargetHash("concepts", `comparison-${comparison.id}`)}" data-comparison-link="${comparison.id}">${comparison.left}与${comparison.right}</a>`).join("")}
+                </div>
+              </div>
+            </article>`;
+        }).join("");
       }
+
 
       function renderIdeologies() {
-        ideologyQuickNav.innerHTML = ideologies
-          .map(
-            (ideology) => `
-              <a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>
-            `
-          )
-          .join("");
-
-        ideologyGrid.innerHTML = ideologies
-          .map(
-            (ideology) => {
-              const related = getRelatedIdeologies(ideology.id);
-              const relatedIssues = getIssuesByIdeologyId(ideology.id);
-
-              return `
-                <article class="info-block" id="ideology-${ideology.id}" tabindex="-1">
-                  <div class="ideology-heading">
-                    <span class="tag">${ideology.family}</span>
-                    <h3>${ideology.name}</h3>
-                  </div>
-                  <p>${ideology.summary}</p>
-                  <div class="pill-list">
-                    ${ideology.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}
-                  </div>
-                  <p class="section-space"><strong>关心的问题：</strong>${ideology.core}</p>
-                  <h4 class="list-label">常见政策倾向</h4>
-                  <ul class="text-list">
-                    ${ideology.policies.map((policy) => `<li>${policy}</li>`).join("")}
-                  </ul>
-                  <p class="section-space"><strong>内部差异：</strong>${ideology.variants}</p>
-                  <p class="section-space"><strong>注意事项：</strong>${ideology.caution}</p>
-                  <div class="adjacent-links">
-                    <span class="adjacent-label">相邻政治词条</span>
-                    <div class="reading-links">
-                      ${related
-                        .map(
-                          (item) => `<a href="#concepts" data-ideology-link="${item.id}">${item.name}</a>`
-                        )
-                        .join("")}
-                    </div>
-                    ${relatedIssues.length
-                      ? `
-                        <span class="adjacent-label">相关议题</span>
-                        <div class="reading-links">
-                          ${relatedIssues
-                            .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
-                            .join("")}
-                        </div>
-                      `
-                      : ""}
-                  </div>
-                </article>
-              `;
-            }
-          )
-          .join("");
+        ideologyQuickNav.innerHTML = ideologies.map((ideology) => `<a href="${getTargetHash("concepts", `ideology-${ideology.id}`)}" data-ideology-link="${ideology.id}">${ideology.name}</a>`).join("");
+        ideologyGrid.innerHTML = ideologies.map((ideology) => {
+          const related = getRelatedIdeologies(ideology.id);
+          const relatedIssues = getIssuesByIdeologyId(ideology.id);
+          const relatedComparisons = getComparisonsByIdeologyIds([ideology.id]);
+          return `
+            <article class="info-block" id="ideology-${ideology.id}" tabindex="-1">
+              <div class="ideology-heading"><span class="tag">${ideology.family}</span><h3><a class="entry-title" href="${getTargetHash("concepts", `ideology-${ideology.id}`)}">${ideology.name}</a></h3></div>
+              <p>${ideology.summary}</p>
+              <p class="section-space"><strong>本站采用的含义：</strong>${ideology.scope}</p>
+              <p class="source-note section-space">阅读关联：以下标签帮助寻找相关议题，不是该思想所有分支的固定立场。</p>
+              <div class="pill-list">${ideology.axes.map((axis) => `<span class="pill">${axis}</span>`).join("")}</div>
+              <details class="reading-details" data-reading-details>
+                <summary>展开核心关切、内部差异与来源</summary>
+                <div class="reading-body">
+                  <h4>核心关切</h4><p>${ideology.core}</p>
+                  <h4>常见政策倾向</h4><ul class="text-list">${ideology.policies.map((policy) => `<li>${policy}</li>`).join("")}</ul>
+                  <h4>内部差异</h4><p>${ideology.variants}</p>
+                  <h4>误读提醒</h4><p>${ideology.caution}</p>
+                  ${renderSources(ideology.sources)}
+                </div>
+              </details>
+              <div class="adjacent-links">
+                <span class="adjacent-label">相邻政治词条</span><div class="reading-links">${related.map((item) => `<a href="${getTargetHash("concepts", `ideology-${item.id}`)}" data-ideology-link="${item.id}">${item.name}</a>`).join("")}</div>
+                <span class="adjacent-label">相关议题</span><div class="reading-links">${relatedIssues.map((issue) => `<a href="${getTargetHash("issues", `issue-${issue.id}`)}" data-issue-link="${issue.id}">${issue.title}</a>`).join("")}</div>
+                <span class="adjacent-label">辨认概念边界</span><div class="reading-links">${relatedComparisons.map((comparison) => `<a href="${getTargetHash("concepts", `comparison-${comparison.id}`)}" data-comparison-link="${comparison.id}">${comparison.left}与${comparison.right}</a>`).join("")}</div>
+              </div>
+            </article>`;
+        }).join("");
       }
 
+
       function renderComparisons() {
-        comparisonGrid.innerHTML = comparisons
-          .map(
-            (comparison) => `
-              <article class="info-block" id="comparison-${comparison.id}" tabindex="-1">
-                <div class="comparison-title">
-                  <h3>${comparison.left}</h3>
-                  <span>vs</span>
-                  <h3>${comparison.right}</h3>
-                </div>
-                <p><strong>共同点：</strong>${comparison.shared}</p>
-                <p class="section-space"><strong>关键差别：</strong>${comparison.difference}</p>
-                <p class="section-space"><strong>阅读提醒：</strong>${comparison.watch}</p>
-                <div class="link-row">
-                  ${comparison.links
-                    .map(getIdeologyById)
-                    .filter(Boolean)
-                    .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
-                    .join("")}
-                </div>
-              </article>
-            `
-          )
-          .join("");
+        comparisonGrid.innerHTML = comparisons.map((comparison) => `
+          <article class="info-block" id="comparison-${comparison.id}" tabindex="-1">
+            <div class="comparison-title"><h3>${comparison.left}</h3><span>与</span><h3>${comparison.right}</h3></div>
+            <p><strong>共同点：</strong>${comparison.shared}</p>
+            <p class="section-space"><strong>关键差别：</strong>${comparison.difference}</p>
+            <details class="reading-details" data-reading-details>
+              <summary>展开阅读提醒与依据</summary><div class="reading-body">
+                <p>${comparison.watch}</p>
+                ${renderSources(comparison.links.flatMap((id) => getIdeologyById(id)?.sources || []))}
+              </div>
+            </details>
+            <div class="link-row">${comparison.links.map(getIdeologyById).filter(Boolean).map((ideology) => `<a href="${getTargetHash("concepts", `ideology-${ideology.id}`)}" data-ideology-link="${ideology.id}">${ideology.name}</a>`).join("")}</div>
+          </article>`).join("");
       }
 
       function renderMethod() {
@@ -3805,25 +3981,32 @@
         return "接近中轴";
       }
 
-      function getCenteredSummaryInsight(dimension) {
+      function getCenteredSummaryInsight(dimension, ranked = []) {
         if (dimension.strength < 18) {
           return {
             title: `${dimension.name}接近中轴`,
-            text: `强度 ${dimension.strength}/100。这条轴上的答案更依赖情境、制度细节和现实后果，不适合直接归类。`,
+            text: `强度 ${dimension.strength}/100。接近中轴可能来自中立回答，也可能来自两端回答相互抵消；总分本身无法区分。`,
+          };
+        }
+
+        if (ranked.length > 1 && ranked.every((item) => item.strength === dimension.strength)) {
+          return {
+            title: "五条坐标强度并列",
+            text: `各维度均为 ${dimension.strength}/100，没有相对较弱的一项。相同幅度不代表价值含义相同，可以分别阅读两端的解释。`,
           };
         }
 
         return {
           title: `${dimension.name}仍${getStrengthText(dimension.strength)}偏向「${getPoleText(dimension)}」`,
-          text: `强度 ${dimension.strength}/100。这是五条坐标中相对较弱的一项，但并不接近中轴；解读时应放回整体高强度结果中。`,
+          text: `强度 ${dimension.strength}/100。这是五条坐标中相对较弱的一项，但仍达到本站显示方向的范围；相对较弱不代表没有倾向。`,
         };
       }
 
-      function getTensionInsight(ranked) {
+      function getCombinationInsight(ranked) {
         const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
 
         if (leading.length < 2) {
-          return "这次结果没有特别尖锐的双轴拉扯，更适合把它看成一组议题判断的起点，而不是固定身份。";
+          return "本次不足两条坐标达到明显倾向的范围。可以从一个具体议题继续观察，不据此判断是否存在价值冲突。";
         }
 
         const key = leading
@@ -3851,7 +4034,7 @@
 
         return (
           notes[key] ||
-          `最值得继续观察的是「${leading[0].name}」与「${leading[1].name}」的取舍：当「${getPoleText(
+          `可以一起观察「${leading[0].name}」与「${leading[1].name}」的组合：当「${getPoleText(
             leading[0]
           )}」和「${getPoleText(leading[1])}」同时重要时，具体政策中的成本分配会决定你的最终选择。`
         );
@@ -3862,8 +4045,8 @@
 
         if (ranked[0].strength < 18) {
           return {
-            title: "中轴调停者",
-            text: "你的答案整体靠近坐标中心，说明你更倾向按议题、情境和现实成本来判断，而不是被单一原则完全牵引。你的政治直觉可能比较重视平衡、可操作性和避免过度极化。",
+            title: "本次结果接近中轴",
+            text: "本次回答汇总后，五条坐标都接近中轴。中立回答、不同方向相互抵消等情况都可能产生这一结果；仅凭总分无法区分原因，也不能推出你善于平衡或拥有某种政治身份。",
           };
         }
 
@@ -3872,25 +4055,26 @@
         const emphasis = leading.map((item) => `${item.name}偏向「${item.pole}」`).join("、");
         const moderation =
           ranked[0].strength >= 62
-            ? "其中至少一个价值坐标相当鲜明，说明你在相关议题上有比较稳定的优先级。"
-            : "这些倾向并不极端，更像是一组默认偏好，具体议题上仍可能保留弹性。";
+            ? "其中至少一条坐标的本次汇总值较高；这只描述这组题目的回答，不能据此判断长期稳定性。"
+            : "这些坐标描述本次回答的汇总方向；换一组题目或条件，结果可能不同。";
 
         return {
           title,
-          text: `你的主要画像是「${title}」。从答案看，你的${emphasis}。${moderation}这不是政治身份标签，而是一张帮助你观察自己价值排序的速写；如果想理解相关词汇，可以继续阅读政治概念库和议题地图。`,
+          text: `本次回答的主要方向是「${title}」。从答案看，你的${emphasis}。${moderation}这不是政治身份标签，而是一张帮助你观察自己价值排序的速写；如果想理解相关词汇，可以继续阅读政治概念库和议题地图。`,
         };
       }
 
       function getResultSummaryCards(scores) {
         const ranked = getRankedDimensions(scores);
         const strongest = ranked[0];
+        const tiedCount = ranked.filter((item) => item.strength === strongest.strength).length;
         const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
-        const centeredInsight = getCenteredSummaryInsight(centered);
+        const centeredInsight = getCenteredSummaryInsight(centered, ranked);
         const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
 
         return [
           {
-            label: "最鲜明",
+            label: strongest.strength >= 18 && tiedCount > 1 ? "并列倾向" : "最鲜明",
             title:
               strongest.strength < 18
                 ? "整体接近中轴"
@@ -3898,20 +4082,20 @@
             text:
               strongest.strength < 18
                 ? "这次结果没有特别突出的单一坐标，更适合从具体议题继续观察自己的判断。"
-                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。读相关议题时，可以先观察你是否愿意为「${getPoleText(strongest)}」承担成本。`,
+                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。${tiedCount > 1 ? `共 ${tiedCount} 条坐标并列，本项只是一个阅读起点。` : ""}读相关议题时，可以先观察你是否愿意为「${getPoleText(strongest)}」承担成本。`,
           },
           {
-            label: "最平衡",
+            label: "倾向较弱",
             title: centeredInsight.title,
             text: centeredInsight.text,
           },
           {
-            label: "主要张力",
+            label: "价值组合",
             title:
               leading.length >= 2
                 ? `${leading[0].name} × ${leading[1].name}`
-                : "暂时没有尖锐双轴拉扯",
-            text: getTensionInsight(ranked),
+                : "暂未形成两项明显倾向",
+            text: getCombinationInsight(ranked),
           },
         ];
       }
@@ -3940,131 +4124,89 @@
           });
       }
 
+
       function getResultNextSteps(scores) {
         const recommendation = getReadingRecommendations(scores);
-        const ranked = getRankedDimensions(scores);
-        const strongest = ranked[0];
-        const second = ranked[1];
+        const strongest = getRankedDimensions(scores)[0];
         const firstIssue = recommendation.issues[0];
         const firstIdeology = recommendation.ideologies[0];
-
-        if (recommendation.isCenter) {
-          return [
-            {
-              label: "第一步",
-              title: "先对照价值坐标",
-              text: "你的结果较接近中轴，先看每条轴两端如何定义，比直接寻找立场名称更有帮助。",
-            },
-            {
-              label: "第二步",
-              title: "选一个现实议题",
-              text: "从住房、教育、医疗或平台治理中选一个熟悉问题，观察不同价值如何同时出现。",
-            },
-            {
-              label: "第三步",
-              title: "读相邻政治词条",
-              text: "再把自由主义、社会民主主义、保守主义和社群主义当作四个参照点，而不是身份标签。",
-            },
-          ];
-        }
-
         return [
           {
             label: "第一步",
-            title: `先读「${strongest.name}」`,
-            text: `这是当前最鲜明的价值坐标。先理解「${strongest.negative}」和「${strongest.positive}」的取舍，再看具体议题。`,
+            title: recommendation.isCenter ? "对照五组价值坐标" : `先读「${strongest.name}」`,
+            text: recommendation.isCenter ? "两端都读，先理解汇总分不能区分的不同回答。" : "同时理解两端的关切，再把本次方向放回具体条件。",
+            route: "concepts",
+            target: recommendation.isCenter ? "concept-dimensions" : `dimension-${strongest.id}`,
           },
           {
             label: "第二步",
-            title: firstIssue ? `回到「${firstIssue.title}」` : "回到相关议题",
-            text: firstIssue
-              ? `这个议题能帮助你观察「${getPoleText(strongest)}」在现实政策里会遇到哪些成本和边界。`
-              : `选择一个相关公共议题，观察你的价值优先级如何进入现实讨论。`,
+            title: `回到「${firstIssue.title}」`,
+            text: "展开假设案例，先核实事实，再比较方案及成本由谁承担。",
+            route: "issues",
+            target: `issue-${firstIssue.id}`,
           },
           {
             label: "第三步",
-            title: firstIdeology ? `再读「${firstIdeology.name}」及相邻概念` : `再对照「${second.name}」`,
-            text: firstIdeology
-              ? "把政治词条当作政治语言的解释工具，重点看它与相邻概念的边界。"
-              : `如果「${second.name}」也较明显，就把它作为第二条线索一起阅读。`,
+            title: `再读「${firstIdeology.name}」`,
+            text: "确认本站采用的含义，再从词条下方进入概念对照，辨认相似语言的边界。",
+            route: "concepts",
+            target: `ideology-${firstIdeology.id}`,
           },
         ];
+      }
+
+      function collectReadingIds(sources, mapping, limit = 4) {
+        const queues = sources.map((dimension) => mapping[dimension.id]?.[dimension.score >= 0 ? "positive" : "negative"] || []);
+        const ids = [];
+        const depth = Math.max(0, ...queues.map((queue) => queue.length));
+        for (let index = 0; index < depth && ids.length < limit; index += 1) {
+          for (const queue of queues) {
+            const id = queue[index];
+            if (id && !ids.includes(id)) ids.push(id);
+            if (ids.length === limit) break;
+          }
+        }
+        return ids;
       }
 
       function getReadingRecommendations(scores) {
         const ranked = getRankedDimensions(scores);
         const sources = ranked.filter((item) => item.strength >= 18).slice(0, 3);
-        const readingSources = sources.length > 0 ? sources : ranked.slice(0, 2);
-        const ids = [];
-        const issueIds = [];
-
-        if (sources.length === 0) {
-          ["liberalism", "social-democracy", "conservatism", "communitarianism"].forEach((id) => ids.push(id));
-          ["housing", "education", "healthcare", "platforms"].forEach((id) => issueIds.push(id));
-        } else {
-          readingSources.forEach((dimension) => {
-            const side = dimension.score >= 0 ? "positive" : "negative";
-            const matched = ideologyRecommendations[dimension.id]?.[side] || [];
-            matched.forEach((id) => {
-              if (!ids.includes(id)) ids.push(id);
-            });
-            const matchedIssues = issueRecommendations[dimension.id]?.[side] || [];
-            matchedIssues.forEach((id) => {
-              if (!issueIds.includes(id)) issueIds.push(id);
-            });
-          });
-        }
-
+        const isCenter = sources.length === 0;
+        const ideologyIds = isCenter
+          ? ["liberalism", "social-democracy", "conservatism", "communitarianism"]
+          : collectReadingIds(sources, ideologyRecommendations);
+        const issueIds = isCenter
+          ? ["housing", "education", "healthcare", "platforms"]
+          : collectReadingIds(sources, issueRecommendations);
+        const readingReason = (id, mapping) => {
+          if (isCenter) return "作为不同方向的阅读参照；接近中轴不能确定一种固定立场。";
+          const matches = sources.filter((dimension) =>
+            (mapping[dimension.id]?.[dimension.score >= 0 ? "positive" : "negative"] || []).includes(id)
+          );
+          return `关联本次${matches.map((dimension) => `${dimension.name}「${getPoleText(dimension)}」`).join("、")}，用于理解相关问题，不表示你认同该词条或方案。`;
+        };
         return {
-          sources: readingSources,
-          ideologies: ids.slice(0, 4).map(getIdeologyById).filter(Boolean),
-          issues: issueIds.slice(0, 4).map(getIssueById).filter(Boolean),
-          isCenter: sources.length === 0,
+          sources,
+          isCenter,
+          ideologies: ideologyIds.map(getIdeologyById).filter(Boolean).map((item) => ({ ...item, readingReason: readingReason(item.id, ideologyRecommendations) })),
+          issues: issueIds.map(getIssueById).filter(Boolean).map((item) => ({ ...item, readingReason: readingReason(item.id, issueRecommendations) })),
+          comparisons: getComparisonsByIdeologyIds(ideologyIds).slice(0, 3),
         };
       }
 
+
       function renderResultReading(scores) {
-        const {
-          sources,
-          ideologies: matchedIdeologies,
-          issues: matchedIssues,
-          isCenter,
-        } = getReadingRecommendations(scores);
-
-        if (!matchedIdeologies.length && !matchedIssues.length) {
-          resultReading.innerHTML = "";
-          return;
-        }
-
-        const sourceText = sources
-          .map((dimension) => `${dimension.name}${dimension.score === 0 ? "接近中轴" : `偏向「${dimension.pole}」`}`)
-          .join("、");
-
+        const recommendation = getReadingRecommendations(scores);
+        const renderItems = (items, route, prefix) => `<ul class="recommendation-list">${items.map((item) => `
+          <li><a href="${getTargetHash(route, `${prefix}-${item.id}`)}">${item.title || item.name}</a>
+          <p>${item.readingReason}</p></li>`).join("")}</ul>`;
         resultReading.innerHTML = `
-          <h3>继续阅读</h3>
-          <p>${isCenter
-            ? "你的主要价值坐标较接近中轴，下面这些词条适合作为不同方向的参照。"
-            : sourceText
-            ? `这些词条根据${sourceText}生成，`
-            : ""}只是帮助你理解相关政治词汇的阅读线索，不是身份判定，也不是立场排名。</p>
-          <p class="section-space">想理解词汇边界，先看政治词条；想回到现实争议，先看相关议题；想分辨容易混淆的概念，再看概念对照。</p>
-          <span class="adjacent-label">相关政治词条</span>
-          <div class="reading-links">
-            ${matchedIdeologies
-              .map((ideology) => `<a href="#concepts" data-ideology-link="${ideology.id}">${ideology.name}</a>`)
-              .join("")}
-          </div>
-          <span class="adjacent-label">相关议题</span>
-          <div class="reading-links">
-            ${matchedIssues
-              .map((issue) => `<a href="#issues" data-issue-link="${issue.id}">${issue.title}</a>`)
-              .join("")}
-          </div>
-          <span class="adjacent-label">推荐路径</span>
-          <div class="reading-links">
-            <a href="#guide" data-route-link="guide">按测评路线继续阅读</a>
-            <a href="#concepts" data-route-link="concepts" data-scroll-target="concept-comparisons">看概念对照</a>
-          </div>
+          <h3>更多关联与对照阅读</h3>
+          <p>可从下面另选一个问题。推荐只作为阅读线索，不是身份判定，也不是立场排名。</p>
+          <h4>相关议题</h4>${renderItems(recommendation.issues, "issues", "issue")}
+          <h4>相关政治词条</h4>${renderItems(recommendation.ideologies, "concepts", "ideology")}
+          <h4>概念对照</h4><div class="reading-links">${recommendation.comparisons.map((comparison) => `<a href="${getTargetHash("concepts", `comparison-${comparison.id}`)}">${comparison.left}与${comparison.right}</a>`).join("")}</div>
         `;
       }
 
@@ -4072,7 +4214,7 @@
         const cards = getResultSummaryCards(scores);
 
         resultQuickRead.innerHTML = `
-          <h3>结果速读</h3>
+          <h3>本次回答的三个线索</h3>
           <div class="quick-read-list">
             ${cards
               .map(
@@ -4118,7 +4260,7 @@
         const steps = getResultNextSteps(scores);
 
         resultNextSteps.innerHTML = `
-          <h3>阅读顺序</h3>
+          <h3>按这个顺序读下去</h3>
           <div class="next-step-list">
             ${steps
               .map(
@@ -4126,54 +4268,13 @@
                   <div class="next-step">
                     <span>${step.label}</span>
                     <div>
-                      <strong>${step.title}</strong>
+                      <a href="${getTargetHash(step.route, step.target)}"><strong>${step.title}</strong></a>
                       <p>${step.text}</p>
                     </div>
                   </div>
                 `
               )
               .join("")}
-          </div>
-        `;
-      }
-
-      function renderResultReport(scores) {
-        const ranked = getRankedDimensions(scores);
-        const strongest = ranked.slice(0, 2);
-        const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
-        const centeredReport =
-          centered.strength < 18
-            ? `${centered.name}最接近中轴（强度 ${centered.strength}/100）。这通常意味着你在这组问题上更依赖具体情境、制度细节或现实后果来判断。`
-            : `${centered.name}是五条坐标中相对较弱的一项，但仍${getStrengthText(centered.strength)}偏向「${getPoleText(
-                centered
-              )}」（强度 ${centered.strength}/100），因此这次结果没有真正接近中轴的维度。`;
-        const strongestList = strongest
-          .map(
-            (dimension) => `
-              <li>
-                <strong>${dimension.name}：${dimension.score === 0 ? "接近中轴" : `偏向「${dimension.pole}」`}</strong>
-                <span>${getStrengthText(dimension.strength)}，强度 ${dimension.strength}/100。${
-                  dimension.strength < 18
-                    ? "这组议题上暂时没有明显的单向牵引。"
-                    : `你可能更愿意为「${getPoleText(dimension)}」承担现实成本。`
-                }</span>
-              </li>
-            `
-          )
-          .join("");
-
-        resultReport.innerHTML = `
-          <div class="report-row">
-            <h3>怎么看排序</h3>
-            <ul class="report-list">${strongestList}</ul>
-          </div>
-          <div class="report-row">
-            <h3>${centered.strength < 18 ? "怎么看中轴" : "有没有中轴"}</h3>
-            <p>${centeredReport}</p>
-          </div>
-          <div class="report-row">
-            <h3>怎么看张力</h3>
-            <p>${getTensionInsight(ranked)}</p>
           </div>
         `;
       }
@@ -4216,7 +4317,6 @@
           resultRetest.innerHTML = "";
           resultQuickRead.innerHTML = "";
           resultReading.innerHTML = "";
-          resultReport.innerHTML = "";
           dimensionNotes.innerHTML = "";
           resultNextSteps.innerHTML = "";
           return;
@@ -4506,7 +4606,6 @@
         resultTitle.textContent = description.title;
         resultCopy.textContent = description.text;
         renderResultQuickRead(latestScores);
-        renderResultReport(latestScores);
         renderScores(latestScores);
         renderDimensionNotes(latestScores);
         renderResultReading(latestScores);
@@ -4586,7 +4685,7 @@
         const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
 
         if (strongest.strength < 18) {
-          return "五条坐标均接近中轴，结果更依赖具体议题、制度细节和现实后果。";
+          return "五条坐标均接近中轴。中立回答或不同方向相互抵消都可能产生这一结果，仅凭总分无法区分。";
         }
 
         const leadingText = leading
@@ -4594,43 +4693,44 @@
           .join("，");
 
         return leading.length >= 2
-          ? `主要方向为${leadingText}；其余坐标共同说明这组价值排序的平衡与张力。`
-          : `主要方向为${leadingText}；其他坐标更接近中轴，具体判断可能随情境变化。`;
+          ? `主要方向为${leadingText}；其他坐标补充本次回答中的价值组合。`
+          : `主要方向为${leadingText}；其他坐标更接近中轴，需留意汇总分无法区分的回答差异。`;
       }
 
       function getPdfSummaryCards(scores) {
         const ranked = getRankedDimensions(scores);
         const strongest = ranked[0];
+        const tiedCount = ranked.filter((item) => item.strength === strongest.strength).length;
         const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
-        const centeredInsight = getCenteredSummaryInsight(centered);
+        const centeredInsight = getCenteredSummaryInsight(centered, ranked);
         const leading = ranked.filter((item) => item.strength >= 18).slice(0, 2);
         const strongestMeaning =
           strongest.score >= 0 ? strongest.positiveMeaning : strongest.negativeMeaning;
 
         return [
           {
-            label: "最鲜明",
+            label: strongest.strength >= 18 && tiedCount > 1 ? "并列倾向" : "最鲜明",
             title:
               strongest.strength < 18
                 ? "整体接近中轴"
                 : `${strongest.name}偏向「${strongest.pole}」`,
             text:
               strongest.strength < 18
-                ? "这次结果没有特别突出的单一坐标，判断更依赖具体情境、制度细节和现实后果。"
-                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。${strongestMeaning}`,
+                ? "本次没有特别突出的单一坐标；接近中轴不等于善于平衡，也不表示没有立场。"
+                : `${getStrengthText(strongest.strength)}，强度 ${strongest.strength}/100。${tiedCount > 1 ? `共 ${tiedCount} 条坐标并列，本项只是一个阅读起点。` : ""}${strongestMeaning}`,
           },
           {
-            label: "最平衡",
+            label: "倾向较弱",
             title: centeredInsight.title,
             text: centeredInsight.text,
           },
           {
-            label: "主要张力",
+            label: "价值组合",
             title:
               leading.length >= 2
                 ? `${leading[0].name} × ${leading[1].name}`
-                : "暂时没有尖锐双轴拉扯",
-            text: getTensionInsight(ranked),
+                : "暂未形成两项明显倾向",
+            text: getCombinationInsight(ranked),
           },
         ];
       }
@@ -4639,10 +4739,13 @@
         const ranked = getRankedDimensions(scores);
         const strongest = ranked[0];
         const second = ranked[1];
+        const tiedCount = ranked.filter((item) => item.strength === strongest.strength).length;
         const centered = [...ranked].sort((a, b) => a.strength - b.strength)[0];
         const rankingText =
           strongest.strength < 18
             ? "五条坐标都较接近中轴，没有形成明显的单一价值优先级。"
+            : tiedCount > 1
+            ? `${tiedCount} 条坐标并列，汇总强度同为 ${strongest.strength}/100。页面顺序不表示它们之间有高低，可任选相关议题作为起点。`
             : `${strongest.name}偏向「${strongest.pole}」最明显（${strongest.strength}/100），其次是${second.name}${
                 second.strength < 18
                   ? `接近中轴（${second.strength}/100）`
@@ -4650,7 +4753,9 @@
               }。`;
         const centerText =
           centered.strength < 18
-            ? `${centered.name}最接近中轴（${centered.strength}/100），说明这组判断更依赖情境与制度细节。`
+            ? `${centered.name}最接近中轴（${centered.strength}/100），中立回答或不同方向相互抵消都可能产生这一结果。`
+            : tiedCount === ranked.length
+            ? `五条坐标同为 ${centered.strength}/100，均达到本站显示方向的范围，没有相对较弱的一项。相同幅度不代表含义相同。`
             : `${centered.name}虽是相对较弱的一项，仍${getStrengthText(centered.strength)}偏向「${centered.pole}」（${centered.strength}/100），因此没有真正接近中轴的维度。`;
 
         return [
@@ -4661,13 +4766,13 @@
           },
           {
             label: "中轴",
-            title: centered.strength < 18 ? "保留情境判断" : "整体方向鲜明",
+            title: centered.strength < 18 ? "理解汇总的局限" : "各轴均显示方向",
             text: centerText,
           },
           {
-            label: "张力",
-            title: "轴间如何相互牵引",
-            text: getTensionInsight(ranked),
+            label: "组合",
+            title: "两项价值如何共同出现",
+            text: getCombinationInsight(ranked),
           },
         ];
       }
@@ -4714,7 +4819,7 @@
             },
             {
               label: "强度",
-              text: "数值越高只表示倾向更稳定，不代表该方向更正确、更理性或更值得认同。",
+              text: "数值表示本次回答的汇总方向与幅度，不衡量稳定性、正确性或理性程度。",
             },
             {
               label: "组合",
@@ -4733,6 +4838,7 @@
             family: ideology.family,
             axes: ideology.axes,
             summary: ideology.summary,
+            scope: ideology.scope,
             core: ideology.core,
             caution: ideology.caution,
           })),
@@ -4931,7 +5037,7 @@
         const dividerY = height - 108;
         const footerY = dividerY + 18;
         const disclaimer =
-          "本报告用于政治概念科普和自我观察，不是政治身份判定，也不构成价值排名。测评答案不上传、不保存。";
+          "本报告用于科普和自我观察，不是身份判定或价值排名。进度与上次结果保存在本机，答案不上传。提交后清除进度；重新测试或清除站点数据可清除记录。";
 
         context.strokeStyle = "#d9ddd6";
         context.lineWidth = 2;
@@ -5448,8 +5554,8 @@
         const innerWidth = width - 32;
         context.font = `400 15px ${fontFamily}`;
         const blocks = [
-          ideology.summary,
-          `核心关切｜${ideology.core}`,
+          `本站用义｜${ideology.scope}`,
+          ideology.core,
           `边界提醒｜${ideology.caution}`,
         ].map((text) => ({
           text,
@@ -5484,7 +5590,7 @@
         context.fillText(layout.ideology.family, x + width - padding, y + 18);
         context.textAlign = "left";
         context.fillStyle = "#2f5f9f";
-        context.fillText(layout.ideology.axes.join(" · "), x + padding, y + 44);
+        context.fillText(`阅读关联｜${layout.ideology.axes.join(" · ")}`, x + padding, y + 44);
 
         let contentY = y + 68;
         context.fillStyle = "#39414d";
@@ -5518,7 +5624,7 @@
         context.fillStyle = "#39414d";
         context.font = `400 18px ${fontFamily}`;
         const detailIntro =
-          "以下内容把五条坐标分别展开，并结合当前排序说明相关公共议题与政治词汇。各坐标彼此独立，方向和强度只表示这次回答中的价值优先级。";
+          "以下分别解释五条坐标，并介绍相关议题与政治词汇。坐标按题目分组计算，不代表经过验证的独立心理特征；同分可能来自不同回答。";
         const introLines = getWrappedCanvasLines(context, detailIntro, contentWidth);
         let y =
           drawWrappedCanvasText(
@@ -6181,7 +6287,6 @@
         setResultActionStatus("");
         resultQuickRead.innerHTML = "";
         resultReading.innerHTML = "";
-        resultReport.innerHTML = "";
         dimensionNotes.innerHTML = "";
         resultNextSteps.innerHTML = "";
         emptyResult.classList.remove("hidden");
@@ -6243,7 +6348,12 @@
         filterContentIndex();
       });
       document.addEventListener("click", (event) => {
-        if (!(event.target instanceof Element)) return;
+        if (!(event.target instanceof Element) || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        if (event.target.closest(".skip-link")) {
+          event.preventDefault();
+          document.getElementById("mainContent").focus();
+          return;
+        }
         const indexItem = event.target.closest("[data-index-item]");
         if (indexItem) {
           event.preventDefault();
@@ -6307,6 +6417,7 @@
         drawCompass(latestScores);
       });
 
+      if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual";
       renderQuiz();
       renderQuestionIndex();
       renderContentIndex();
